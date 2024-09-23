@@ -31,9 +31,17 @@ public class User {
         boolean resul = false;
         if (email.contains("@")){
             String[] partes = email.split("@");
+            if (partes.length == 2 && partes[1].contains(".")){
+                String[] dominio= partes[1].split("\\.");
+                if (dominio.length == 2){
+                    resul=true;
+                }
+            }
+
         }
         return resul;
     }
+
 
 
 
@@ -75,6 +83,9 @@ public class User {
     }
 
     public void setEmail(String email) {
+        if (esEmail(email)){
+            throw new IllegalArgumentException("El mail no es valido");
+        }
         this.email = email;
     }
 
@@ -83,6 +94,9 @@ public class User {
     }
 
     public void setGenero(String genero) {
+        if (!(genero.equalsIgnoreCase("M") || genero.equalsIgnoreCase("H"))){
+            throw new IllegalArgumentException("El genero no es valido");
+        }
         this.genero = genero;
     }
 }
