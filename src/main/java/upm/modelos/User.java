@@ -10,15 +10,13 @@ public class User {
     private String name;
     private LocalDate birthdate;
     private String dni;
-    private String email;
     private int id;
 
 
-    public User(String name, LocalDate birthdate, String dni, String email, int id) {
+    public User(String name, LocalDate birthdate, String dni, int id) {
         this.name = name;
         this.setBirthdate(birthdate);
         this.setDni(dni);
-        this.setEmail(email);
         this.id = id;
     }
 
@@ -34,14 +32,6 @@ public class User {
             i++;
         }
         return digits && letter;
-    }
-
-    public void changeName(String nuevo) {
-        setName(nuevo);
-    }
-
-    public void changeEmail(String nuevo) {
-        setEmail(nuevo);
     }
 
     public String getName() {
@@ -66,19 +56,6 @@ public class User {
         }
         this.dni = dni;
     }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        email = email.trim();
-        if (!(email.endsWith("@gmail.com") || email.endsWith("@hotmail.com"))) {
-            throw new IllegalArgumentException("El mail no es valido");
-        }
-        this.email = email;
-    }
-
 
     public LocalDate getBirthdate() {
         return birthdate;
@@ -106,7 +83,7 @@ public class User {
                 "name='" + name + '\'' +
                 ", birthdate=" + birthdate +
                 ", dni='" + dni + '\'' +
-                ", email='" + email + '\'' +
+                ", id=" + id +
                 '}';
     }
 }
