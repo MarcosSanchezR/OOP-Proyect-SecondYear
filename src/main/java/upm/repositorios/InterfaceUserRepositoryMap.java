@@ -5,9 +5,9 @@ import upm.modelos.User;
 import java.util.List;
 
 public interface InterfaceUserRepositoryMap {
-User create(User user);
+    User create(User user);
 
-void deleteById(int id);
+    void deleteById(int id);
 
-List<User> findAll();
+    List<User> findAll();
 }
