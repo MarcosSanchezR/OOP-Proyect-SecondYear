@@ -2,10 +2,7 @@ package upm.repositorios;
 
 import upm.modelos.User;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class UserRepositoryMap implements InterfaceUserRepositoryMap {
     private final Map<Integer, User> map;
@@ -34,6 +31,17 @@ public class UserRepositoryMap implements InterfaceUserRepositoryMap {
     public List<User> findAll() {
         return new ArrayList<>(map.values());
     }
+
+    @Override
+    public Optional<User> findByDni(String dni) {
+        for (User user: this.findAll()){
+            if (user.getDni().equalsIgnoreCase(dni)){
+                return Optional.of(user);
+            }
+        }
+        return Optional.empty();
+    }
+
 
     public void setId(User user, Integer id) {
         user.setId(id);
