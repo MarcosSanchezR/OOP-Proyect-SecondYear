@@ -12,6 +12,6 @@ public interface InterfaceUserRepositoryMap {
 
     List<User> findAll();
 
-    public Optional<User> findByDni(String dni);
+    Optional<User> findByDni(String dni);
 }
 

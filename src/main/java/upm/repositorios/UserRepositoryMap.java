@@ -34,14 +34,17 @@ public class UserRepositoryMap implements InterfaceUserRepositoryMap {
 
     @Override
     public Optional<User> findByDni(String dni) {
-        for (User user: this.findAll()){
-            if (user.getDni().equalsIgnoreCase(dni)){
+        for (User user : this.findAll()) {
+            if (user.getDni().equalsIgnoreCase(dni)) {
                 return Optional.of(user);
             }
         }
         return Optional.empty();
     }
 
+    public Integer getId (User user){
+        return user.getId();
+    }
 
     public void setId(User user, Integer id) {
         user.setId(id);

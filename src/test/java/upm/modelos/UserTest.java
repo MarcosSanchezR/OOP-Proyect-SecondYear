@@ -12,7 +12,7 @@ public class UserTest {
 
     @BeforeEach
     void before(){
-        user=new User("marcos", LocalDate.of(2005,11,1), "02564017t", 1);
+        user=new User("marcos", LocalDate.of(2005,11,1), "02564017t");
     }
 
     @Test
@@ -23,19 +23,19 @@ public class UserTest {
     }
 
     @Test
-    void isIdTestTest(){
-        assertTrue(user.isId(user.getDni()));
+    void isDniTestTest(){
+        assertTrue(user.isDni(user.getDni()));
     }
 
 
     @Test
     void setBirthdateTest(){
-        assertThrows(IllegalArgumentException.class,()->new User("marcos", LocalDate.of(2009,11,1), "025640170t",1));
+        assertThrows(IllegalArgumentException.class,()->new User("marcos", LocalDate.of(2009,11,1), "025640170t"));
     }
 
     @Test
     void setIdTest(){
-        assertThrows(IllegalArgumentException.class,()->new User("marcos", LocalDate.of(2005,11,1), "025640170",1));
+        assertThrows(IllegalArgumentException.class,()->new User("marcos", LocalDate.of(2005,11,1), "025640170"));
     }
 
 }

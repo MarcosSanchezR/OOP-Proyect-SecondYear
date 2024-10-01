@@ -10,18 +10,17 @@ public class User {
     private String name;
     private LocalDate birthdate;
     private String dni;
-    private int id;
+    private Integer id;
 
 
-    public User(String name, LocalDate birthdate, String dni, int id) {
+    public User(String name, LocalDate birthdate, String dni) {
         this.name = name;
         this.setBirthdate(birthdate);
         this.setDni(dni);
-        this.id = id;
     }
 
-    public boolean isId(String id) {
-        char[] characters = id.toCharArray();
+    public boolean isDni(String dni) {
+        char[] characters = dni.toCharArray();
         boolean digits = true;
         boolean letter = Character.isAlphabetic(characters[characters.length - 1]);
         int i = 0;
@@ -51,7 +50,7 @@ public class User {
     }
 
     public void setDni(String dni) {
-        if (!isId(dni)) {
+        if (!isDni(dni)) {
             throw new IllegalArgumentException("El DNI no es valido");
         }
         this.dni = dni;
@@ -69,12 +68,12 @@ public class User {
         this.birthdate = birthdate;
     }
 
-    public int getId() {
-        return id;
+    public Integer getId(){
+        return this.id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setId(Integer id) {
+        this.id=id;
     }
 
     @Override
@@ -83,7 +82,6 @@ public class User {
                 "name='" + name + '\'' +
                 ", birthdate=" + birthdate +
                 ", dni='" + dni + '\'' +
-                ", id=" + id +
                 '}';
     }
 }
