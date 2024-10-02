@@ -6,7 +6,7 @@ import java.util.*;
 
 public class UserRepositoryMap implements InterfaceUserRepositoryMap {
     private final Map<Integer, User> map;
-    private int id;
+    private Integer id;
 
     public UserRepositoryMap() {
         this.map = new HashMap<>();

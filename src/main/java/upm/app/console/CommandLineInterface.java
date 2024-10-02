@@ -14,15 +14,17 @@ public class CommandLineInterface {
     private static final String HELP ="help";
     private static final String EXIT ="exit";
     private static final String COMMAND_DELIMITER_PARAMETERS ="[:\\r\\n]";
-    private static final String DELIMITER =";";
+    private static final String DELIMITER =",";
 
 
     private final UserService userService;
     private final View view;
+    private final Help help;
 
-    public CommandLineInterface(UserService userService, View view) {
+    public CommandLineInterface(UserService userService, View view, Help help) {
         this.userService = userService;
         this.view=view;
+        this.help=help;
     }
 
     public boolean runCommands(){
@@ -35,7 +37,7 @@ public class CommandLineInterface {
     }
 
     public boolean runCommands(Scanner scanner){
-        this.view.show("Bienvenido a la aplicacion");
+        this.view.showBold("Escribe el comando");
         String command=scanner.next();
         boolean exit=false;
         switch (command){
@@ -46,7 +48,7 @@ public class CommandLineInterface {
                 this.deleteByDni(scanner.next().split(DELIMITER));
                 break;
             case FIND_ALL:
-                this.listAll(scanner.next().split(DELIMITER));
+                this.listAll();
                 break;
             case HELP:
                 this.help();
@@ -60,7 +62,7 @@ public class CommandLineInterface {
 
     private void createUser(String[] values){
     if (values.length!=3){
-        throw new IllegalArgumentException("El numero de parametros no es el adecuado, se necesitan 3");
+        throw new IllegalArgumentException("El numero de parametros no es el adecuado, se necesitan 3 y usted ha utilizado: "+values.length);
     }
         User createdUser=this.userService.create(new User(values[0], LocalDate.parse(values[1]), values[2]));
         this.view.show(createdUser.toString());
@@ -68,24 +70,21 @@ public class CommandLineInterface {
 
     private void deleteByDni(String[] values){
         if (values.length!=1){
-            throw new IllegalArgumentException("El numero de parametros no es el adecuado, se necesita 1");
+            throw new IllegalArgumentException("El numero de parametros no es el adecuado, se necesita 1 y usted ha utilizado: "+values.length);
         }
         this.userService.deleteByDni(values[0]);
         this.view.show("Usuario borrado");
     }
 
-    private void listAll(String[] values){
-        if (values.length!=0){
-            throw new IllegalArgumentException("El numero de parametros no es el adecuado, no es necesario ningun paarametro");
-        }
+    private void listAll(){
         List<User> list=this.userService.listAll();
         this.view.show(list.toString());
     }
 
     private void help(){
         this.view.show(HELP);
-        this.view.show(CREATE_USER);
-        this.view.show(DELETE_USER);
+        this.view.show(CREATE_USER+help.createUser());
+        this.view.show(DELETE_USER+help.deleteByDni());
         this.view.show(FIND_ALL);
         this.view.show(EXIT);
     }
