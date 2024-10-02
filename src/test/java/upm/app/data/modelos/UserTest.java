@@ -1,8 +1,7 @@
-package upm.modelos;
+package upm.app.data.modelos;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import upm.app.data.modelos.User;
 
 import java.time.LocalDate;
 
