@@ -1,6 +1,6 @@
-package upm.repositorios;
+package upm.app.data.repositorios;
 
-import upm.modelos.User;
+import upm.app.data.modelos.User;
 
 import java.util.List;
 import java.util.Optional;
