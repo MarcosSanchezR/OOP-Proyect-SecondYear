@@ -19,14 +19,14 @@ public class UserRepositoryMapTest {
 
 
     @BeforeEach
-    void before(){
-        userRepositoryMap=new UserRepositoryMap();
-        user1=new User("Marcos", LocalDate.of(2005,11,1), "02485905U");
-        user2=new User("Daniel", LocalDate.of(2000,12,3), "00000000I");
+    void before() {
+        userRepositoryMap = new UserRepositoryMap();
+        user1 = new User("Marcos", LocalDate.of(2005, 11, 1), "02485905U");
+        user2 = new User("Daniel", LocalDate.of(2000, 12, 3), "00000000I");
     }
 
     @Test
-    void createTest(){
+    void createTest() {
         User userCreated = userRepositoryMap.create(user1);
         assertNotNull(userCreated.getId());
         assertEquals(1, userCreated.getId());
@@ -36,31 +36,31 @@ public class UserRepositoryMapTest {
     }
 
     @Test
-    void deleteByIdTest(){
-        User userCreated =userRepositoryMap.create(user1);
+    void deleteByIdTest() {
+        User userCreated = userRepositoryMap.create(user1);
         userRepositoryMap.deleteById(userCreated.getId());
-        List<User> users=userRepositoryMap.findAll();
+        List<User> users = userRepositoryMap.findAll();
         assertTrue(users.isEmpty());
     }
 
     @Test
-    void findAllTest(){
+    void findAllTest() {
         userRepositoryMap.create(user1);
         userRepositoryMap.create(user2);
-        List<User> users=userRepositoryMap.findAll();
+        List<User> users = userRepositoryMap.findAll();
         assertEquals(2, users.size());
     }
 
     @Test
-    void finfByDniTest(){
+    void finfByDniTest() {
         userRepositoryMap.create(user1);
         userRepositoryMap.create(user2);
 
-        Optional<User> userFounded=userRepositoryMap.findByDni("02485905U");
+        Optional<User> userFounded = userRepositoryMap.findByDni("02485905U");
         assertTrue(userFounded.isPresent());
         assertEquals("Marcos", userFounded.get().getName());
 
-        Optional<User> userNotFounded=userRepositoryMap.findByDni("02485335U");
+        Optional<User> userNotFounded = userRepositoryMap.findByDni("02485335U");
         assertFalse(userNotFounded.isPresent());
     }
 

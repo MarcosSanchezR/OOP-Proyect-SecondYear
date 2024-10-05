@@ -83,8 +83,8 @@ public class CommandLineInterface {
 
     private void help() {
         this.view.show(HELP);
-        this.view.show(CREATE_USER+ HELP_CREATE_U );
-        this.view.show(DELETE_USER+ HELP_DELETE_BY_DNI);
+        this.view.show(CREATE_USER + HELP_CREATE_U);
+        this.view.show(DELETE_USER + HELP_DELETE_BY_DNI);
         this.view.show(FIND_ALL);
         this.view.show(EXIT);
     }

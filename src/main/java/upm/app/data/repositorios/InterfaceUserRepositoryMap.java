@@ -8,7 +8,7 @@ import java.util.Optional;
 public interface InterfaceUserRepositoryMap {
     User create(User user);
 
-    void deleteById(int id);
+    void deleteById(Integer id);
 
     List<User> findAll();
 

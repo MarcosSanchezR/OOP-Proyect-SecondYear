@@ -7,7 +7,7 @@ import java.time.Period;
 public class User {
     private static final int MAX_AGE = 30;
     private static final int MINIMUM_AGE = 18;
-    private String name;
+    private final String name;
     private LocalDate birthdate;
     private String dni;
     private Integer id;
@@ -35,10 +35,6 @@ public class User {
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public int getAge() {

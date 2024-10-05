@@ -23,7 +23,7 @@ public class UserRepositoryMap implements InterfaceUserRepositoryMap {
     }
 
     @Override
-    public void deleteById(int id) {
+    public void deleteById(Integer id) {
         this.map.remove(id);
     }
 
@@ -40,10 +40,6 @@ public class UserRepositoryMap implements InterfaceUserRepositoryMap {
             }
         }
         return Optional.empty();
-    }
-
-    public Integer getId(User user) {
-        return user.getId();
     }
 
     public void setId(User user, Integer id) {
