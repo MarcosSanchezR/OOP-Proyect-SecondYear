@@ -68,12 +68,12 @@ public class User {
         this.birthdate = birthdate;
     }
 
-    public Integer getId(){
+    public Integer getId() {
         return this.id;
     }
 
     public void setId(Integer id) {
-        this.id=id;
+        this.id = id;
     }
 
     @Override

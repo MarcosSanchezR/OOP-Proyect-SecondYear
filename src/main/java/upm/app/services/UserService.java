@@ -22,9 +22,9 @@ public class UserService {
     }
 
     public void deleteByDni(String dni) {
-        Optional<User> userOptional=userRepositoryMap.findByDni(dni);
-        if (userOptional.isPresent()){
-            User user=userOptional.get();
+        Optional<User> userOptional = userRepositoryMap.findByDni(dni);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
             this.userRepositoryMap.deleteById(user.getId());
         }
     }

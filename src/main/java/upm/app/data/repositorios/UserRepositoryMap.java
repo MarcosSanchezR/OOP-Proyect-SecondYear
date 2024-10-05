@@ -42,7 +42,7 @@ public class UserRepositoryMap implements InterfaceUserRepositoryMap {
         return Optional.empty();
     }
 
-    public Integer getId (User user){
+    public Integer getId(User user) {
         return user.getId();
     }
 
