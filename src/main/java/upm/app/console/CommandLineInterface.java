@@ -31,7 +31,7 @@ public class CommandLineInterface {
 
     public boolean runCommands(Scanner scanner) {
         this.view.showBold("Escribe el comando");
-        CommandNames command=CommandNames.fromValue(scanner.next());
+        CommandNames command = CommandNames.fromValue(scanner.next());
         boolean exit = false;
         switch (command) {
             case CREATE_USER:
@@ -50,7 +50,7 @@ public class CommandLineInterface {
                 exit = true;
                 break;
             default:
-                throw new IllegalArgumentException("El comando "+command+" no existe");
+                throw new IllegalArgumentException("El comando " + command + " no existe");
         }
         return exit;
     }
@@ -77,9 +77,9 @@ public class CommandLineInterface {
     }
 
     private void help() {
-    for (CommandNames command: CommandNames.values()){
-        this.view.show(command.getHelp());
-    }
+        for (CommandNames command : CommandNames.values()) {
+            this.view.show(command.getHelp());
+        }
     }
 
 
