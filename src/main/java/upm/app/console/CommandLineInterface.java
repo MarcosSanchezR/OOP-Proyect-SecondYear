@@ -49,6 +49,8 @@ public class CommandLineInterface {
             case EXIT:
                 exit = true;
                 break;
+            default:
+                throw new IllegalArgumentException("El comando "+command+" no existe");
         }
         return exit;
     }
