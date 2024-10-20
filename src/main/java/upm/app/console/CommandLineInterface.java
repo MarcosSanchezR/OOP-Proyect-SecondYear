@@ -4,13 +4,13 @@ import upm.app.data.modelos.User;
 import upm.app.services.UserService;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
 public class CommandLineInterface {
 
-    private static final String COMMAND_DELIMITER_PARAMETERS = "[:\\r\\n]";
-    private static final String DELIMITER = ",";
+    private static final String COMMAND_DELIMITER_PARAMETERS = "["+Delimiters.COMMAND.getValue()    +"\\r\\n]";
 
     private final UserService userService;
     private final View view;
@@ -32,13 +32,14 @@ public class CommandLineInterface {
     public boolean runCommands(Scanner scanner) {
         this.view.showBold("Escribe el comando");
         CommandNames command = CommandNames.fromValue(scanner.next());
+        String[] params=this.getParamsIfNeededAssured(scanner, command);
         boolean exit = false;
         switch (command) {
             case CREATE_USER:
-                this.createUser(scanner.next().split(DELIMITER));
+                this.createUser(params);
                 break;
             case DELETE_USER:
-                this.deleteByDni(scanner.next().split(DELIMITER));
+                this.deleteByDni(params);
                 break;
             case FIND_ALL:
                 this.listAll();
@@ -54,6 +55,19 @@ public class CommandLineInterface {
         }
         return exit;
     }
+
+    private String[] getParamsIfNeededAssured(Scanner scanner, CommandNames command) {
+        if (command.getParams().length > 0) {
+            String[] params = scanner.next().split(Delimiters.PARAM.getValue());
+            if (command.getParams().length != params.length) {
+                throw new IllegalArgumentException("Parámetros esperados: " + Arrays.toString(command.getParams()) +
+                        ", encontrados " + Arrays.toString(params));
+            }
+            return params;
+        }
+        return new String[0];
+    }
+
 
     private void createUser(String[] values) {
         if (values.length != 3) {

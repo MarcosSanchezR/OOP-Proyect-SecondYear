@@ -23,8 +23,8 @@ public class UserTest {
     }
 
     @Test
-    void isDniTestTest() {
-        assertTrue(user.isDni(user.getDni()));
+    void validDniTestTest() {
+        assertTrue(user.validDni(user.getDni()));
     }
 
 

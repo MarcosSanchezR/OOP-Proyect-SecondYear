@@ -4,22 +4,21 @@ import java.time.LocalDate;
 import java.time.Period;
 
 
-public class User {
+public class User extends Entity {
     private static final int MAX_AGE = 30;
     private static final int MINIMUM_AGE = 18;
     private final String name;
     private LocalDate birthdate;
     private String dni;
-    private Integer id;
 
 
     public User(String name, LocalDate birthdate, String dni) {
         this.name = name;
         this.setBirthdate(birthdate);
-        this.setDni(dni);
+        this.setDni(dni); 
     }
 
-    public boolean isDni(String dni) {
+    public boolean validDni(String dni) {
         char[] characters = dni.toCharArray();
         boolean digits = true;
         boolean letter = Character.isAlphabetic(characters[characters.length - 1]);
@@ -46,7 +45,7 @@ public class User {
     }
 
     public void setDni(String dni) {
-        if (!isDni(dni)) {
+        if (!validDni(dni)) {
             throw new IllegalArgumentException("El DNI no es valido");
         }
         this.dni = dni;
@@ -62,14 +61,6 @@ public class User {
             throw new IllegalArgumentException("La edad debe estar entre 18 y 30 años.");
         }
         this.birthdate = birthdate;
-    }
-
-    public Integer getId() {
-        return this.id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     @Override

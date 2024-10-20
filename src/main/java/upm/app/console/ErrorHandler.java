@@ -1,0 +1,24 @@
+package upm.app.console;
+
+public class ErrorHandler {
+    private final CommandLineInterface commandLineInterface;
+    private final View view;
+
+    public ErrorHandler(CommandLineInterface commandLineInterface, View view) {
+        this.commandLineInterface = commandLineInterface;
+        this.view = view;
+        this.view.showBold("App. "+View.COPY_RIGHT+"UPM.ETSISI.POO.MSANCHEZ");
+    }
+
+    public void handleErrors(){
+        boolean exit=false;
+        while (!exit){
+            try{
+                exit=this.commandLineInterface.runCommands();
+            }catch (Exception e){
+                this.view.showError(">>> ERROR ("+e.getClass().getSimpleName()+") >>>"+ e.getMessage());
+            }
+        }
+        this.view.showBold("Hasta luego!");
+    }
+}

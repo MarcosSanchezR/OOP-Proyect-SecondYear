@@ -1,18 +1,20 @@
 package upm.app.console;
 
 public enum CommandNames {
-    CREATE_USER("create-user", ":<nombre>,<aaaa-mm-dd>,<dni>"),
-    DELETE_USER("delete-user", ":<dni>"),
-    FIND_ALL("find-all", " muestra  todos los usuarios"),
-    HELP("help", " muestra la ayuda de los comandos"),
-    EXIT("exit", " termina la ejecucion");
+    CREATE_USER("create-user", ". Se crea un usuario.", "<nombre>","<aaaa-mm-dd>","<dni>"),
+    DELETE_USER("delete-user", ". Borra el usuario a traves del dni." , ":<dni>"),
+    FIND_ALL("find-all", ". Muestra  todos los usuarios."),
+    HELP("help", ". Muestra la ayuda de los comandos."),
+    EXIT("exit", ". Termina la ejecucion.");
 
     private final String value;
     private final String help;
+    private final String[] params;
 
-    CommandNames(String value, String help) {
+    CommandNames(String value, String help, String... params) {
         this.value = value;
         this.help = help;
+        this.params=params;
     }
 
     public static CommandNames fromValue(String value) {
@@ -25,10 +27,18 @@ public enum CommandNames {
     }
 
     public String getHelp() {
-        return this.getValue() + this.help;
+        String finalHelp=this.getValue();
+        if(this.params.length!=0){
+            finalHelp+=Delimiters.COMMAND.getValue()+String.join(Delimiters.PARAM.getValue(), this.params);
+        }
+        return finalHelp+this.help;
     }
 
     public String getValue() {
         return this.value;
+    }
+
+    public String[] getParams() {
+        return params;
     }
 }
