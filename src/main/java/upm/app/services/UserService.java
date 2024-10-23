@@ -1,35 +1,35 @@
 package upm.app.services;
 
 import upm.app.data.modelos.User;
-import upm.app.data.repositorios.UserRepositoryMap;
+import upm.app.data.repositorios.UserRepository;
 
 import java.util.List;
 import java.util.Optional;
 
 public class UserService {
-    private final UserRepositoryMap userRepositoryMap;
+    private final UserRepository userRepository;
 
 
-    public UserService(UserRepositoryMap userRepositoryMap) {
-        this.userRepositoryMap = userRepositoryMap;
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     public User create(User user) {
-        if (this.userRepositoryMap.findByDni(user.getDni()).isPresent()) {
+        if (this.userRepository.findByDni(user.getDni()).isPresent()) {
             throw new IllegalArgumentException("El dni ya existe, deberia ser único: " + user.getDni());
         }
-        return this.userRepositoryMap.create(user);
+        return this.userRepository.create(user);
     }
 
     public void deleteByDni(String dni) {
-        Optional<User> userOptional = userRepositoryMap.findByDni(dni);
+        Optional<User> userOptional = userRepository.findByDni(dni);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
-            this.userRepositoryMap.deleteById(user.getId());
+            this.userRepository.deleteById(user.getId());
         }
     }
 
     public List<User> listAll() {
-        return this.userRepositoryMap.findAll();
+        return this.userRepository.findAll();
     }
 }

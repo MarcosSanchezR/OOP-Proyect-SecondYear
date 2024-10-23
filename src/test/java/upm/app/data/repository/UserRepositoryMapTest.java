@@ -3,7 +3,7 @@ package upm.app.data.repository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import upm.app.data.modelos.User;
-import upm.app.data.repositorios.UserRepositoryMap;
+import upm.app.data.repositorios.map.UserRepositoryMap;
 
 import java.time.LocalDate;
 import java.util.List;

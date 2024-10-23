@@ -3,7 +3,7 @@ package upm.app.service;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import upm.app.data.modelos.User;
-import upm.app.data.repositorios.UserRepositoryMap;
+import upm.app.data.repositorios.map.UserRepositoryMap;
 import upm.app.services.UserService;
 
 import java.time.LocalDate;

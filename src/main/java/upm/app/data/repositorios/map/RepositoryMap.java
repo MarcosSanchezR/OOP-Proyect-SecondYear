@@ -1,10 +1,11 @@
-package upm.app.data.repositorios;
+package upm.app.data.repositorios.map;
 
 import upm.app.data.modelos.Entity;
+import upm.app.data.repositorios.GenericRepository;
 
 import java.util.*;
 
-public class RepositoryMap<T extends Entity >{
+public abstract class RepositoryMap<T extends Entity > implements GenericRepository<T> {
     private final Map<Integer, T> map;
     private Integer id;
 
