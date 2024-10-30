@@ -12,7 +12,7 @@ public class UserTest {
 
     @BeforeEach
     void before() {
-        user = new User("marcos", LocalDate.of(2005, 11, 1), "02564017t");
+        user = new User("marcos", LocalDate.of(2005, 11, 1), "02564017t", "666");
     }
 
     @Test
@@ -30,12 +30,12 @@ public class UserTest {
 
     @Test
     void setBirthdateTest() {
-        assertThrows(IllegalArgumentException.class, () -> new User("marcos", LocalDate.of(2009, 11, 1), "025640170t"));
+        assertThrows(IllegalArgumentException.class, () -> new User("marcos", LocalDate.of(2009, 11, 1), "025640170t", "666"));
     }
 
     @Test
     void setIdTest() {
-        assertThrows(IllegalArgumentException.class, () -> new User("marcos", LocalDate.of(2005, 11, 1), "025640170"));
+        assertThrows(IllegalArgumentException.class, () -> new User("marcos", LocalDate.of(2005, 11, 1), "025640170", "666"));
     }
 
 }

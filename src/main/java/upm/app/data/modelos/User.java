@@ -10,12 +10,14 @@ public class User extends Entity {
     private final String name;
     private LocalDate birthdate;
     private String dni;
+    private String password;
 
 
-    public User(String name, LocalDate birthdate, String dni) {
+    public User(String name, LocalDate birthdate, String dni, String password) {
         this.name = name;
         this.setBirthdate(birthdate);
-        this.setDni(dni); 
+        this.setDni(dni);
+        this.password=password;
     }
 
     public boolean validDni(String dni) {
@@ -61,6 +63,14 @@ public class User extends Entity {
             throw new IllegalArgumentException("La edad debe estar entre 18 y 30 años.");
         }
         this.birthdate = birthdate;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override

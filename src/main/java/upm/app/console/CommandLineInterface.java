@@ -70,10 +70,10 @@ public class CommandLineInterface {
 
 
     private void createUser(String[] values) {
-        if (values.length != 3) {
+        if (values.length != 4) {
             throw new IllegalArgumentException(CommandNames.CREATE_USER.getHelp());
         }
-        User createdUser = this.userService.create(new User(values[0], LocalDate.parse(values[1]), values[2]));
+        User createdUser = this.userService.create(new User(values[0], LocalDate.parse(values[1]), values[2], values[3]));
         this.view.show(createdUser.toString());
     }
 
