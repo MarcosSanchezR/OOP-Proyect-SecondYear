@@ -1,13 +1,13 @@
 package upm.app.data.modelos;
 
-public class TenisCourt extends Entity{
+public class TennisCourt extends Entity{
     private String name;
     private String surfaceType;
     private String location;
 
-    public TenisCourt(String name, String surfaceType, String location) {
+    public TennisCourt(String name, String surfaceType, String location) {
         this.name = name;
-        this.surfaceType = surfaceType;
+        setSurfaceType(surfaceType);
         this.location = location;
     }
 

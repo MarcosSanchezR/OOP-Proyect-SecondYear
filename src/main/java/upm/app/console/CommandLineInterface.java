@@ -1,7 +1,9 @@
 package upm.app.console;
 
+import upm.app.data.modelos.TennisCourt;
 import upm.app.data.modelos.User;
 import upm.app.services.UserService;
+import upm.app.services.CourtService;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -13,10 +15,12 @@ public class CommandLineInterface {
     private static final String COMMAND_DELIMITER_PARAMETERS = "["+Delimiters.COMMAND.getValue()    +"\\r\\n]";
 
     private final UserService userService;
+    private final CourtService courtService;
     private final View view;
 
-    public CommandLineInterface(UserService userService, View view) {
+    public CommandLineInterface(UserService userService, CourtService courtService, View view) {
         this.userService = userService;
+        this.courtService=courtService;
         this.view = view;
     }
 
@@ -41,8 +45,17 @@ public class CommandLineInterface {
             case DELETE_USER:
                 this.deleteByDni(params);
                 break;
-            case FIND_ALL:
+            case FIND_ALL_USER:
                 this.listAll();
+                break;
+            case CREATE_COURT:
+                this.createCourt(params);
+                break;
+            case DELETE_COURT:
+                this.deleteByName(params);
+                break;
+            case FIND_ALL_COURT:
+                this.listAllCourt();
                 break;
             case HELP:
                 this.help();
@@ -87,6 +100,27 @@ public class CommandLineInterface {
 
     private void listAll() {
         List<User> list = this.userService.listAll();
+        this.view.show(list.toString());
+    }
+
+    private void createCourt(String[] values){
+        if (values.length!=3){
+            throw new IllegalArgumentException(CommandNames.CREATE_COURT.getHelp());
+        }
+        TennisCourt createdCourt = this.courtService.create(new TennisCourt(values[0], values[1], values[2]));
+        this.view.show(createdCourt.toString());
+    }
+
+    private void deleteByName(String[] values){
+        if (values.length!=1){
+            throw new IllegalArgumentException(CommandNames.DELETE_COURT.getHelp());
+        }
+        this.courtService.deleteByName(values[0]);
+        this.view.show("Pista borrada");
+    }
+
+    private void listAllCourt(){
+        List<TennisCourt> list=this.courtService.listAll();
         this.view.show(list.toString());
     }
 

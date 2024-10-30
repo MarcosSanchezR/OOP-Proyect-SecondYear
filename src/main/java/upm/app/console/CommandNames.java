@@ -2,8 +2,11 @@ package upm.app.console;
 
 public enum CommandNames {
     CREATE_USER("create-user", ". Se crea un usuario.", "<nombre>","<aaaa-mm-dd>","<dni>"),
-    DELETE_USER("delete-user", ". Borra el usuario a traves del dni." , ":<dni>"),
-    FIND_ALL("find-all", ". Muestra  todos los usuarios."),
+    DELETE_USER("delete-user", ". Borra el usuario a traves del dni." , "<dni>"),
+    FIND_ALL_USER("find-all-user", ". Muestra  todos los usuarios."),
+    CREATE_COURT("create-court", ". Se crea una pista de tenis.", "<nombre>", "<superficie>", "<localizacion>"),
+    DELETE_COURT("delete-court", ". Borra la pista a traves del nombre.", "<nombre>" ),
+    FIND_ALL_COURT("find-all-court", ". Muestra todas las pistas."),
     HELP("help", ". Muestra la ayuda de los comandos."),
     EXIT("exit", ". Termina la ejecucion.");
 
