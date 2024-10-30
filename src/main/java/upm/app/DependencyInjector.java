@@ -56,4 +56,12 @@ public class DependencyInjector {
     public UserService getUserService() {
         return userService;
     }
+
+    public CourtRepository getCourtRepository() {
+        return courtRepository;
+    }
+
+    public CourtService getCourtService() {
+        return courtService;
+    }
 }
