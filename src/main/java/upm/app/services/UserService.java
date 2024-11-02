@@ -16,7 +16,7 @@ public class UserService {
 
     public User create(User user) {
         if (this.userRepository.findByDni(user.getDni()).isPresent()) {
-            throw new IllegalArgumentException("El dni ya existe, deberia ser único: " + user.getDni());
+            throw new DuplicateException("El dni ya existe, deberia ser único: " + user.getDni());
         }
         return this.userRepository.create(user);
     }
@@ -31,5 +31,16 @@ public class UserService {
 
     public List<User> listAll() {
         return this.userRepository.findAll();
+    }
+
+    public User login(String dni, String password){
+        Optional<User> user= this.userRepository.findByDni(dni);
+        if (user.isEmpty()){
+            throw new NotFoundException("No autorizado, dni o contraseña incorrectas");
+        }
+        if (!password.equals(user.get().getPassword())){
+            throw new UnauthorizedException("No autorizado, dni o contraseña incorrectas");
+        }
+        return user.get();
     }
 }

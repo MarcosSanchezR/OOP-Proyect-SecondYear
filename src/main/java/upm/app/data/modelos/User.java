@@ -11,6 +11,7 @@ public class User extends Entity {
     private LocalDate birthdate;
     private String dni;
     private String password;
+    private Rol rol;
 
 
     public User(String name, LocalDate birthdate, String dni, String password) {
@@ -48,7 +49,7 @@ public class User extends Entity {
 
     public void setDni(String dni) {
         if (!validDni(dni)) {
-            throw new IllegalArgumentException("El DNI no es valido");
+            throw new InvalidAttributeException("El DNI no es valido");
         }
         this.dni = dni;
     }
@@ -60,7 +61,7 @@ public class User extends Entity {
     public void setBirthdate(LocalDate birthdate) {
         int age = Period.between(birthdate, LocalDate.now()).getYears();
         if (age < MINIMUM_AGE || age > MAX_AGE) {
-            throw new IllegalArgumentException("La edad debe estar entre 18 y 30 años.");
+            throw new InvalidAttributeException("La edad debe estar entre 18 y 30 años.");
         }
         this.birthdate = birthdate;
     }
@@ -73,12 +74,21 @@ public class User extends Entity {
         this.password = password;
     }
 
+    public Rol getRol() {
+        return rol;
+    }
+
+    public void setRol(Rol rol) {
+        this.rol = rol;
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "name='" + name + '\'' +
                 ", birthdate=" + birthdate +
                 ", dni='" + dni + '\'' +
+                ", rol='" + rol + '\'' +
                 '}';
     }
 }

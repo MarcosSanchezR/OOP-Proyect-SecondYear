@@ -8,6 +8,7 @@ import upm.app.services.CourtService;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class CommandLineInterface {
@@ -17,6 +18,7 @@ public class CommandLineInterface {
     private final UserService userService;
     private final CourtService courtService;
     private final View view;
+    private User user;
 
     public CommandLineInterface(UserService userService, CourtService courtService, View view) {
         this.userService = userService;
@@ -34,37 +36,26 @@ public class CommandLineInterface {
     }
 
     public boolean runCommands(Scanner scanner) {
-        this.view.showBold("Escribe el comando");
+        if (!Objects.isNull(this.user)) {
+            this.view.showCommand(this.user.getName());
+        } else {
+            this.view.showCommand();
+        }
         CommandNames command = CommandNames.fromValue(scanner.next());
         String[] params=this.getParamsIfNeededAssured(scanner, command);
         boolean exit = false;
         switch (command) {
-            case CREATE_USER:
-                this.createUser(params);
-                break;
-            case DELETE_USER:
-                this.deleteByDni(params);
-                break;
-            case FIND_ALL_USER:
-                this.listAll();
-                break;
-            case CREATE_COURT:
-                this.createCourt(params);
-                break;
-            case DELETE_COURT:
-                this.deleteByName(params);
-                break;
-            case FIND_ALL_COURT:
-                this.listAllCourt();
-                break;
-            case HELP:
-                this.help();
-                break;
-            case EXIT:
-                exit = true;
-                break;
-            default:
-                throw new IllegalArgumentException("El comando " + command + " no existe");
+            case LOGIN -> this.login(params);
+            case LOGOUT -> this.logout();
+            case CREATE_USER -> this.createUser(params);
+            case DELETE_USER -> this.deleteByDni(params);
+            case FIND_ALL_USER -> this.listAll();
+            case CREATE_COURT -> this.createCourt(params);
+            case DELETE_COURT -> this.deleteByName(params);
+            case FIND_ALL_COURT -> this.listAllCourt();
+            case HELP -> this.help();
+            case EXIT -> exit = true;
+            default -> throw new IllegalArgumentException("El comando " + command + " no existe");
         }
         return exit;
     }
@@ -81,6 +72,13 @@ public class CommandLineInterface {
         return new String[0];
     }
 
+    private void login(String[] values){
+        this.user=this.userService.login(values[0], values[1]);
+    }
+
+    private void logout(){
+        this.user=null;
+    }
 
     private void createUser(String[] values) {
         if (values.length != 4) {

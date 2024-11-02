@@ -8,7 +8,10 @@ public enum CommandNames {
     DELETE_COURT("delete-court", ". Borra la pista a traves del nombre.", "<nombre>" ),
     FIND_ALL_COURT("find-all-court", ". Muestra todas las pistas."),
     HELP("help", ". Muestra la ayuda de los comandos."),
+    LOGIN("login", ". Inicia sesion", "<dni>", "<password>"),
+    LOGOUT("logout", ". Cierra sesion"),
     EXIT("exit", ". Termina la ejecucion.");
+
 
     private final String value;
     private final String help;

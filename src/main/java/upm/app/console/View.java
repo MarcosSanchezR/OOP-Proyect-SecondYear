@@ -7,6 +7,7 @@ public class View {
     public static final String BACKGROUND_WHITE = "\u001B[47m";
     public static final String BACKGROUND_RED = "\u001B[41m";
     public static final String COPY_RIGHT = "©";
+    public static final String COMMAND = "app>";
 
     public void show(String message) {
         System.out.println(View.CYAN + "   - " + message + View.RESET);
@@ -18,6 +19,14 @@ public class View {
 
     public void showError(String message) {
         System.out.println(BACKGROUND_RED + upm.app.console.View.BLACK + "  " + message + "  " + upm.app.console.View.RESET);
+    }
+
+    public void showCommand(String name) {
+        System.out.print(name + " " + COMMAND);
+    }
+
+    public void showCommand() {
+        System.out.print(COMMAND);
     }
 
 

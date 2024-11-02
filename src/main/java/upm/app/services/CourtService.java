@@ -15,7 +15,7 @@ public class CourtService {
 
     public TennisCourt create(TennisCourt tennisCourt){
         if (this.courtRepository.findByName(tennisCourt.getName()).isPresent()){
-            throw new IllegalArgumentException("El nombre ya existe, deberia ser unico: "+ tennisCourt.getName());
+            throw new DuplicateException("El nombre ya existe, deberia ser unico: "+ tennisCourt.getName());
         }
         return this.courtRepository.create(tennisCourt);
     }
