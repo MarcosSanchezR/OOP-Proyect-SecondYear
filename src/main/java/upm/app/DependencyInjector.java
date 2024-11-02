@@ -4,6 +4,7 @@ import upm.app.console.CommandLineInterface;
 import upm.app.console.ErrorHandler;
 import upm.app.console.View;
 import upm.app.data.repositorios.CourtRepository;
+import upm.app.data.repositorios.TennisSeeder;
 import upm.app.data.repositorios.UserRepository;
 import upm.app.data.repositorios.map.CourtRepositoryMap;
 import upm.app.data.repositorios.map.UserRepositoryMap;
@@ -14,6 +15,7 @@ import upm.app.services.UserService;
 public class DependencyInjector {
     private final ErrorHandler errorHandler;
     private final View view;
+    private final TennisSeeder tennisSeeder;
     private final CommandLineInterface commandLineInterface;
     private final UserRepository userRepository;
     private final UserService userService;
@@ -23,6 +25,8 @@ public class DependencyInjector {
     public DependencyInjector(){
         this.userRepository=new UserRepositoryMap();
         this.courtRepository=new CourtRepositoryMap();
+        this.tennisSeeder=new TennisSeeder(userRepository, courtRepository);
+        tennisSeeder.seed();
 
         this.userService=new UserService(this.userRepository);
         this.courtService=new CourtService(this.courtRepository);
@@ -47,6 +51,10 @@ public class DependencyInjector {
 
     public CommandLineInterface getCommandLineInterface() {
         return commandLineInterface;
+    }
+
+    public TennisSeeder getTennisSeeder() {
+        return tennisSeeder;
     }
 
     public UserRepository getUserRepository() {

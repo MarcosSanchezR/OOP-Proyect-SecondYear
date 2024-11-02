@@ -1,15 +1,18 @@
 package upm.app.data.repositorios;
 
 
+import upm.app.data.modelos.TennisCourt;
 import upm.app.data.modelos.User;
 
 import java.time.LocalDate;
 
-public class TenisSeeder {
+public class TennisSeeder {
     private final UserRepository userRepository;
+    private final CourtRepository courtRepository;
 
-    public TenisSeeder(UserRepository userRepository){
+    public TennisSeeder(UserRepository userRepository, CourtRepository courtRepository){
         this.userRepository=userRepository;
+        this.courtRepository=courtRepository;
     }
 
     public void seed(){
@@ -21,6 +24,16 @@ public class TenisSeeder {
         };
         for (int i=0; i<users.length; i++){
             users[i]=this.userRepository.create(users[i]);
+        }
+
+        TennisCourt[] courts={
+            new TennisCourt("Manolo Santana", "Arcilla", "Madrid"),
+            new TennisCourt("Centre Court", "cesped", "Londres"),
+            new TennisCourt("Philippe Chatrier", "Arcilla", "Paris"),
+            new TennisCourt("Rod Laver Arena", "dura", "Melbourne")
+        };
+        for (int i=0; i<users.length; i++){
+            courts[i]=this.courtRepository.create(courts[i]);
         }
 
     }
