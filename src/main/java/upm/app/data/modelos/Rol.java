@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum Rol {
-    ADMIN, PLAYER, NONE;
+    ADMIN, PLAYER, REFEREE, NONE;
 
     public static List<Rol> all() {
         return Arrays.asList(Rol.values());
