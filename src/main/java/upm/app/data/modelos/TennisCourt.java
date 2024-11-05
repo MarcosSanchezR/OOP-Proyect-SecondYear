@@ -1,6 +1,6 @@
 package upm.app.data.modelos;
 
-public class TennisCourt extends Entity{
+public class TennisCourt extends Entity {
     private final String name;
     private String surfaceType;
     private String location;
@@ -20,7 +20,7 @@ public class TennisCourt extends Entity{
     }
 
     public void setSurfaceType(String surfaceType) {
-        if(!surfaceType.equalsIgnoreCase("arcilla") && !surfaceType.equalsIgnoreCase("cesped") && !surfaceType.equalsIgnoreCase("dura")){
+        if (!surfaceType.equalsIgnoreCase("arcilla") && !surfaceType.equalsIgnoreCase("cesped") && !surfaceType.equalsIgnoreCase("dura")) {
             throw new InvalidAttributeException("No existe ese tipo de pista");
         }
         this.surfaceType = surfaceType;

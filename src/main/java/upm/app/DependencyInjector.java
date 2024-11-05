@@ -22,22 +22,22 @@ public class DependencyInjector {
     private final CourtRepository courtRepository;
     private final CourtService courtService;
 
-    public DependencyInjector(){
-        this.userRepository=new UserRepositoryMap();
-        this.courtRepository=new CourtRepositoryMap();
-        this.tennisSeeder=new TennisSeeder(userRepository, courtRepository);
+    public DependencyInjector() {
+        this.userRepository = new UserRepositoryMap();
+        this.courtRepository = new CourtRepositoryMap();
+        this.tennisSeeder = new TennisSeeder(userRepository, courtRepository);
         tennisSeeder.seed();
 
-        this.userService=new UserService(this.userRepository);
-        this.courtService=new CourtService(this.courtRepository);
+        this.userService = new UserService(this.userRepository);
+        this.courtService = new CourtService(this.courtRepository);
 
-        this.view= new View();
-        this.commandLineInterface=new CommandLineInterface(userService, courtService, view);
+        this.view = new View();
+        this.commandLineInterface = new CommandLineInterface(userService, courtService, view);
 
-        this.errorHandler=new ErrorHandler(this.commandLineInterface, this.view);
+        this.errorHandler = new ErrorHandler(this.commandLineInterface, this.view);
     }
 
-    public void run(){
+    public void run() {
         this.errorHandler.handleErrors();
     }
 

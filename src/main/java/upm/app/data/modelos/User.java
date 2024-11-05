@@ -18,7 +18,8 @@ public class User extends Entity {
         this.name = name;
         this.setBirthdate(birthdate);
         this.setDni(dni);
-        this.password=password;
+        this.password = password;
+        this.rol = Rol.PLAYER;
     }
 
     public boolean validDni(String dni) {
@@ -89,6 +90,7 @@ public class User extends Entity {
                 ", birthdate=" + birthdate +
                 ", dni='" + dni + '\'' +
                 ", rol='" + rol + '\'' +
+                ", password='***'" +
                 '}';
     }
 }

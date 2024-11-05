@@ -1,18 +1,20 @@
 package upm.app.data.modelos;
 
-import java.util.ArrayList;
-import java.util.EnumSet;
+import java.util.Arrays;
 import java.util.List;
 
 public enum Rol {
     ADMIN, PLAYER, NONE;
 
-    public static List<Rol> all(){
-        return new ArrayList<>(EnumSet.allOf(Rol.class));
+    public static List<Rol> all() {
+        return Arrays.asList(Rol.values());
     }
 
-    public static List<Rol> autorized(){
-    return new ArrayList<>(EnumSet.complementOf(EnumSet.of(NONE)));
+    public static List<Rol> autorized() {
+        return all().stream()
+                .filter(rol -> rol != Rol.NONE)
+                .toList();
     }
+
 }
 

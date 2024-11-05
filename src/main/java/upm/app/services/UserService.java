@@ -2,6 +2,9 @@ package upm.app.services;
 
 import upm.app.data.modelos.User;
 import upm.app.data.repositorios.UserRepository;
+import upm.app.services.exceptions.DuplicateException;
+import upm.app.services.exceptions.NotFoundException;
+import upm.app.services.exceptions.UnauthorizedException;
 
 import java.util.List;
 import java.util.Optional;
@@ -33,12 +36,12 @@ public class UserService {
         return this.userRepository.findAll();
     }
 
-    public User login(String dni, String password){
-        Optional<User> user= this.userRepository.findByDni(dni);
-        if (user.isEmpty()){
+    public User login(String dni, String password) {
+        Optional<User> user = this.userRepository.findByDni(dni);
+        if (user.isEmpty()) {
             throw new NotFoundException("No autorizado, dni o contraseña incorrectas");
         }
-        if (!password.equals(user.get().getPassword())){
+        if (!password.equals(user.get().getPassword())) {
             throw new UnauthorizedException("No autorizado, dni o contraseña incorrectas");
         }
         return user.get();
