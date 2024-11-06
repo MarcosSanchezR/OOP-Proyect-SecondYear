@@ -2,26 +2,37 @@ package upm.app.data.modelos;
 
 import java.time.LocalDateTime;
 
-public class Match extends Entity{
-    private LocalDateTime dateTime;
+public class Match extends Entity {
+    private static final int DURATION = 2;
+    private LocalDateTime dateTimeStart;
+    private LocalDateTime dateTimeEnd;
     private User user1;
     private User user2;
     private TennisCourt court;
     private User ganador;
 
-    public Match(LocalDateTime dateTime, User user1, User user2, TennisCourt court) {
-        this.dateTime = dateTime;
+    public Match(LocalDateTime dateTimeStart, User user1, User user2, TennisCourt court) {
+        this.dateTimeStart = dateTimeStart;
         this.user1 = user1;
         this.user2 = user2;
         this.court = court;
+        this.dateTimeEnd = dateTimeStart.plusHours(DURATION);
     }
 
-    public LocalDateTime getDateTime() {
-        return dateTime;
+    public LocalDateTime getDateTimeStart() {
+        return dateTimeStart;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
+    public void setDateTimeStart(LocalDateTime dateTimeStart) {
+        this.dateTimeStart = dateTimeStart;
+    }
+
+    public LocalDateTime getDateTimeEnd() {
+        return dateTimeEnd;
+    }
+
+    public void setDateTimeEnd(LocalDateTime dateTimeEnd) {
+        this.dateTimeEnd = dateTimeEnd;
     }
 
     public User getUser1() {
@@ -59,7 +70,7 @@ public class Match extends Entity{
     @Override
     public String toString() {
         return "Match{" +
-                "dateTime=" + dateTime +
+                "dateTimeStart=" + dateTimeStart +
                 ", user1=" + user1 +
                 ", user2=" + user2 +
                 ", court=" + court +

@@ -1,13 +1,16 @@
 package upm.app.console;
 
 import upm.app.console.exceptions.BadRequestException;
+import upm.app.data.modelos.Match;
 import upm.app.data.modelos.Rol;
 import upm.app.data.modelos.TennisCourt;
 import upm.app.data.modelos.User;
 import upm.app.services.CourtService;
+import upm.app.services.MatchService;
 import upm.app.services.UserService;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -19,12 +22,14 @@ public class CommandLineInterface {
 
     private final UserService userService;
     private final CourtService courtService;
+    private final MatchService matchService;
     private final View view;
     private User user;
 
-    public CommandLineInterface(UserService userService, CourtService courtService, View view) {
+    public CommandLineInterface(UserService userService, CourtService courtService, MatchService matchService, View view) {
         this.userService = userService;
         this.courtService = courtService;
+        this.matchService = matchService;
         this.view = view;
     }
 
@@ -39,7 +44,7 @@ public class CommandLineInterface {
 
     public boolean runCommands(Scanner scanner) {
         this.view.showCommand(userName());
-        CommandNames command = CommandNames.fromValue(scanner.next(),this.userRol());
+        CommandNames command = CommandNames.fromValue(scanner.next(), this.userRol());
         String[] params = this.getParamsIfNeededAssured(scanner, command);
         boolean exit = false;
         switch (command) {
@@ -51,17 +56,20 @@ public class CommandLineInterface {
             case CREATE_COURT -> this.createCourt(params);
             case DELETE_COURT -> this.deleteByName(params);
             case FIND_ALL_COURT -> this.listAllCourt();
+            case CREATE_MATCH -> this.createMatch(params);
+            case ESTABLISH_WINNER -> this.establishWinner(params);
+            case FIND_ALL_MATCH -> this.listAllMatch();
             case HELP -> this.help();
             case EXIT -> exit = true;
-            default -> throw new IllegalArgumentException("El comando " + command + " no existe");
+            default -> throw new UnsupportedOperationException("El comando " + command + " no existe");
         }
         return exit;
     }
 
     private String userName() {
-        if (Objects.isNull(this.user)){
+        if (Objects.isNull(this.user)) {
             return "";
-        }else{
+        } else {
             return this.user.getName();
         }
     }
@@ -121,6 +129,21 @@ public class CommandLineInterface {
 
     private void listAllCourt() {
         List<TennisCourt> list = this.courtService.listAll();
+        this.view.show(list.toString());
+    }
+
+    private void createMatch(String[] value) {
+        Match createdMatch = this.matchService.create(LocalDateTime.parse(value[0]), value[1], value[2], value[3]);
+        this.view.show(createdMatch.toString());
+    }
+
+    private void establishWinner(String[] values) {
+        this.matchService.establishWinner(LocalDateTime.parse(values[0]), values[1], values[2]);
+        this.view.show("Ganador establecido");
+    }
+
+    private void listAllMatch() {
+        List<Match> list = this.matchService.listAll();
         this.view.show(list.toString());
     }
 

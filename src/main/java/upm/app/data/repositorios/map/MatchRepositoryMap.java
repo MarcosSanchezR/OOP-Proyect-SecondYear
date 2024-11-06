@@ -5,16 +5,27 @@ import upm.app.data.modelos.User;
 import upm.app.data.repositorios.MatchRepository;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class MatchRepositoryMap extends RepositoryMap<Match> implements MatchRepository {
+
     @Override
-    public Optional<Match> findByDateTime(LocalDateTime dateTime) {
-        return Optional.empty();
+    public List<Match> findByCourt(String name) {
+        List<Match> matchesInCourt = new ArrayList<>();
+        for (Match match : this.findAll()) {
+            if (name.equalsIgnoreCase(match.getCourt().getName())) {
+                matchesInCourt.add(match);
+            }
+        }
+        return matchesInCourt;
     }
 
     @Override
-    public void establishWinner(LocalDateTime dateTime, String dni) {
-
+    public void establishWinner(Match match, User winner) {
+        match.setGanador(winner);
     }
+
+
 }
