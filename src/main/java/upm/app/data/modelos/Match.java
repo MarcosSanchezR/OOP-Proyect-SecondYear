@@ -25,7 +25,7 @@ public class Match extends Entity {
 
     public void setDateTimeStart(LocalDateTime dateTimeStart) {
         if (dateTimeStart.isBefore(LocalDateTime.now())) {
-            throw new InvalidAttributeException("El partido no puede empezar en una fecha pasada: "+dateTimeStart);
+            throw new InvalidAttributeException("El partido no puede empezar en una fecha pasada: " + dateTimeStart);
         }
         this.dateTimeStart = dateTimeStart;
         this.dateTimeEnd = dateTimeStart.plusHours(DURATION);

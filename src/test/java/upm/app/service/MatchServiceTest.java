@@ -5,8 +5,8 @@ import org.junit.jupiter.api.Test;
 import upm.app.data.modelos.Match;
 import upm.app.data.modelos.TennisCourt;
 import upm.app.data.modelos.User;
-import upm.app.data.repositorios.map.MatchRepositoryMap;
 import upm.app.data.repositorios.map.CourtRepositoryMap;
+import upm.app.data.repositorios.map.MatchRepositoryMap;
 import upm.app.data.repositorios.map.UserRepositoryMap;
 import upm.app.services.MatchService;
 import upm.app.services.exceptions.DuplicateException;
@@ -88,7 +88,6 @@ public class MatchServiceTest {
         List<Match> matches = matchService.listAll();
         assertEquals(2, matches.size());
     }
-
 
 
 }

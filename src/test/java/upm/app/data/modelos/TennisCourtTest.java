@@ -29,7 +29,7 @@ public class TennisCourtTest {
         tennisCourt.setSurfaceType("Dura");
         assertEquals("Dura", tennisCourt.getSurfaceType());
 
-        assertThrows(InvalidAttributeException.class, ()->new TennisCourt("Pista Central", "agua", "Madrid"));
+        assertThrows(InvalidAttributeException.class, () -> new TennisCourt("Pista Central", "agua", "Madrid"));
 
     }
 }

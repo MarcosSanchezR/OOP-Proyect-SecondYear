@@ -16,8 +16,8 @@ public class CourtRepositoryMapTest {
     private TennisCourt court2;
 
     @BeforeEach
-    void before(){
-        courtRepositoryMap =new CourtRepositoryMap();
+    void before() {
+        courtRepositoryMap = new CourtRepositoryMap();
         court1 = new TennisCourt("Pista Central", "Arcilla", "Madrid");
         court2 = new TennisCourt("Pista Norte", "Cesped", "Barcelona");
     }
