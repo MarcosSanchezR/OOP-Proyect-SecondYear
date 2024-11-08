@@ -33,4 +33,13 @@ public class TennisCourt extends Entity {
     public void setLocation(String location) {
         this.location = location;
     }
+
+    @Override
+    public String toString() {
+        return "TennisCourt{" +
+                "name='" + name + '\'' +
+                ", surfaceType='" + surfaceType + '\'' +
+                ", location='" + location + '\'' +
+                '}';
+    }
 }

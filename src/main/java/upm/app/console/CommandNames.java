@@ -7,14 +7,14 @@ import upm.app.data.modelos.Rol;
 import java.util.List;
 
 public enum CommandNames {
-    CREATE_USER("create-user", ". Se crea un usuario.", Rol.all(), "<nombre>", "<aaaa-mm-dd>", "<dni>"),
-    DELETE_USER("delete-user", ". Borra el usuario a traves del dni.", List.of(Rol.ADMIN), "<dni>"),
+    CREATE_USER("create-user", ". Se crea un usuario.", Rol.all(), "<nombre>", "<aaaa-mm-dd>", "<dni>", "<contraseña>"),
+    DELETE_USER("delete-user", ". Borra el usuario a traves del dni.", Rol.autorized(), "<dni>"),
     FIND_ALL_USER("find-all-user", ". Muestra  todos los usuarios.", Rol.autorized()),
-    CREATE_COURT("create-court", ". Se crea una pista de tenis.", List.of(Rol.ADMIN, Rol.REFEREE), "<nombre>", "<superficie>", "<localizacion>"),
-    DELETE_COURT("delete-court", ". Borra la pista a traves del nombre.", List.of(Rol.ADMIN), "<nombre>"),
+    CREATE_COURT("create-court", ". Se crea una pista de tenis.", Rol.autorized(), "<nombre>", "<superficie>", "<localizacion>"),
+    DELETE_COURT("delete-court", ". Borra la pista a traves del nombre.", Rol.autorized(), "<nombre>"),
     FIND_ALL_COURT("find-all-court", ". Muestra todas las pistas.", Rol.autorized()),
-    CREATE_MATCH("create-match", ". Se crea un partido", List.of(Rol.REFEREE, Rol.ADMIN), "<aaaa-mm-dd-hh-mm-ss>", "<dni-jugador1>", "<dni-jugador2>", "<nombre-pista>"),
-    ESTABLISH_WINNER("establish-winner", ". Establece un ganador al partido", List.of(Rol.REFEREE, Rol.ADMIN), "aaaa-mm-dd-hh-mm-ss (inicio)", "<nombre-pista", "<dni-ganador>"),
+    CREATE_MATCH("create-match", ". Se crea un partido", Rol.autorized(), "<aaaa-mm-dd-hh-mm-ss>", "<dni-jugador1>", "<dni-jugador2>", "<nombre-pista>"),
+    ESTABLISH_WINNER("establish-winner", ". Establece un ganador al partido", Rol.autorized(), "aaaa-mm-dd-hh-mm-ss (inicio)", "<nombre-pista", "<dni-ganador>"),
     FIND_ALL_MATCH("find-all-match", ". Muestra todos los partidos", Rol.autorized()),
     HELP("help", ". Muestra la ayuda de los comandos.", Rol.all()),
     LOGIN("login", ". Inicia sesion", Rol.all(), "<dni>", "<password>"),

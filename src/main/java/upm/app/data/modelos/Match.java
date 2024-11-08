@@ -12,7 +12,7 @@ public class Match extends Entity {
     private User ganador;
 
     public Match(LocalDateTime dateTimeStart, User user1, User user2, TennisCourt court) {
-        this.dateTimeStart = dateTimeStart;
+        this.setDateTimeStart(dateTimeStart);
         this.user1 = user1;
         this.user2 = user2;
         this.court = court;
@@ -24,15 +24,15 @@ public class Match extends Entity {
     }
 
     public void setDateTimeStart(LocalDateTime dateTimeStart) {
+        if (dateTimeStart.isBefore(LocalDateTime.now())) {
+            throw new InvalidAttributeException("El partido no puede empezar en una fecha pasada: "+dateTimeStart);
+        }
         this.dateTimeStart = dateTimeStart;
+        this.dateTimeEnd = dateTimeStart.plusHours(DURATION);
     }
 
     public LocalDateTime getDateTimeEnd() {
         return dateTimeEnd;
-    }
-
-    public void setDateTimeEnd(LocalDateTime dateTimeEnd) {
-        this.dateTimeEnd = dateTimeEnd;
     }
 
     public User getUser1() {
@@ -75,6 +75,6 @@ public class Match extends Entity {
                 ", user2=" + user2 +
                 ", court=" + court +
                 ", ganador=" + ganador +
-                '}';
+                '}' + "\n";
     }
 }

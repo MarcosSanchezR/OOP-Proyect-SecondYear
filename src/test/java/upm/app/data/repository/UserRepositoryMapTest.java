@@ -21,8 +21,8 @@ public class UserRepositoryMapTest {
     @BeforeEach
     void before() {
         userRepositoryMap = new UserRepositoryMap();
-        user1 = new User("Marcos", LocalDate.of(2005, 11, 1), "02485905U");
-        user2 = new User("Daniel", LocalDate.of(2000, 12, 3), "00000000I");
+        user1 = new User("Marcos", LocalDate.of(2005, 11, 1), "02485905U", "666");
+        user2 = new User("Daniel", LocalDate.of(2000, 12, 3), "00000000I", "666");
     }
 
     @Test
@@ -52,7 +52,7 @@ public class UserRepositoryMapTest {
     }
 
     @Test
-    void finfByDniTest() {
+    void findByDniTest() {
         userRepositoryMap.create(user1);
         userRepositoryMap.create(user2);
 

@@ -4,11 +4,14 @@ import upm.app.console.CommandLineInterface;
 import upm.app.console.ErrorHandler;
 import upm.app.console.View;
 import upm.app.data.repositorios.CourtRepository;
+import upm.app.data.repositorios.MatchRepository;
 import upm.app.data.repositorios.TennisSeeder;
 import upm.app.data.repositorios.UserRepository;
 import upm.app.data.repositorios.map.CourtRepositoryMap;
+import upm.app.data.repositorios.map.MatchRepositoryMap;
 import upm.app.data.repositorios.map.UserRepositoryMap;
 import upm.app.services.CourtService;
+import upm.app.services.MatchService;
 import upm.app.services.UserService;
 
 
@@ -21,18 +24,22 @@ public class DependencyInjector {
     private final UserService userService;
     private final CourtRepository courtRepository;
     private final CourtService courtService;
+    private final MatchRepository matchRepository;
+    private final MatchService matchService;
 
     public DependencyInjector() {
         this.userRepository = new UserRepositoryMap();
         this.courtRepository = new CourtRepositoryMap();
-        this.tennisSeeder = new TennisSeeder(userRepository, courtRepository);
+        this.matchRepository = new MatchRepositoryMap();
+        this.tennisSeeder = new TennisSeeder(userRepository, courtRepository, matchRepository);
         tennisSeeder.seed();
 
         this.userService = new UserService(this.userRepository);
         this.courtService = new CourtService(this.courtRepository);
+        this.matchService = new MatchService(this.matchRepository, courtRepository, userRepository);
 
         this.view = new View();
-        this.commandLineInterface = new CommandLineInterface(userService, courtService, view);
+        this.commandLineInterface = new CommandLineInterface(userService, courtService, matchService, view);
 
         this.errorHandler = new ErrorHandler(this.commandLineInterface, this.view);
     }
@@ -71,5 +78,13 @@ public class DependencyInjector {
 
     public CourtService getCourtService() {
         return courtService;
+    }
+
+    public MatchRepository getMatchRepository() {
+        return matchRepository;
+    }
+
+    public MatchService getMatchService() {
+        return matchService;
     }
 }

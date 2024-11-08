@@ -73,12 +73,10 @@ public class MatchService {
         } else {
             this.matchRepository.establishWinner(match, match.getUser2());
         }
-
     }
 
     public List<Match> listAll() {
         return this.matchRepository.findAll();
     }
-
 
 }

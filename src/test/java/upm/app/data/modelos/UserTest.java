@@ -30,12 +30,12 @@ public class UserTest {
 
     @Test
     void setBirthdateTest() {
-        assertThrows(IllegalArgumentException.class, () -> new User("marcos", LocalDate.of(2009, 11, 1), "025640170t", "666"));
+        assertThrows(InvalidAttributeException.class, () -> new User("marcos", LocalDate.of(2009, 11, 1), "025640170t", "666"));
     }
 
     @Test
     void setIdTest() {
-        assertThrows(IllegalArgumentException.class, () -> new User("marcos", LocalDate.of(2005, 11, 1), "025640170", "666"));
+        assertThrows(InvalidAttributeException.class, () -> new User("marcos", LocalDate.of(2005, 11, 1), "025640170", "666"));
     }
 
 }
