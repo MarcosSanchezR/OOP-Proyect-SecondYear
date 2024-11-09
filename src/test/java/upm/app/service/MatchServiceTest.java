@@ -21,24 +21,20 @@ import static org.junit.jupiter.api.Assertions.*;
 public class MatchServiceTest {
 
     private MatchService matchService;
-    private MatchRepositoryMap matchRepositoryMap;
-    private CourtRepositoryMap courtRepositoryMap;
-    private UserRepositoryMap userRepositoryMap;
     private User user1;
     private User user2;
     private TennisCourt court1;
-    private TennisCourt court2;
 
     @BeforeEach
     void before() {
-        matchRepositoryMap = new MatchRepositoryMap();
-        courtRepositoryMap = new CourtRepositoryMap();
-        userRepositoryMap = new UserRepositoryMap();
+        MatchRepositoryMap matchRepositoryMap = new MatchRepositoryMap();
+        CourtRepositoryMap courtRepositoryMap = new CourtRepositoryMap();
+        UserRepositoryMap userRepositoryMap = new UserRepositoryMap();
 
         user1 = new User("Marcos", LocalDate.of(2005, 11, 1), "03948573h", "666");
         user2 = new User("Daniel", LocalDate.of(2000, 12, 3), "03378573p", "666");
         court1 = new TennisCourt("Pista Central", "Arcilla", "Madrid");
-        court2 = new TennisCourt("Pista 2", "Cesped", "Barcelona");
+        TennisCourt court2 = new TennisCourt("Pista 2", "Cesped", "Barcelona");
 
         userRepositoryMap.create(user1);
         userRepositoryMap.create(user2);
