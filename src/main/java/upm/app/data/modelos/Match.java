@@ -1,6 +1,7 @@
 package upm.app.data.modelos;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Match extends Entity {
     private static final int DURATION = 2;
@@ -69,8 +70,9 @@ public class Match extends Entity {
 
     @Override
     public String toString() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
         return "Match{" +
-                "dateTimeStart=" + dateTimeStart +
+                "dateTimeStart=" + dateTimeStart.format(formatter) +
                 ", user1=" + user1 +
                 ", user2=" + user2 +
                 ", court=" + court +

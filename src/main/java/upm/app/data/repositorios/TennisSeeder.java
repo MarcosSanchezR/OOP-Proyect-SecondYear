@@ -41,10 +41,10 @@ public class TennisSeeder {
         }
 
         Match[] matches = {
-                new Match(LocalDateTime.of(2024, 11, 1, 12, 30, 0), users[0], users[1], courts[0]),
-                new Match(LocalDateTime.of(2024, 11, 2, 12, 30, 0), users[2], users[1], courts[2]),
-                new Match(LocalDateTime.of(2024, 11, 3, 12, 30, 0), users[2], users[3], courts[1]),
-                new Match(LocalDateTime.of(2024, 11, 4, 12, 30, 0), users[0], users[3], courts[3])
+                new Match(LocalDateTime.of(2025, 11, 1, 12, 30, 0), users[0], users[1], courts[0]),
+                new Match(LocalDateTime.of(2025, 11, 2, 12, 30, 0), users[2], users[1], courts[2]),
+                new Match(LocalDateTime.of(2025, 11, 3, 12, 30, 0), users[2], users[3], courts[1]),
+                new Match(LocalDateTime.of(2025, 11, 4, 12, 30, 0), users[0], users[3], courts[3])
 
         };
         for (int i = 0; i < matches.length; i++) {

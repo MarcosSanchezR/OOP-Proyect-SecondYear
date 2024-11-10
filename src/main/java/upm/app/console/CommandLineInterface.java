@@ -11,6 +11,7 @@ import upm.app.services.UserService;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -133,12 +134,14 @@ public class CommandLineInterface {
     }
 
     private void createMatch(String[] value) {
-        Match createdMatch = this.matchService.create(LocalDateTime.parse(value[0]), value[1], value[2], value[3]);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH-mm-ss");
+        Match createdMatch = this.matchService.create(LocalDateTime.parse(value[0], formatter), value[1], value[2], value[3]);
         this.view.show(createdMatch.toString());
     }
 
     private void establishWinner(String[] values) {
-        this.matchService.establishWinner(LocalDateTime.parse(values[0]), values[1], values[2]);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH-mm-ss");
+        this.matchService.establishWinner(LocalDateTime.parse(values[0], formatter), values[1], values[2]);
         this.view.show("Ganador establecido");
     }
 
