@@ -19,7 +19,7 @@ public class DependencyInjector {
     private final ErrorHandler errorHandler;
     private final View view;
     private final TennisSeeder tennisSeeder;
-    private final CommandLineInterface commandLineInterface;
+    private final CommandLineInterface cli;
     private final UserRepository userRepository;
     private final UserService userService;
     private final CourtRepository courtRepository;
@@ -39,9 +39,9 @@ public class DependencyInjector {
         this.matchService = new MatchService(this.matchRepository, courtRepository, userRepository);
 
         this.view = new View();
-        this.commandLineInterface = new CommandLineInterface(userService, courtService, matchService, view);
+        this.cli = new CommandLineInterface(userService, courtService, matchService, view);
 
-        this.errorHandler = new ErrorHandler(this.commandLineInterface, this.view);
+        this.errorHandler = new ErrorHandler(this.cli, this.view);
     }
 
     public void run() {
@@ -57,7 +57,7 @@ public class DependencyInjector {
     }
 
     public CommandLineInterface getCommandLineInterface() {
-        return commandLineInterface;
+        return cli;
     }
 
     public TennisSeeder getTennisSeeder() {

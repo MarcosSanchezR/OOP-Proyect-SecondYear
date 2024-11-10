@@ -24,10 +24,4 @@ public class View {
     public void showCommand(String name) {
         System.out.print(name + " " + COMMAND);
     }
-
-    public void showCommand() {
-        System.out.print(COMMAND);
-    }
-
-
 }
