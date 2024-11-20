@@ -1,37 +1,33 @@
 package upm.app.console;
 
 import upm.app.console.exceptions.BadRequestException;
+import upm.app.console.exceptions.ForbiddenException;
 import upm.app.data.modelos.Match;
 import upm.app.data.modelos.Rol;
 import upm.app.data.modelos.TennisCourt;
 import upm.app.data.modelos.User;
-import upm.app.services.CourtService;
-import upm.app.services.MatchService;
-import upm.app.services.UserService;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-import java.util.Scanner;
+import java.util.*;
 
 public class CommandLineInterface {
 
+    private static final String EXIT="exit";
     private static final String COMMAND_DELIMITER_PARAMETERS = "[" + Delimiters.COMMAND.getValue() + "\\r\\n]";
 
-    private final UserService userService;
-    private final CourtService courtService;
-    private final MatchService matchService;
+    private final Map<String, Command> commands;
     private final View view;
     private User user;
 
-    public CommandLineInterface(UserService userService, CourtService courtService, MatchService matchService, View view) {
-        this.userService = userService;
-        this.courtService = courtService;
-        this.matchService = matchService;
+    public CommandLineInterface(View view) {
         this.view = view;
+        this.commands=new HashMap<>();
+    }
+
+    public void add(Command command){
+        this.commands.put(command.name(), command);
     }
 
     public boolean runCommands() {
@@ -44,27 +40,23 @@ public class CommandLineInterface {
     }
 
     public boolean runCommands(Scanner scanner) {
-        this.view.showCommand(userName());
-        CommandNames command = CommandNames.fromValue(scanner.next(), this.userRol());
-        String[] params = this.getParamsIfNeededAssured(scanner, command);
-        boolean exit = false;
-        switch (command) {
-            case LOGIN -> this.login(params);
-            case LOGOUT -> this.logout();
-            case CREATE_USER -> this.createUser(params);
-            case DELETE_USER -> this.deleteByDni(params);
-            case FIND_ALL_USER -> this.listAll();
-            case CREATE_COURT -> this.createCourt(params);
-            case DELETE_COURT -> this.deleteByName(params);
-            case FIND_ALL_COURT -> this.listAllCourt();
-            case CREATE_MATCH -> this.createMatch(params);
-            case ESTABLISH_WINNER -> this.establishWinner(params);
-            case FIND_ALL_MATCH -> this.listAllMatch();
-            case HELP -> this.help();
-            case EXIT -> exit = true;
-            default -> throw new UnsupportedOperationException("El comando " + command + " no existe");
+        this.view.showCommand(this.userName());
+        String command=scanner.next();
+        if (this.commands.containsKey(command)){
+            throw new BadRequestException("El comando ("+command+") no existe");
         }
-        return exit;
+        if (!this.commands.get(command).allowedRoles().contains(this.userRol())) {
+            throw new ForbiddenException("Rol actual: " + this.userRol() + ", roles permitidos: " + this.commands.get(command).allowedRoles());
+        }
+        String[] params = this.scanParamsIfNeededAssured(scanner, command);
+        if (EXIT.equals(command)) {
+            return true;
+        } else {
+            this.commands.get(command).execute(params);
+        }
+        return false;
+
+
     }
 
     private String userName() {
@@ -83,79 +75,28 @@ public class CommandLineInterface {
         }
     }
 
-    private String[] getParamsIfNeededAssured(Scanner scanner, CommandNames command) {
-        if (command.getParams().length > 0) {
-            String[] params = scanner.next().split(Delimiters.PARAM.getValue());
-            if (command.getParams().length != params.length) {
-                throw new BadRequestException("Parámetros esperados: " + Arrays.toString(command.getParams()) +
-                        ", encontrados " + Arrays.toString(params));
-            }
-            return params;
+    private String[] scanParamsIfNeededAssured(Scanner scanner, String command) {
+        List<String> expected = commands.get(command).params();
+        if (expected.isEmpty()) {
+            return new String[0];
         }
-        return new String[0];
+        String[] foundParams = scanner.next().split(Delimiters.PARAM.getValue());
+        if (expected.size() != foundParams.length) {
+            throw new BadRequestException("Parámetros esperados: " + expected + ", encontrados " + Arrays.toString(foundParams));
+        }
+        return foundParams;
     }
 
-    private void login(String[] values) {
-        this.user = this.userService.login(values[0], values[1]);
-    }
-
-    private void logout() {
-        this.user = null;
-    }
-
-    private void createUser(String[] values) {
-        User createdUser = this.userService.create(new User(values[0], LocalDate.parse(values[1]), values[2], values[3]));
-        this.view.show(createdUser.toString());
-    }
-
-    private void deleteByDni(String[] values) {
-        this.userService.deleteByDni(values[0]);
-        this.view.show("Usuario borrado");
-    }
-
-    private void listAll() {
-        List<User> list = this.userService.listAll();
-        this.view.show(list.toString());
-    }
-
-    private void createCourt(String[] values) {
-        TennisCourt createdCourt = this.courtService.create(new TennisCourt(values[0], values[1], values[2]));
-        this.view.show(createdCourt.toString());
-    }
-
-    private void deleteByName(String[] values) {
-        this.courtService.deleteByName(values[0]);
-        this.view.show("Pista borrada");
-    }
-
-    private void listAllCourt() {
-        List<TennisCourt> list = this.courtService.listAll();
-        this.view.show(list.toString());
-    }
-
-    private void createMatch(String[] value) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH-mm-ss");
-        Match createdMatch = this.matchService.create(LocalDateTime.parse(value[0], formatter), value[1], value[2], value[3]);
-        this.view.show(createdMatch.toString());
-    }
-
-    private void establishWinner(String[] values) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH-mm-ss");
-        this.matchService.establishWinner(LocalDateTime.parse(values[0], formatter), values[1], values[2]);
-        this.view.show("Ganador establecido");
-    }
-
-    private void listAllMatch() {
-        List<Match> list = this.matchService.listAll();
-        this.view.show(list.toString());
-    }
-
-    private void help() {
-        for (CommandNames command : CommandNames.values()) {
-            if (!command.getHelp(userRol()).isEmpty()) {
-                this.view.show(command.getHelp(userRol()));
+    public void help() {
+        for (Command command : this.commands.values()) {
+            if (command.allowedRoles().contains(this.userRol())) {
+                this.view.showBold(command.help());
             }
         }
+    }
+
+    public void setUser(User user){
+        this.user=user;
     }
 
 

@@ -3,6 +3,7 @@ package upm.app;
 import upm.app.console.CommandLineInterface;
 import upm.app.console.ErrorHandler;
 import upm.app.console.View;
+import upm.app.console.commands.*;
 import upm.app.data.repositorios.CourtRepository;
 import upm.app.data.repositorios.MatchRepository;
 import upm.app.data.repositorios.TennisSeeder;
@@ -16,6 +17,7 @@ import upm.app.services.UserService;
 
 
 public class DependencyInjector {
+    private static final DependencyInjector instance = new DependencyInjector();
     private final ErrorHandler errorHandler;
     private final View view;
     private final TennisSeeder tennisSeeder;
@@ -39,9 +41,25 @@ public class DependencyInjector {
         this.matchService = new MatchService(this.matchRepository, courtRepository, userRepository);
 
         this.view = new View();
-        this.cli = new CommandLineInterface(userService, courtService, matchService, view);
-
+        this.cli = new CommandLineInterface(this.view);
+        this.cli.add(new Help(this.cli));
+        this.cli.add(new Exit());
+        this.cli.add(new Login(this.userService, this.cli));
+        this.cli.add(new Logout(this.cli));
+        this.cli.add(new CreateUser(this.view, this.userService));
+        this.cli.add(new DeleteUser(this.view, this.userService));
+        this.cli.add(new ListUser(this.view, this.userService));
+        this.cli.add(new CreateCourt(this.view, this.courtService));
+        this.cli.add(new DeleteCourt(this.view, this.courtService));
+        this.cli.add(new ListCourt(this.view, this.courtService));
+        this.cli.add(new CreateMatch(this.view, this.matchService));
+        this.cli.add(new EstablishWinner(this.view, this.matchService));
+        this.cli.add(new ListMatch(this.view, this.matchService));
         this.errorHandler = new ErrorHandler(this.cli, this.view);
+    }
+
+    public static DependencyInjector getInstance(){
+        return instance;
     }
 
     public void run() {
