@@ -11,7 +11,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class UserRepositoryMapTest {
+ class UserRepositoryMapTest {
 
     private UserRepositoryMap userRepositoryMap;
     private User user1;

@@ -12,7 +12,7 @@ public abstract class RepositoryMap<T extends Entity> implements GenericReposito
     private final Map<Integer, T> map;
     private Integer id;
 
-    public RepositoryMap() {
+    protected RepositoryMap() {
         this.map = new HashMap<>();
         this.id = 1;
     }

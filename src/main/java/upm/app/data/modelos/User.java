@@ -2,6 +2,7 @@ package upm.app.data.modelos;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.Objects;
 
 
 public class User extends Entity {
@@ -81,6 +82,20 @@ public class User extends Entity {
 
     public void setRol(Rol rol) {
         this.rol = rol;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        User user = (User) o;
+        return Objects.equals(name, user.name) && Objects.equals(birthdate, user.birthdate) && Objects.equals(dni, user.dni) && Objects.equals(password, user.password) && rol == user.rol;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), name, birthdate, dni, password, rol);
     }
 
     @Override

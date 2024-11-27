@@ -13,7 +13,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class MatchRepositoryMapTest {
+ class MatchRepositoryMapTest {
 
     private MatchRepositoryMap matchRepositoryMap;
     private Match match1;

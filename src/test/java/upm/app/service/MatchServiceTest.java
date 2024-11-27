@@ -18,7 +18,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class MatchServiceTest {
+ class MatchServiceTest {
 
     private MatchService matchService;
     private User user1;

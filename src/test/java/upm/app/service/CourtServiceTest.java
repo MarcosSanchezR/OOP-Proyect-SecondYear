@@ -11,7 +11,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class CourtServiceTest {
+ class CourtServiceTest {
     private CourtService courtService;
     private CourtRepositoryMap courtRepositoryMap;
 

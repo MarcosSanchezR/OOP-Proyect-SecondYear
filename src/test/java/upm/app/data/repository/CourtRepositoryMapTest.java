@@ -10,7 +10,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class CourtRepositoryMapTest {
+ class CourtRepositoryMapTest {
     private CourtRepositoryMap courtRepositoryMap;
     private TennisCourt court1;
     private TennisCourt court2;
