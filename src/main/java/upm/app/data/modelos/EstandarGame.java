@@ -26,7 +26,7 @@ public class EstandarGame implements Game {
                 case 15 -> THIRTY.getValue();
                 case 30 -> FORTY.getValue();
                 case 40 -> ADVANTAGE.getValue();
-                case 50 -> throw new IllegalArgumentException("No hay siguiente después de la 'Ventaja'.");
+                case 50 -> WIN_AD.getValue();
                 default -> throw new IllegalStateException("Expresion invalida: " + current);
             };
         }
@@ -44,7 +44,7 @@ public class EstandarGame implements Game {
     @Override
     public void serviceWon() {
         if (gameWon()){
-            return;
+            throw new InvalidAttributeException("Ya se ha ganado el juego");
         }
         if (this.service == GamePoints.FORTY.getValue() && this.rest != GamePoints.ADVANTAGE.getValue()) {
             this.service = GamePoints.ADVANTAGE.getValue();
@@ -58,7 +58,7 @@ public class EstandarGame implements Game {
     @Override
     public void restWon(){
         if (gameWon()){
-            return;
+            throw new InvalidAttributeException("Ya se ha ganado el juego");
         }
         if (this.rest == GamePoints.FORTY.getValue() && this.service != GamePoints.ADVANTAGE.getValue()) {
             this.rest = GamePoints.ADVANTAGE.getValue();
@@ -100,7 +100,7 @@ public class EstandarGame implements Game {
     @Override
     public String toString() {
         return "EstandarGame{" +
-                ", user1Points=" + service +
+                ", service=" + service +
                 ", rest=" + rest +
                 '}';
     }

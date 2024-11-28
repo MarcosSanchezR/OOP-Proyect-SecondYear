@@ -6,6 +6,11 @@ public class TieBreak implements  Game{
     private int service;
     private int rest;
 
+    public TieBreak(){
+        this.service=0;
+        this.rest=0;
+    }
+
 
     @Override
     public void serviceWon() {
@@ -25,7 +30,23 @@ public class TieBreak implements  Game{
 
     @Override
     public boolean gameWon() {
-        return ((this.service>=MINIMUM_WIN && this.service-this.rest==MINIMUM_ADVANTAGE) ||
+        return ((this.service>=MINIMUM_WIN && this.service-this.rest>=MINIMUM_ADVANTAGE) ||
                 (this.rest>=MINIMUM_WIN && this.rest-this.service>=MINIMUM_ADVANTAGE));
+    }
+
+    public int getService() {
+        return service;
+    }
+
+    public void setService(int service) {
+        this.service = service;
+    }
+
+    public int getRest() {
+        return rest;
+    }
+
+    public void setRest(int rest) {
+        this.rest = rest;
     }
 }
