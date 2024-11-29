@@ -2,15 +2,34 @@ package upm.app.data.modelos;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Random;
 
 public class Match extends Entity {
+
+    public enum MatchStatus {
+        IN_PROGRESS,
+        FINISHED,
+        NOT_STARTED
+    }
+
+    private final Random r = new Random();
+
+    private static final int WIN=2;
     private static final int DURATION = 2;
     private LocalDateTime dateTimeStart;
     private LocalDateTime dateTimeEnd;
     private User user1;
     private User user2;
+    private int service;
     private TennisCourt court;
     private User ganador;
+    private MatchStatus status;
+    private List<Set> sets;
+    private Set currentSet;
+
 
     public Match(LocalDateTime dateTimeStart, User user1, User user2, TennisCourt court) {
         this.setDateTimeStart(dateTimeStart);
@@ -18,6 +37,9 @@ public class Match extends Entity {
         this.user2 = user2;
         this.court = court;
         this.dateTimeEnd = dateTimeStart.plusHours(DURATION);
+        this.status = MatchStatus.NOT_STARTED;
+        this.sets = new ArrayList<>();
+        this.service=0;
     }
 
     public LocalDateTime getDateTimeStart() {
@@ -66,6 +88,87 @@ public class Match extends Entity {
 
     public void setGanador(User ganador) {
         this.ganador = ganador;
+    }
+
+    public int getService() {
+        return service;
+    }
+
+    public void setService() {
+        if (this.service==0){
+            this.service =r.nextInt(2)+1;
+        } else {
+            this.service = (this.service == 1) ? 2 : 1;
+        }
+    }
+
+    public void punctuate(int who){
+        if (this.service==0){
+            throw new InvalidAttributeException("No se ha establecido quien tiene el servicio todavia");
+        }
+        if (currentSet.setWon()){
+            throw new InvalidAttributeException("Ya se ha ganado el set");
+        }
+        if (matchWon()){
+            throw new InvalidAttributeException("Ya se ha ganado el partido");
+        }
+        if (who==1){
+            currentSet.player1Won();
+        }else{
+            currentSet.player2Won();
+        }
+        if (currentSet.setWon()) {
+            addSet(currentSet);
+            if (!matchWon()) {
+                this.currentSet = new Set();
+            }
+        }
+
+    }
+
+    public boolean matchWon(){
+        int player1Sets = 0;
+        int player2Sets = 0;
+
+        for (Set set: sets){
+            if (set.getWinner()==1){
+                player1Sets++;
+            }else if (set.getWinner()==2){
+                player2Sets++;
+            }
+        }
+        return player1Sets>=WIN || player2Sets>=WIN;
+    }
+
+    public MatchStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(MatchStatus status) {
+        this.status = status;
+    }
+
+    public List<Set> getSets() {
+        return sets;
+    }
+
+     public void addSet(Set set) {
+        this.sets.add(set);
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Match match = (Match) o;
+        return Objects.equals(dateTimeStart, match.dateTimeStart) && Objects.equals(dateTimeEnd, match.dateTimeEnd) && Objects.equals(user1, match.user1) && Objects.equals(user2, match.user2) && Objects.equals(court, match.court) && Objects.equals(ganador, match.ganador);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), dateTimeStart, dateTimeEnd, user1, user2, court, ganador);
     }
 
     @Override

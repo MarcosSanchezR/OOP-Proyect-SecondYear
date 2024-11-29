@@ -1,20 +1,17 @@
 package upm.app.data.modelos;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Set {
     private static final int MINIMUM_WIN=6;
     private static final int MINIMUM_ADVANTAGE = 2;
-    private static final int WIN_IN_TIEBREAK_AD=1;
     private int player1;
     private int player2;
+    private int winner;
     private Game game;
 
-    public Set(Game game) {
+    public Set() {
         this.player1 = 0;
         this.player2 = 0;
-        this.game = game;
+        this.game = createNewGame();
     }
 
     public void player1Won(){
@@ -42,11 +39,14 @@ public class Set {
     }
 
     public boolean setWon() {
-        if (this.player1 > MINIMUM_WIN || this.player2> MINIMUM_WIN){
+        if (this.player1 > MINIMUM_WIN || this.player1 == MINIMUM_WIN && this.player1 - this.player2 >= MINIMUM_ADVANTAGE){
+            this.winner=1;
+            return true;
+        } else if (this.player2> MINIMUM_WIN || this.player2 == MINIMUM_WIN && this.player2 - this.player1 >= MINIMUM_ADVANTAGE) {
+            this.winner=2;
             return true;
         }
-        return (this.player1 == MINIMUM_WIN && this.player1 - this.player2 >= MINIMUM_ADVANTAGE) ||
-                (this.player2 == MINIMUM_WIN && this.player2 - this.player1 >= MINIMUM_ADVANTAGE);
+        return false;
     }
 
     private Game createNewGame(){
@@ -79,6 +79,14 @@ public class Set {
 
     public void setGame(Game game) {
         this.game = game;
+    }
+
+    public int getWinner() {
+        return winner;
+    }
+
+    public void setWinner(int winner) {
+        this.winner = winner;
     }
 
     @Override

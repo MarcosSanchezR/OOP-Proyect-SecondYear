@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
     @BeforeEach
     void setUp(){
-        this.set=new Set(new EstandarGame());
+        this.set=new Set();
     }
 
     @Test
