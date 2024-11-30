@@ -2,14 +2,9 @@ package upm.app.console;
 
 import upm.app.console.exceptions.BadRequestException;
 import upm.app.console.exceptions.ForbiddenException;
-import upm.app.data.modelos.Match;
 import upm.app.data.modelos.Rol;
-import upm.app.data.modelos.TennisCourt;
 import upm.app.data.modelos.User;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class CommandLineInterface {
@@ -42,7 +37,7 @@ public class CommandLineInterface {
     public boolean runCommands(Scanner scanner) {
         this.view.showCommand(this.userName());
         String command=scanner.next();
-        if (this.commands.containsKey(command)){
+        if (!this.commands.containsKey(command)){
             throw new BadRequestException("El comando ("+command+") no existe");
         }
         if (!this.commands.get(command).allowedRoles().contains(this.userRol())) {
@@ -90,7 +85,7 @@ public class CommandLineInterface {
     public void help() {
         for (Command command : this.commands.values()) {
             if (command.allowedRoles().contains(this.userRol())) {
-                this.view.showBold(command.help());
+                this.view.show(command.help());
             }
         }
     }

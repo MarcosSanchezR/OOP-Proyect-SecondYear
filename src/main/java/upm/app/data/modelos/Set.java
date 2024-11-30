@@ -49,7 +49,7 @@ public class Set {
         return false;
     }
 
-    private Game createNewGame(){
+    public Game createNewGame(){
         if (this.player1==MINIMUM_WIN && this.player2==MINIMUM_WIN){
             return new TieBreak();
         }else{

@@ -72,4 +72,29 @@ import static org.junit.jupiter.api.Assertions.*;
         List<Match> matches = matchRepositoryMap.findAll();
         assertEquals(2, matches.size());
     }
+
+    @Test
+     void startMatchTest(){
+        matchRepositoryMap.startMatch(match1);
+        assertNotEquals(0, match1.getService());
+        assertEquals(Match.MatchStatus.IN_PROGRESS, match1.getStatus());
+    }
+
+    @Test
+     void scoreMatchTest(){
+        matchRepositoryMap.startMatch(match1);
+        matchRepositoryMap.scoreMatch(match1, 1);
+        if (match1.getService()==1) {
+            assertEquals(15, match1.getSets().get(0).getGame().getService());
+        }else{
+            assertEquals(15, match1.getSets().get(0).getGame().getRest());
+        }
+    }
+
+    @Test
+     void readMatchTest(){
+        Match matchTest = matchRepositoryMap.readMatch(match1);
+        assertEquals(match1, matchTest);
+    }
+
 }

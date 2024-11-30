@@ -6,8 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 class MatchTest {
@@ -44,4 +43,173 @@ class MatchTest {
         LocalDateTime pastStart = LocalDateTime.of(2020, 11, 2, 15, 0, 0);
         assertThrows(InvalidAttributeException.class, () -> match.setDateTimeStart(pastStart));
     }
+
+    @Test
+    void testEasyWin(){
+        match.setService(1);
+        Set set1=new Set();
+        set1.setWinner(1);
+        match.addSet(set1);
+        match.punctuate(2); //15
+        match.punctuate(2);
+        match.punctuate(2);
+        match.punctuate(2); //1-0
+        match.punctuate(1); //15
+        match.punctuate(1);
+        match.punctuate(1);
+        match.punctuate(1); //2-0
+        match.punctuate(2); //15
+        match.punctuate(2);
+        match.punctuate(2);
+        match.punctuate(2); // 3-0
+        match.punctuate(1); //15
+        match.punctuate(1);
+        match.punctuate(1);
+        match.punctuate(1); //4-0
+        match.punctuate(2); //15
+        match.punctuate(2);
+        match.punctuate(2);
+        match.punctuate(2); //5-0
+        match.punctuate(1); //15
+        match.punctuate(1);
+        match.punctuate(1);
+        match.punctuate(1); //6-0
+        assertTrue(match.matchWon());
+    }
+
+    @Test
+    void testComplicatedWin(){
+        match.setService(1);
+        Set set1=new Set();
+        set1.setWinner(1);
+        match.addSet(set1);
+        Set set2=new Set();
+        set2.setWinner(2);
+        match.addSet(set2);
+        assertFalse(match.matchWon());
+        match.punctuate(1); //15
+        match.punctuate(1);
+        match.punctuate(1);
+        match.punctuate(1); //1-0
+        match.punctuate(2); //15
+        match.punctuate(2);
+        match.punctuate(2);
+        match.punctuate(2); //2-0
+        match.punctuate(1); //15
+        match.punctuate(1);
+        match.punctuate(1);
+        match.punctuate(1); // 3-0
+        match.punctuate(2); //15
+        match.punctuate(2);
+        match.punctuate(2);
+        match.punctuate(2); //4-0
+        match.punctuate(1); //15
+        match.punctuate(1);
+        match.punctuate(1);
+        match.punctuate(1); //5-0
+        match.punctuate(1); //15
+        match.punctuate(1);
+        match.punctuate(1);
+        match.punctuate(1); //5-1
+        assertFalse(match.matchWon());
+        match.punctuate(2); //15
+        match.punctuate(2);
+        match.punctuate(2);
+        match.punctuate(2); //5-2
+        match.punctuate(1); //15
+        match.punctuate(1);
+        match.punctuate(1);
+        match.punctuate(1); // 5-3
+        match.punctuate(2); //15
+        match.punctuate(2);
+        match.punctuate(2);
+        match.punctuate(2); //5-4
+        match.punctuate(1); //15
+        match.punctuate(1);
+        match.punctuate(1);
+        match.punctuate(1); //5-5
+        assertFalse(match.matchWon());
+        match.punctuate(1); //15
+        match.punctuate(1);
+        match.punctuate(1);
+        match.punctuate(1); //6-5
+        match.punctuate(2); //15
+        match.punctuate(2);
+        match.punctuate(2);
+        match.punctuate(2); //7-5
+        assertTrue(match.matchWon());
+    }
+
+    @Test
+    void testTiebreak(){
+        match.setService(1);
+        Set set1=new Set();
+        set1.setWinner(1);
+        match.addSet(set1);
+        Set set2=new Set();
+        set2.setWinner(2);
+        match.addSet(set2);
+        assertFalse(match.matchWon());
+        match.punctuate(1); //15
+        match.punctuate(1);
+        match.punctuate(1);
+        match.punctuate(1); //1-0
+        match.punctuate(2); //15
+        match.punctuate(2);
+        match.punctuate(2);
+        match.punctuate(2); //2-0
+        match.punctuate(1); //15
+        match.punctuate(1);
+        match.punctuate(1);
+        match.punctuate(1); // 3-0
+        match.punctuate(2); //15
+        match.punctuate(2);
+        match.punctuate(2);
+        match.punctuate(2); //4-0
+        match.punctuate(1); //15
+        match.punctuate(1);
+        match.punctuate(1);
+        match.punctuate(1); //5-0
+        match.punctuate(1); //15
+        match.punctuate(1);
+        match.punctuate(1);
+        match.punctuate(1); //5-1
+        assertFalse(match.matchWon());
+        match.punctuate(2); //15
+        match.punctuate(2);
+        match.punctuate(2);
+        match.punctuate(2); //5-2
+        match.punctuate(1); //15
+        match.punctuate(1);
+        match.punctuate(1);
+        match.punctuate(1); // 5-3
+        match.punctuate(2); //15
+        match.punctuate(2);
+        match.punctuate(2);
+        match.punctuate(2); //5-4
+        match.punctuate(1); //15
+        match.punctuate(1);
+        match.punctuate(1);
+        match.punctuate(1); //5-5
+        assertFalse(match.matchWon());
+        match.punctuate(1); //15
+        match.punctuate(1);
+        match.punctuate(1);
+        match.punctuate(1); //6-5
+        match.punctuate(1); //15
+        match.punctuate(1);
+        match.punctuate(1);
+        match.punctuate(1); //6-6
+        match.punctuate(1); //1
+        match.punctuate(1);
+        match.punctuate(1);
+        match.punctuate(1); //4
+        match.punctuate(1); //5
+        match.punctuate(1);
+        match.punctuate(1); //7-6
+        assertTrue(match.matchWon());
+    }
+
+
+
 }

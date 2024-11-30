@@ -25,5 +25,21 @@ public class MatchRepositoryMap extends RepositoryMap<Match> implements MatchRep
         match.setGanador(winner);
     }
 
+    @Override
+    public void startMatch(Match match) {
+        match.altService();
+        match.setStatus(Match.MatchStatus.IN_PROGRESS);
+    }
+
+    @Override
+    public void scoreMatch(Match match, int winner) {
+        match.punctuate(winner);
+    }
+
+    @Override
+    public Match readMatch(Match match) {
+        return match;
+    }
+
 
 }

@@ -4,7 +4,6 @@ import upm.app.console.Command;
 import upm.app.console.View;
 import upm.app.data.modelos.Rol;
 import upm.app.services.CourtService;
-import upm.app.services.UserService;
 
 import java.util.List;
 

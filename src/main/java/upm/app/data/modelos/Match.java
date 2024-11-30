@@ -27,7 +27,7 @@ public class Match extends Entity {
     private TennisCourt court;
     private User ganador;
     private MatchStatus status;
-    private List<Set> sets;
+    private final List<Set> sets;
     private Set currentSet;
 
 
@@ -39,6 +39,8 @@ public class Match extends Entity {
         this.dateTimeEnd = dateTimeStart.plusHours(DURATION);
         this.status = MatchStatus.NOT_STARTED;
         this.sets = new ArrayList<>();
+        this.currentSet= new Set();
+        sets.add(currentSet);
         this.service=0;
     }
 
@@ -94,7 +96,7 @@ public class Match extends Entity {
         return service;
     }
 
-    public void setService() {
+    public void altService() {
         if (this.service==0){
             this.service =r.nextInt(2)+1;
         } else {
@@ -102,7 +104,11 @@ public class Match extends Entity {
         }
     }
 
-    public void punctuate(int who){
+    public void setService(int who){
+        service=who;
+    }
+
+    public void punctuate(int winner){
         if (this.service==0){
             throw new InvalidAttributeException("No se ha establecido quien tiene el servicio todavia");
         }
@@ -112,18 +118,26 @@ public class Match extends Entity {
         if (matchWon()){
             throw new InvalidAttributeException("Ya se ha ganado el partido");
         }
-        if (who==1){
-            currentSet.player1Won();
-        }else{
-            currentSet.player2Won();
+        if (currentSet.getGame().getService()==0 &&currentSet.getGame().getRest()==0){
+            altService();
         }
-        if (currentSet.setWon()) {
-            addSet(currentSet);
-            if (!matchWon()) {
-                this.currentSet = new Set();
+        if (winner == 1) {
+            if (service == 1) {
+                currentSet.player1Won();
+            } else {
+                currentSet.player2Won();
+            }
+        } else if (winner == 2) {
+            if (service == 1) {
+                currentSet.player2Won();
+            } else {
+                currentSet.player1Won();
             }
         }
-
+        if (currentSet.setWon() && !matchWon()) {
+            this.currentSet = new Set();
+            sets.add(currentSet);
+        }
     }
 
     public boolean matchWon(){
@@ -138,6 +152,27 @@ public class Match extends Entity {
             }
         }
         return player1Sets>=WIN || player2Sets>=WIN;
+    }
+
+    public String scoreboard(){
+        StringBuilder scoreboard = new StringBuilder();
+
+        int player1Sets = 0;
+        int player2Sets = 0;
+
+        for (Set set : sets) {
+            player1Sets=set.getPlayer1();
+            player2Sets=set.getPlayer2();
+        }
+
+        String player1GameScore = String.valueOf(currentSet.getGame().getService());
+        String player2GameScore = String.valueOf(currentSet.getGame().getRest());
+
+        scoreboard.append(user1.getName()).append(": ") .append(player1Sets).append(" (").append(player1GameScore).append(")\n");
+
+        scoreboard.append(user2.getName()).append(": ").append(player2Sets).append(" (").append(player2GameScore).append(")");
+
+        return scoreboard.toString();
     }
 
     public MatchStatus getStatus() {

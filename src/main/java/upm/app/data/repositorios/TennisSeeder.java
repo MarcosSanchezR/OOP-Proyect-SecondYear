@@ -2,6 +2,7 @@ package upm.app.data.repositorios;
 
 
 import upm.app.data.modelos.Match;
+import upm.app.data.modelos.Referee;
 import upm.app.data.modelos.TennisCourt;
 import upm.app.data.modelos.User;
 
@@ -24,7 +25,8 @@ public class TennisSeeder {
                 new User("user1", LocalDate.of(2005, 11, 1), "12567385t", "666"),
                 new User("user2", LocalDate.of(2005, 11, 2), "22567385t", "666"),
                 new User("user3", LocalDate.of(2005, 11, 3), "32567385t", "666"),
-                new User("user4", LocalDate.of(2005, 11, 4), "42567385t", "666")
+                new User("user4", LocalDate.of(2005, 11, 4), "42567385t", "666"),
+                new Referee("referee", LocalDate.of(1999, 11, 1), "52567385t", "666", "category")
         };
         for (int i = 0; i < users.length; i++) {
             users[i] = this.userRepository.create(users[i]);

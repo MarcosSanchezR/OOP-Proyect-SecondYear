@@ -27,6 +27,8 @@
         <maven.compile.source>19</maven.compile.source>
         <!-- JUnit -->
         <junit.jupiter.version>5.9.3</junit.jupiter.version>
+        <!-- Logs -->
+        <log4j.version>2.24.1</log4j.version>
     </properties>
 
     <dependencies>
@@ -42,6 +44,22 @@
             <artifactId>junit-jupiter-api</artifactId>
             <version>${junit.jupiter.version}</version>
             <scope>test</scope>
+        </dependency>
+        <!-- Logs -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+            <version>${log4j.version}</version>
         </dependency>
     </dependencies>
     <build>

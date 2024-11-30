@@ -85,5 +85,31 @@ import static org.junit.jupiter.api.Assertions.*;
         assertEquals(2, matches.size());
     }
 
+    @Test
+     void startMatchTest(){
+        Match match=matchService.create(LocalDateTime.of(2025, 11, 1, 12, 0, 0), "03948573h", "03378573p", "Pista Central");
+        matchService.startMatch(LocalDateTime.of(2025, 11, 1, 12, 0, 0), "Pista Central");
+        assertEquals(Match.MatchStatus.IN_PROGRESS, match.getStatus());
+    }
+
+    @Test
+     void scoreMatchTest(){
+        Match match=matchService.create(LocalDateTime.of(2025, 11, 1, 12, 0, 0), "03948573h", "03378573p", "Pista Central");
+        matchService.startMatch(LocalDateTime.of(2025, 11, 1, 12, 0, 0), "Pista Central");
+        matchService.scoreMatch(LocalDateTime.of(2025, 11, 1, 12, 0, 0), "Pista Central", "service");
+        if (match.getService()==1) {
+            assertEquals(15, match.getSets().get(0).getGame().getService());
+        }else{
+            assertEquals(15, match.getSets().get(0).getGame().getRest());
+        }
+    }
+
+    @Test
+     void readMatchTest(){
+        Match match=matchService.create(LocalDateTime.of(2025, 11, 1, 12, 0, 0), "03948573h", "03378573p", "Pista Central");
+        Match matchTest= matchService.readMatch(LocalDateTime.of(2025, 11, 1, 12, 0, 0), "Pista Central");
+        assertEquals(match, matchTest);
+    }
+
 
 }

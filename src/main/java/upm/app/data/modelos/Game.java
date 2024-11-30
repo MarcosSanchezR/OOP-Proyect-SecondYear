@@ -6,4 +6,12 @@ public interface Game {
     void restWon();
 
     boolean gameWon();
+
+     int getService();
+
+    void setService(int service);
+
+    int getRest();
+
+    void setRest(int rest);
 }
