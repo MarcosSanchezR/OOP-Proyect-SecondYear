@@ -22,6 +22,7 @@ public class Match extends Entity {
     private User ganador;
     private MatchStatus status;
     private Set currentSet;
+
     public Match(LocalDateTime dateTimeStart, User user1, User user2, TennisCourt court) {
         this.setDateTimeStart(dateTimeStart);
         this.user1 = user1;
