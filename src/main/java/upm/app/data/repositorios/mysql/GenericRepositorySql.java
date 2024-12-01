@@ -1,8 +1,8 @@
 package upm.app.data.repositorios.mysql;
 
+import org.apache.logging.log4j.LogManager;
 import upm.app.data.modelos.Entity;
 import upm.app.data.repositorios.GenericRepository;
-import org.apache.logging.log4j.LogManager;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.function.Function;
 
 
-public abstract class GenericRepositorySql <T extends Entity> implements GenericRepository<T> {
+public abstract class GenericRepositorySql<T extends Entity> implements GenericRepository<T> {
     private final Connection connection;
 
     protected GenericRepositorySql(Connection connection) {

@@ -3,7 +3,6 @@ package upm.app.console.commands;
 import upm.app.console.Command;
 import upm.app.console.View;
 import upm.app.data.modelos.Rol;
-import upm.app.data.modelos.User;
 import upm.app.services.UserService;
 
 import java.util.List;
@@ -20,7 +19,7 @@ public class ListUser implements Command {
 
     @Override
     public String name() {
-            return "list-user";
+        return "list-user";
     }
 
     @Override

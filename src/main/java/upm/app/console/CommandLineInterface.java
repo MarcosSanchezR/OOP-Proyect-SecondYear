@@ -9,7 +9,7 @@ import java.util.*;
 
 public class CommandLineInterface {
 
-    private static final String EXIT="exit";
+    private static final String EXIT = "exit";
     private static final String COMMAND_DELIMITER_PARAMETERS = "[" + Delimiters.COMMAND.getValue() + "\\r\\n]";
 
     private final Map<String, Command> commands;
@@ -18,10 +18,10 @@ public class CommandLineInterface {
 
     public CommandLineInterface(View view) {
         this.view = view;
-        this.commands=new HashMap<>();
+        this.commands = new HashMap<>();
     }
 
-    public void add(Command command){
+    public void add(Command command) {
         this.commands.put(command.name(), command);
     }
 
@@ -36,9 +36,9 @@ public class CommandLineInterface {
 
     public boolean runCommands(Scanner scanner) {
         this.view.showCommand(this.userName());
-        String command=scanner.next();
-        if (!this.commands.containsKey(command)){
-            throw new BadRequestException("El comando ("+command+") no existe");
+        String command = scanner.next();
+        if (!this.commands.containsKey(command)) {
+            throw new BadRequestException("El comando (" + command + ") no existe");
         }
         if (!this.commands.get(command).allowedRoles().contains(this.userRol())) {
             throw new ForbiddenException("Rol actual: " + this.userRol() + ", roles permitidos: " + this.commands.get(command).allowedRoles());
@@ -90,8 +90,8 @@ public class CommandLineInterface {
         }
     }
 
-    public void setUser(User user){
-        this.user=user;
+    public void setUser(User user) {
+        this.user = user;
     }
 
 

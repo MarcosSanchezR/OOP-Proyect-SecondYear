@@ -39,7 +39,7 @@ public class Login implements Command {
 
     @Override
     public void execute(String[] params) {
-        User logged=this.userService.login(params[0], params[1]);
+        User logged = this.userService.login(params[0], params[1]);
         this.commandLineInterface.setUser(logged);
     }
 }

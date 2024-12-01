@@ -9,16 +9,10 @@ import java.util.Random;
 
 public class Match extends Entity {
 
-    public enum MatchStatus {
-        IN_PROGRESS,
-        FINISHED,
-        NOT_STARTED
-    }
-
-    private final Random r = new Random();
-
-    private static final int WIN=2;
+    private static final int WIN = 2;
     private static final int DURATION = 2;
+    private final Random r = new Random();
+    private final List<Set> sets;
     private LocalDateTime dateTimeStart;
     private LocalDateTime dateTimeEnd;
     private User user1;
@@ -27,10 +21,7 @@ public class Match extends Entity {
     private TennisCourt court;
     private User ganador;
     private MatchStatus status;
-    private final List<Set> sets;
     private Set currentSet;
-
-
     public Match(LocalDateTime dateTimeStart, User user1, User user2, TennisCourt court) {
         this.setDateTimeStart(dateTimeStart);
         this.user1 = user1;
@@ -39,9 +30,9 @@ public class Match extends Entity {
         this.dateTimeEnd = dateTimeStart.plusHours(DURATION);
         this.status = MatchStatus.NOT_STARTED;
         this.sets = new ArrayList<>();
-        this.currentSet= new Set();
+        this.currentSet = new Set();
         sets.add(currentSet);
-        this.service=0;
+        this.service = 0;
     }
 
     public LocalDateTime getDateTimeStart() {
@@ -96,29 +87,29 @@ public class Match extends Entity {
         return service;
     }
 
+    public void setService(int who) {
+        service = who;
+    }
+
     public void altService() {
-        if (this.service==0){
-            this.service =r.nextInt(2)+1;
+        if (this.service == 0) {
+            this.service = r.nextInt(2) + 1;
         } else {
             this.service = (this.service == 1) ? 2 : 1;
         }
     }
 
-    public void setService(int who){
-        service=who;
-    }
-
-    public void punctuate(int winner){
-        if (this.service==0){
+    public void punctuate(int winner) {
+        if (this.service == 0) {
             throw new InvalidAttributeException("No se ha establecido quien tiene el servicio todavia");
         }
-        if (currentSet.setWon()){
+        if (currentSet.setWon()) {
             throw new InvalidAttributeException("Ya se ha ganado el set");
         }
-        if (matchWon()){
+        if (matchWon()) {
             throw new InvalidAttributeException("Ya se ha ganado el partido");
         }
-        if (currentSet.getGame().getService()==0 &&currentSet.getGame().getRest()==0){
+        if (currentSet.getGame().getService() == 0 && currentSet.getGame().getRest() == 0) {
             altService();
         }
         if (winner == 1) {
@@ -140,35 +131,35 @@ public class Match extends Entity {
         }
     }
 
-    public boolean matchWon(){
+    public boolean matchWon() {
         int player1Sets = 0;
         int player2Sets = 0;
 
-        for (Set set: sets){
-            if (set.getWinner()==1){
+        for (Set set : sets) {
+            if (set.getWinner() == 1) {
                 player1Sets++;
-            }else if (set.getWinner()==2){
+            } else if (set.getWinner() == 2) {
                 player2Sets++;
             }
         }
-        return player1Sets>=WIN || player2Sets>=WIN;
+        return player1Sets >= WIN || player2Sets >= WIN;
     }
 
-    public String scoreboard(){
+    public String scoreboard() {
         StringBuilder scoreboard = new StringBuilder();
 
         int player1Sets = 0;
         int player2Sets = 0;
 
         for (Set set : sets) {
-            player1Sets=set.getPlayer1();
-            player2Sets=set.getPlayer2();
+            player1Sets = set.getPlayer1();
+            player2Sets = set.getPlayer2();
         }
 
         String player1GameScore = String.valueOf(currentSet.getGame().getService());
         String player2GameScore = String.valueOf(currentSet.getGame().getRest());
 
-        scoreboard.append(user1.getName()).append(": ") .append(player1Sets).append(" (").append(player1GameScore).append(")\n");
+        scoreboard.append(user1.getName()).append(": ").append(player1Sets).append(" (").append(player1GameScore).append(")\n");
 
         scoreboard.append(user2.getName()).append(": ").append(player2Sets).append(" (").append(player2GameScore).append(")");
 
@@ -187,10 +178,9 @@ public class Match extends Entity {
         return sets;
     }
 
-     public void addSet(Set set) {
+    public void addSet(Set set) {
         this.sets.add(set);
     }
-
 
     @Override
     public boolean equals(Object o) {
@@ -216,5 +206,11 @@ public class Match extends Entity {
                 ", court=" + court +
                 ", ganador=" + ganador +
                 '}' + "\n";
+    }
+
+    public enum MatchStatus {
+        IN_PROGRESS,
+        FINISHED,
+        NOT_STARTED
     }
 }

@@ -9,8 +9,8 @@ class TieBreakTest {
     private TieBreak tieBreak;
 
     @BeforeEach
-    void setUp(){
-        tieBreak= new TieBreak();
+    void setUp() {
+        tieBreak = new TieBreak();
     }
 
     @Test
@@ -20,7 +20,7 @@ class TieBreakTest {
     }
 
     @Test
-    void testEasyTieBreak(){
+    void testEasyTieBreak() {
         tieBreak.serviceWon();
         tieBreak.serviceWon();
         tieBreak.serviceWon();
@@ -34,7 +34,7 @@ class TieBreakTest {
     }
 
     @Test
-    void testComplicatedTieBreak(){
+    void testComplicatedTieBreak() {
         tieBreak.serviceWon();
         tieBreak.serviceWon();
         tieBreak.serviceWon();
@@ -56,7 +56,6 @@ class TieBreakTest {
         assertEquals(8, tieBreak.getService());
         assertTrue(tieBreak.gameWon());
     }
-
 
 
 }

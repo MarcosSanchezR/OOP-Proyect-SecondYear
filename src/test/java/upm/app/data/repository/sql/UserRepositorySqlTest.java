@@ -13,9 +13,9 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
- class UserRepositorySqlTest {
-    Connection connection=new RepositoryMysql().createConnection();
-    private final UserRepository userRepository=new UserRepositorySql(connection);
+class UserRepositorySqlTest {
+    Connection connection = new RepositoryMysql().createConnection();
+    private final UserRepository userRepository = new UserRepositorySql(connection);
 
     @Test
     void testCreateAndRead() {
@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
         Optional<User> dbUser1 = this.userRepository.read(user.getId());
         assertTrue(dbUser1.isPresent());
         assertEquals("user-1", dbUser1.get().getName());
-        assertEquals("02485905U", dbUser1.get().getDni() );
+        assertEquals("02485905U", dbUser1.get().getDni());
     }
 
     @Test

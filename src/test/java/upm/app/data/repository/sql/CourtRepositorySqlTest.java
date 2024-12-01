@@ -13,22 +13,22 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CourtRepositorySqlTest {
-     Connection connection = new RepositoryMysql().createConnection();
-     private final CourtRepository courtRepository = new CourtRespositorySql(connection);
+    Connection connection = new RepositoryMysql().createConnection();
+    private final CourtRepository courtRepository = new CourtRespositorySql(connection);
 
-     @Test
-     void testCreateAndRead() {
-         Optional<TennisCourt> dbCourt = courtRepository.findByName("pista1");
-         dbCourt.ifPresent(court -> courtRepository.deleteById(court.getId()));
+    @Test
+    void testCreateAndRead() {
+        Optional<TennisCourt> dbCourt = courtRepository.findByName("pista1");
+        dbCourt.ifPresent(court -> courtRepository.deleteById(court.getId()));
 
-         TennisCourt court = courtRepository.create(new TennisCourt("pista1", "dura", "Madrid"));
-         Optional<TennisCourt> dbCourt1 = courtRepository.read(court.getId());
+        TennisCourt court = courtRepository.create(new TennisCourt("pista1", "dura", "Madrid"));
+        Optional<TennisCourt> dbCourt1 = courtRepository.read(court.getId());
 
-         assertTrue(dbCourt1.isPresent());
-         assertEquals("pista1", dbCourt1.get().getName());
-         assertEquals("dura", dbCourt1.get().getSurfaceType());
-         assertEquals("Madrid", dbCourt1.get().getLocation());
-     }
+        assertTrue(dbCourt1.isPresent());
+        assertEquals("pista1", dbCourt1.get().getName());
+        assertEquals("dura", dbCourt1.get().getSurfaceType());
+        assertEquals("Madrid", dbCourt1.get().getLocation());
+    }
 
     @Test
     void testDelete() {
@@ -46,8 +46,8 @@ class CourtRepositorySqlTest {
     }
 
     @Test
-    void testListAll(){
-        List<TennisCourt> list=this.courtRepository.findAll();
+    void testListAll() {
+        List<TennisCourt> list = this.courtRepository.findAll();
         assertFalse(list.isEmpty());
     }
 }

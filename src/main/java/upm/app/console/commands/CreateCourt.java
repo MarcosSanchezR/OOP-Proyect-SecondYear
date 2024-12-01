@@ -9,8 +9,8 @@ import upm.app.services.CourtService;
 import java.util.List;
 
 public class CreateCourt implements Command {
-private final View view;
-private final CourtService courtService;
+    private final View view;
+    private final CourtService courtService;
 
     public CreateCourt(View view, CourtService courtService) {
         this.view = view;

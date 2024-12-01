@@ -36,6 +36,6 @@ public class Help implements Command {
 
     @Override
     public void execute(String[] params) {
-    this.commandLineInterface.help();
+        this.commandLineInterface.help();
     }
 }

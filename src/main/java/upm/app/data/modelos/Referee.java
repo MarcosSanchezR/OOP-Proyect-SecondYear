@@ -3,12 +3,12 @@ package upm.app.data.modelos;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class Referee extends User{
+public class Referee extends User {
     private String category;
 
     public Referee(String name, LocalDate birthdate, String dni, String password, String category) {
         super(name, birthdate, dni, password);
-        this.category=category;
+        this.category = category;
         this.setRol(Rol.REFEREE);
     }
 

@@ -36,10 +36,10 @@ public class UserRepositorySql extends GenericRepositorySql<User> implements Use
 
     @Override
     public User create(User entity) {
-        int id= executeInsertGeneratedKey("INSERT INTO UserApp (dni, password, name, birthdate, rol) VALUES (?,?,?,?,?)",
+        int id = executeInsertGeneratedKey("INSERT INTO UserApp (dni, password, name, birthdate, rol) VALUES (?,?,?,?,?)",
                 entity.getDni(), entity.getPassword(), entity.getName(), entity.getBirthdate(), entity.getRol().name());
         return this.read(id).orElseThrow(
-                () -> new RuntimeException("Error de la  base de datos inesperado debido a una entidad no encontrada: "+id));
+                () -> new RuntimeException("Error de la  base de datos inesperado debido a una entidad no encontrada: " + id));
     }
 
     @Override
@@ -62,7 +62,7 @@ public class UserRepositorySql extends GenericRepositorySql<User> implements Use
     @Override
     protected User convertToEntity(ResultSet resultSet) {
         try {
-            User userBd = new User(resultSet.getString("name") , resultSet.getDate("birthdate").toLocalDate(),
+            User userBd = new User(resultSet.getString("name"), resultSet.getDate("birthdate").toLocalDate(),
                     resultSet.getString("dni"), resultSet.getString("password"));
             userBd.setId(resultSet.getInt("id"));
             userBd.setRol(Rol.valueOf(resultSet.getString("rol")));

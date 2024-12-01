@@ -7,7 +7,7 @@ public interface Game {
 
     boolean gameWon();
 
-     int getService();
+    int getService();
 
     void setService(int service);
 

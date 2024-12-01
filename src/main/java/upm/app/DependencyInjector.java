@@ -57,11 +57,11 @@ public class DependencyInjector {
         this.cli.add(new ListMatch(this.view, this.matchService));
         this.cli.add(new StartMatch(this.view, this.matchService));
         this.cli.add(new ScoreMatch(this.view, this.matchService));
-        this.cli.add(new ReadMatch(this.view,this.matchService));
+        this.cli.add(new ReadMatch(this.view, this.matchService));
         this.errorHandler = new ErrorHandler(this.cli, this.view);
     }
 
-    public static DependencyInjector getInstance(){
+    public static DependencyInjector getInstance() {
         return instance;
     }
 

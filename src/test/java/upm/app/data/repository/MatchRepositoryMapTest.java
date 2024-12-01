@@ -13,7 +13,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
- class MatchRepositoryMapTest {
+class MatchRepositoryMapTest {
 
     private MatchRepositoryMap matchRepositoryMap;
     private Match match1;
@@ -74,25 +74,25 @@ import static org.junit.jupiter.api.Assertions.*;
     }
 
     @Test
-     void startMatchTest(){
+    void startMatchTest() {
         matchRepositoryMap.startMatch(match1);
         assertNotEquals(0, match1.getService());
         assertEquals(Match.MatchStatus.IN_PROGRESS, match1.getStatus());
     }
 
     @Test
-     void scoreMatchTest(){
+    void scoreMatchTest() {
         matchRepositoryMap.startMatch(match1);
         matchRepositoryMap.scoreMatch(match1, 1);
-        if (match1.getService()==1) {
+        if (match1.getService() == 1) {
             assertEquals(15, match1.getSets().get(0).getGame().getService());
-        }else{
+        } else {
             assertEquals(15, match1.getSets().get(0).getGame().getRest());
         }
     }
 
     @Test
-     void readMatchTest(){
+    void readMatchTest() {
         Match matchTest = matchRepositoryMap.readMatch(match1);
         assertEquals(match1, matchTest);
     }

@@ -10,8 +10,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class EstablishWinner implements Command {
-private final View view;
-private final MatchService matchService;
+    private final View view;
+    private final MatchService matchService;
 
     public EstablishWinner(View view, MatchService matchService) {
         this.view = view;

@@ -2,7 +2,10 @@ package upm.app.data.repositorios.mysql;
 
 import org.apache.logging.log4j.LogManager;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class RepositoryMysql {
     private static final String DATABASE = "mysql";

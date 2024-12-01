@@ -12,7 +12,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
- class UserServiceTest {
+class UserServiceTest {
 
     private UserService userService;
     private UserRepositoryMap userRepositoryMap;

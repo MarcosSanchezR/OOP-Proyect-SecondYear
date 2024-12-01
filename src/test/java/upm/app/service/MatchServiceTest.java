@@ -18,7 +18,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
- class MatchServiceTest {
+class MatchServiceTest {
 
     private MatchService matchService;
     private User user1;
@@ -86,28 +86,28 @@ import static org.junit.jupiter.api.Assertions.*;
     }
 
     @Test
-     void startMatchTest(){
-        Match match=matchService.create(LocalDateTime.of(2025, 11, 1, 12, 0, 0), "03948573h", "03378573p", "Pista Central");
+    void startMatchTest() {
+        Match match = matchService.create(LocalDateTime.of(2025, 11, 1, 12, 0, 0), "03948573h", "03378573p", "Pista Central");
         matchService.startMatch(LocalDateTime.of(2025, 11, 1, 12, 0, 0), "Pista Central");
         assertEquals(Match.MatchStatus.IN_PROGRESS, match.getStatus());
     }
 
     @Test
-     void scoreMatchTest(){
-        Match match=matchService.create(LocalDateTime.of(2025, 11, 1, 12, 0, 0), "03948573h", "03378573p", "Pista Central");
+    void scoreMatchTest() {
+        Match match = matchService.create(LocalDateTime.of(2025, 11, 1, 12, 0, 0), "03948573h", "03378573p", "Pista Central");
         matchService.startMatch(LocalDateTime.of(2025, 11, 1, 12, 0, 0), "Pista Central");
         matchService.scoreMatch(LocalDateTime.of(2025, 11, 1, 12, 0, 0), "Pista Central", "service");
-        if (match.getService()==1) {
+        if (match.getService() == 1) {
             assertEquals(15, match.getSets().get(0).getGame().getService());
-        }else{
+        } else {
             assertEquals(15, match.getSets().get(0).getGame().getRest());
         }
     }
 
     @Test
-     void readMatchTest(){
-        Match match=matchService.create(LocalDateTime.of(2025, 11, 1, 12, 0, 0), "03948573h", "03378573p", "Pista Central");
-        Match matchTest= matchService.readMatch(LocalDateTime.of(2025, 11, 1, 12, 0, 0), "Pista Central");
+    void readMatchTest() {
+        Match match = matchService.create(LocalDateTime.of(2025, 11, 1, 12, 0, 0), "03948573h", "03378573p", "Pista Central");
+        Match matchTest = matchService.readMatch(LocalDateTime.of(2025, 11, 1, 12, 0, 0), "Pista Central");
         assertEquals(match, matchTest);
     }
 

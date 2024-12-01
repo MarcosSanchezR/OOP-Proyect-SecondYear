@@ -39,6 +39,6 @@ public class ListCourt implements Command {
 
     @Override
     public void execute(String[] params) {
-    this.courtService.listAll().forEach(court -> this.view.show(court.toString()));
+        this.courtService.listAll().forEach(court -> this.view.show(court.toString()));
     }
 }

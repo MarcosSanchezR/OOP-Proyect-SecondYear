@@ -1,7 +1,7 @@
 package upm.app.data.modelos;
 
 public class Set {
-    private static final int MINIMUM_WIN=6;
+    private static final int MINIMUM_WIN = 6;
     private static final int MINIMUM_ADVANTAGE = 2;
     private int player1;
     private int player2;
@@ -14,46 +14,46 @@ public class Set {
         this.game = createNewGame();
     }
 
-    public void player1Won(){
-        if (this.game.gameWon() || setWon()){
+    public void player1Won() {
+        if (this.game.gameWon() || setWon()) {
             throw new InvalidAttributeException("Ya se ha ganado el juego");
-        }else{
+        } else {
             this.game.serviceWon();
         }
-        if (this.game.gameWon()){
+        if (this.game.gameWon()) {
             this.player1++;
-            this.game=createNewGame();
+            this.game = createNewGame();
         }
     }
 
-    public void player2Won(){
-        if (this.game.gameWon() || setWon()){
+    public void player2Won() {
+        if (this.game.gameWon() || setWon()) {
             throw new InvalidAttributeException("Ya se ha ganado el juego");
-        }else{
+        } else {
             this.game.restWon();
         }
-        if (this.game.gameWon()){
+        if (this.game.gameWon()) {
             this.player2++;
-            this.game=createNewGame();
+            this.game = createNewGame();
         }
     }
 
     public boolean setWon() {
-        if (this.player1 > MINIMUM_WIN || this.player1 == MINIMUM_WIN && this.player1 - this.player2 >= MINIMUM_ADVANTAGE){
-            this.winner=1;
+        if (this.player1 > MINIMUM_WIN || this.player1 == MINIMUM_WIN && this.player1 - this.player2 >= MINIMUM_ADVANTAGE) {
+            this.winner = 1;
             return true;
-        } else if (this.player2> MINIMUM_WIN || this.player2 == MINIMUM_WIN && this.player2 - this.player1 >= MINIMUM_ADVANTAGE) {
-            this.winner=2;
+        } else if (this.player2 > MINIMUM_WIN || this.player2 == MINIMUM_WIN && this.player2 - this.player1 >= MINIMUM_ADVANTAGE) {
+            this.winner = 2;
             return true;
         }
         return false;
     }
 
-    public Game createNewGame(){
-        if (this.player1==MINIMUM_WIN && this.player2==MINIMUM_WIN){
+    public Game createNewGame() {
+        if (this.player1 == MINIMUM_WIN && this.player2 == MINIMUM_WIN) {
             return new TieBreak();
-        }else{
-         return new EstandarGame();
+        } else {
+            return new EstandarGame();
         }
     }
 

@@ -38,6 +38,6 @@ public class ListMatch implements Command {
 
     @Override
     public void execute(String[] params) {
-    this.matchService.listAll().forEach(match -> this.view.show(match.toString()));
+        this.matchService.listAll().forEach(match -> this.view.show(match.toString()));
     }
 }

@@ -35,6 +35,6 @@ public class Logout implements Command {
 
     @Override
     public void execute(String[] params) {
-    this.commandLineInterface.setUser(null);
+        this.commandLineInterface.setUser(null);
     }
 }

@@ -6,13 +6,13 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class EstandarGameTest {
-     private EstandarGame estandarGame;
+    private EstandarGame estandarGame;
 
-     @BeforeEach
-     void setUp() {
-         estandarGame = new EstandarGame();
+    @BeforeEach
+    void setUp() {
+        estandarGame = new EstandarGame();
 
-     }
+    }
 
     @Test
     void testInitialState() {
@@ -21,7 +21,7 @@ class EstandarGameTest {
     }
 
     @Test
-    void testEasyWon(){
+    void testEasyWon() {
         estandarGame.serviceWon(); //15
         assertEquals(15, estandarGame.getService());
         estandarGame.serviceWon(); //30
@@ -34,7 +34,7 @@ class EstandarGameTest {
     }
 
     @Test
-    void testAdvantage(){
+    void testAdvantage() {
         estandarGame.serviceWon(); //15
         assertEquals(15, estandarGame.getService());
         estandarGame.restWon(); //15-15

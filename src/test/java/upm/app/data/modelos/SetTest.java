@@ -5,22 +5,22 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
- class SetTest {
+class SetTest {
     private Set set;
 
     @BeforeEach
-    void setUp(){
-        this.set=new Set();
+    void setUp() {
+        this.set = new Set();
     }
 
     @Test
-    void testInitialEstate(){
+    void testInitialEstate() {
         assertEquals(0, set.getPlayer1());
         assertEquals(0, set.getPlayer2());
     }
 
     @Test
-    void testEasyWin(){
+    void testEasyWin() {
         set.player1Won();
         set.player1Won();
         set.player1Won();
@@ -56,7 +56,7 @@ import static org.junit.jupiter.api.Assertions.*;
     }
 
     @Test
-     void testComplicatedWin(){
+    void testComplicatedWin() {
         set.player1Won();
         set.player1Won();
         set.player1Won();
@@ -122,7 +122,7 @@ import static org.junit.jupiter.api.Assertions.*;
     }
 
     @Test
-     void testWinInTieBreak(){
+    void testWinInTieBreak() {
         set.player1Won();
         set.player1Won();
         set.player1Won();
@@ -192,7 +192,7 @@ import static org.junit.jupiter.api.Assertions.*;
         set.player1Won();
         set.player1Won();
         set.player1Won();
-        assertThrows(InvalidAttributeException.class, ()-> set.player1Won());
+        assertThrows(InvalidAttributeException.class, () -> set.player1Won());
         assertEquals(7, set.getPlayer1());
         assertTrue(set.setWon());
 

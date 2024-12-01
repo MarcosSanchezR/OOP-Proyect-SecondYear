@@ -45,9 +45,9 @@ class MatchTest {
     }
 
     @Test
-    void testEasyWin(){
+    void testEasyWin() {
         match.setService(1);
-        Set set1=new Set();
+        Set set1 = new Set();
         set1.setWinner(1);
         match.addSet(set1);
         match.punctuate(2); //15
@@ -78,12 +78,12 @@ class MatchTest {
     }
 
     @Test
-    void testComplicatedWin(){
+    void testComplicatedWin() {
         match.setService(1);
-        Set set1=new Set();
+        Set set1 = new Set();
         set1.setWinner(1);
         match.addSet(set1);
-        Set set2=new Set();
+        Set set2 = new Set();
         set2.setWinner(2);
         match.addSet(set2);
         assertFalse(match.matchWon());
@@ -141,12 +141,12 @@ class MatchTest {
     }
 
     @Test
-    void testTiebreak(){
+    void testTiebreak() {
         match.setService(1);
-        Set set1=new Set();
+        Set set1 = new Set();
         set1.setWinner(1);
         match.addSet(set1);
-        Set set2=new Set();
+        Set set2 = new Set();
         set2.setWinner(2);
         match.addSet(set2);
         assertFalse(match.matchWon());
@@ -209,7 +209,6 @@ class MatchTest {
         match.punctuate(1); //7-6
         assertTrue(match.matchWon());
     }
-
 
 
 }
