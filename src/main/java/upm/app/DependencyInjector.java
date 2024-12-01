@@ -34,7 +34,7 @@ public class DependencyInjector {
         this.courtRepository = new CourtRepositoryMap();
         this.matchRepository = new MatchRepositoryMap();
         this.tennisSeeder = new TennisSeeder(userRepository, courtRepository, matchRepository);
-        tennisSeeder.seed();
+        this.tennisSeeder.seed();
 
         this.userService = new UserService(this.userRepository);
         this.courtService = new CourtService(this.courtRepository);

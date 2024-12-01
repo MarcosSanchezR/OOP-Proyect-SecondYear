@@ -8,7 +8,7 @@ import java.util.Objects;
 public class User extends Entity {
     private static final int MAX_AGE = 30;
     private static final int MINIMUM_AGE = 18;
-    private final String name;
+    private String name;
     private LocalDate birthdate;
     private String dni;
     private String password;
@@ -39,6 +39,10 @@ public class User extends Entity {
 
     public String getName() {
         return name;
+    }
+
+    public void setName(String name){
+        this.name=name;
     }
 
     public int getAge() {
@@ -108,5 +112,6 @@ public class User extends Entity {
                 ", password='***'" +
                 '}';
     }
+
 }
 

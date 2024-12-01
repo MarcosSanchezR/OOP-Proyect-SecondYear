@@ -3,10 +3,7 @@ package upm.app.data.repositorios.map;
 import upm.app.data.modelos.Entity;
 import upm.app.data.repositorios.GenericRepository;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public abstract class RepositoryMap<T extends Entity> implements GenericRepository<T> {
     private final Map<Integer, T> map;
@@ -30,6 +27,11 @@ public abstract class RepositoryMap<T extends Entity> implements GenericReposito
 
     public List<T> findAll() {
         return new ArrayList<>(map.values());
+    }
+
+    @Override
+    public Optional<T> read(Integer id) {
+        return Optional.ofNullable(this.map.get(id));
     }
 
 }
