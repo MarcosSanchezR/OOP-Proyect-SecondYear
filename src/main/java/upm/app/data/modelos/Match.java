@@ -11,7 +11,7 @@ public class Match extends Entity {
 
     private static final int WIN = 2;
     private static final int DURATION = 3;
-    private static final int MINIMUM_START=9;
+    private static final int MINIMUM_START = 9;
     private final Random r = new Random();
     private final List<Set> sets;
     private LocalDateTime dateTimeStart;
@@ -45,8 +45,8 @@ public class Match extends Entity {
         if (dateTimeStart.isBefore(LocalDateTime.now())) {
             throw new InvalidAttributeException("El partido no puede empezar en una fecha pasada: " + dateTimeStart);
         }
-        if (dateTimeStart.getHour()<MINIMUM_START){
-            throw new InvalidAttributeException("El partido no puede empezar antes de las "+MINIMUM_START);
+        if (dateTimeStart.getHour() < MINIMUM_START) {
+            throw new InvalidAttributeException("El partido no puede empezar antes de las " + MINIMUM_START);
         }
         this.dateTimeStart = dateTimeStart;
         this.dateTimeEnd = dateTimeStart.plusHours(DURATION);

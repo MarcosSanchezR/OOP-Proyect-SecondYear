@@ -30,7 +30,7 @@ class MatchTest {
         assertEquals(user2, match.getUser2());
         assertEquals(court, match.getCourt());
         assertEquals(LocalDateTime.of(2025, 11, 1, 12, 0, 0), match.getDateTimeStart());
-        assertEquals(LocalDateTime.of(2025, 11, 1, 14, 0, 0), match.getDateTimeEnd());
+        assertEquals(LocalDateTime.of(2025, 11, 1, 15, 0, 0), match.getDateTimeEnd());
     }
 
     @Test
@@ -38,7 +38,7 @@ class MatchTest {
         LocalDateTime newStart = LocalDateTime.of(2025, 11, 2, 15, 0, 0);
         match.setDateTimeStart(newStart);
         assertEquals(newStart, match.getDateTimeStart());
-        assertEquals(newStart.plusHours(2), match.getDateTimeEnd());
+        assertEquals(newStart.plusHours(3), match.getDateTimeEnd());
 
         LocalDateTime pastStart = LocalDateTime.of(2020, 11, 2, 15, 0, 0);
         assertThrows(InvalidAttributeException.class, () -> match.setDateTimeStart(pastStart));

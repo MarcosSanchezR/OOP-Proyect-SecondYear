@@ -5,6 +5,7 @@ public class EstandarGame implements Game {
     private static final int MINIMUM_ADVANTAGE = 20;
     private int service;
     private int rest;
+
     public EstandarGame() {
         this.service = GamePoints.START.getValue();
         this.rest = GamePoints.START.getValue();

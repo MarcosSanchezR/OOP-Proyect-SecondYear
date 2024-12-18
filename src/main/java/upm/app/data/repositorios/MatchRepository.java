@@ -3,6 +3,7 @@ package upm.app.data.repositorios;
 import upm.app.data.modelos.Match;
 import upm.app.data.modelos.User;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface MatchRepository extends GenericRepository<Match> {
@@ -17,6 +18,6 @@ public interface MatchRepository extends GenericRepository<Match> {
 
     Match readMatch(Match match);
 
-    void moveMatchInHoliday();
+    void moveMatchInHoliday(Match match, LocalDateTime newDate);
 
 }

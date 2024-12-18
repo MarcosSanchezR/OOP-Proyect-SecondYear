@@ -62,7 +62,7 @@ public class FX2BasicInputControlsExample extends Application {
             alert.setTitle("User Input");
             alert.setHeaderText("Form Submitted!");
             alert.setContentText("Username: " + username + "\nPassword: " + password
-                    + "\nRemember Me: " + rememberMe+"\nTerminos y Condiciones: "+terminos+"\nGender: " + gender);
+                    + "\nRemember Me: " + rememberMe + "\nTerminos y Condiciones: " + terminos + "\nGender: " + gender);
             alert.showAndWait();
         });
 
@@ -72,7 +72,7 @@ public class FX2BasicInputControlsExample extends Application {
         gridPane.add(passwordLabel, 0, 1);
         gridPane.add(passwordField, 1, 1);
         gridPane.add(rememberMeCheckBox, 0, 2);
-        gridPane.add(terminosYCondiciones,1, 2);
+        gridPane.add(terminosYCondiciones, 1, 2);
         gridPane.add(genderLabel, 0, 4);
         gridPane.add(maleRadio, 1, 4);
         gridPane.add(femaleRadio, 1, 5);

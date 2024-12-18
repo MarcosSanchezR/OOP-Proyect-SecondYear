@@ -4,6 +4,7 @@ import upm.app.data.modelos.Match;
 import upm.app.data.modelos.User;
 import upm.app.data.repositorios.MatchRepository;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,8 +43,8 @@ public class MatchRepositoryMap extends RepositoryMap<Match> implements MatchRep
     }
 
     @Override
-    public void moveMatchInHoliday() {
-
+    public void moveMatchInHoliday(Match match, LocalDateTime newDate) {
+        match.setDateTimeStart(newDate);
     }
 
 

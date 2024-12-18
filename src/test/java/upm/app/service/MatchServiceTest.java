@@ -52,7 +52,7 @@ class MatchServiceTest {
         assertEquals(user1, match.getUser1());
         assertEquals(user2, match.getUser2());
         assertEquals(court1, match.getCourt());
-        assertEquals(LocalDateTime.of(2025, 11, 1, 14, 0, 0), match.getDateTimeEnd());
+        assertEquals(LocalDateTime.of(2025, 11, 1, 15, 0, 0), match.getDateTimeEnd());
 
         assertThrows(NotFoundException.class, () -> matchService.create(LocalDateTime.of(2025, 11, 1, 12, 0, 0), "03948573h", "03378573p", "Non Existent Court"));
 
@@ -88,15 +88,19 @@ class MatchServiceTest {
     @Test
     void startMatchTest() {
         Match match = matchService.create(LocalDateTime.of(2025, 11, 1, 12, 0, 0), "03948573h", "03378573p", "Pista Central");
+
         matchService.startMatch(LocalDateTime.of(2025, 11, 1, 12, 0, 0), "Pista Central");
+
         assertEquals(Match.MatchStatus.IN_PROGRESS, match.getStatus());
     }
 
     @Test
     void scoreMatchTest() {
         Match match = matchService.create(LocalDateTime.of(2025, 11, 1, 12, 0, 0), "03948573h", "03378573p", "Pista Central");
+
         matchService.startMatch(LocalDateTime.of(2025, 11, 1, 12, 0, 0), "Pista Central");
         matchService.scoreMatch(LocalDateTime.of(2025, 11, 1, 12, 0, 0), "Pista Central", "service");
+
         if (match.getService() == 1) {
             assertEquals(15, match.getSets().get(0).getGame().getService());
         } else {
@@ -108,8 +112,34 @@ class MatchServiceTest {
     void readMatchTest() {
         Match match = matchService.create(LocalDateTime.of(2025, 11, 1, 12, 0, 0), "03948573h", "03378573p", "Pista Central");
         Match matchTest = matchService.readMatch(LocalDateTime.of(2025, 11, 1, 12, 0, 0), "Pista Central");
+
         assertEquals(match, matchTest);
     }
+
+    @Test
+    void moveMatchInHolidayTest(){
+        LocalDate holiday = LocalDate.of(2025, 11, 1);
+
+        matchService.create(LocalDateTime.of(2025, 11, 1, 9, 0, 0), "03948573h", "03378573p", "Pista Central");
+        matchService.create(LocalDateTime.of(2025, 11, 1, 12, 0, 0), "03378573p", "03948573h", "Pista Central");
+        matchService.create(LocalDateTime.of(2025, 11, 2, 9, 0, 0), "03948573h", "03378573p", "Pista Central");
+
+        matchService.moveMatchInHoliday(holiday);
+
+        Match match1 = matchService.readMatch(LocalDateTime.of(2025, 11, 2, 9, 0, 0), "Pista Central");
+        Match match2 = matchService.readMatch(LocalDateTime.of(2025, 11, 2, 12, 0, 0), "Pista Central");
+        Match match3 = matchService.readMatch(LocalDateTime.of(2025, 11, 2, 15, 0, 0), "Pista Central");
+
+        assertNotNull(match1);
+        assertNotNull(match2);
+        assertNotNull(match3);
+
+        assertEquals(LocalDate.of(2025, 11, 2), match1.getDateTimeStart().toLocalDate());
+        assertEquals(LocalDate.of(2025, 11, 2), match2.getDateTimeStart().toLocalDate());
+        assertEquals(LocalDate.of(2025, 11, 2), match3.getDateTimeStart().toLocalDate());
+
+    }
+
 
 
 }

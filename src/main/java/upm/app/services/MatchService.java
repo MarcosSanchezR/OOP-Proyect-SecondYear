@@ -135,40 +135,46 @@ public class MatchService {
         return this.matchRepository.readMatch(match);
     }
 
-    public void moveMatchInHoliday(LocalDate holiday){
-        List<Match> matches=listAll();
-        List<Match> matchesHoliday=new ArrayList<>();
-        for (Match match:matches){
-            if (match.getDateTimeStart().toLocalDate().equals(holiday)){
+    public void moveMatchInHoliday(LocalDate holiday) {
+        List<Match> matches = listAll();
+        List<Match> matchesHoliday = new ArrayList<>();
+        for (Match match : matches) {
+            if (match.getDateTimeStart().toLocalDate().equals(holiday)) {
                 matchesHoliday.add(match);
             }
         }
-        for (Match match:matchesHoliday){
-            boolean isMoved=false;
-            LocalDate newDate=holiday.plusDays(1);
-            while (!isMoved){
-                List<Match> matchesNewDate=matches.stream().filter(m -> m.getDateTimeStart().toLocalDate().equals(newDate)
+        for (Match match : matchesHoliday) {
+            boolean isMoved = false;
+            final LocalDate[] newDate = {holiday.plusDays(1)};
+            while (!isMoved) {
+                List<Match> matchesNewDate = matches.stream().filter(m -> m.getDateTimeStart().toLocalDate().equals(newDate[0])
                         && m.getCourt().equals(match.getCourt())).toList();
 
-                boolean timeFound=false;
-                LocalTime initialTime=LocalTime.of(9,0);
-                while (!timeFound && initialTime.isBefore(LocalTime.of(21,0))){
-                    LocalDateTime potentialStart= newDate.atTime(initialTime);
-                    boolean collision=matchesNewDate.stream().
-                            anyMatch(m->Math.abs(Duration.between(potentialStart, m.getDateTimeStart()).toHours())<DURATION);
-                    if (!collision){
-                        matchRepository.moveMatchInHoliday(match, potentialStart);
-                        isMoved=true;
-                        timeFound=true;
-                    }else{
-                        initialTime=initialTime.plusHours(DURATION);
-                    }
-                }
-                if (!isMoved){
-                    newDate=newDate.plusDays(1);
+                isMoved=tryRescheduleMatch(match, newDate[0], matchesNewDate);
+
+                if (!isMoved) {
+                    newDate[0] = newDate[0].plusDays(1);
                 }
             }
         }
+    }
+
+    private boolean tryRescheduleMatch(Match match, LocalDate newDate, List<Match> matchesNewDate){
+        LocalTime initialTime = LocalTime.of(9, 0);
+
+        while (initialTime.isBefore(LocalTime.of(21, 0))) {
+            LocalDateTime potentialStart = newDate.atTime(initialTime);
+
+            boolean collision = matchesNewDate.stream().
+                    anyMatch(m -> Math.abs(Duration.between(potentialStart, m.getDateTimeStart()).toHours()) < DURATION);
+            if (!collision) {
+                matchRepository.moveMatchInHoliday(match, potentialStart);
+                return true;
+            } else {
+                initialTime = initialTime.plusHours(DURATION);
+            }
+        }
+        return false;
     }
 
 }
