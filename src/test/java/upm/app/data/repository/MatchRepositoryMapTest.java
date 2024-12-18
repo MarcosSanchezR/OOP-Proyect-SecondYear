@@ -97,4 +97,13 @@ class MatchRepositoryMapTest {
         assertEquals(match1, matchTest);
     }
 
+    @Test
+    void moveMatchInHolidayTest(){
+        LocalDateTime newDate= LocalDateTime.of(2025, 11, 2, 12, 0, 0);
+
+        matchRepositoryMap.moveMatchInHoliday(match1, newDate);
+
+        assertEquals(LocalDate.of(2025,11,2), match1.getDateTimeStart().toLocalDate());
+    }
+
 }
