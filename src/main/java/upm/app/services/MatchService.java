@@ -10,11 +10,15 @@ import upm.app.services.exceptions.DuplicateException;
 import upm.app.services.exceptions.InvalidUse;
 import upm.app.services.exceptions.NotFoundException;
 
+import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MatchService {
-    private static final int DURATION = 2;
+    private static final int DURATION = 3;
     private final MatchRepository matchRepository;
     private final CourtRepository courtRepository;
     private final UserRepository userRepository;
@@ -129,6 +133,42 @@ public class MatchService {
             }
         }
         return this.matchRepository.readMatch(match);
+    }
+
+    public void moveMatchInHoliday(LocalDate holiday){
+        List<Match> matches=listAll();
+        List<Match> matchesHoliday=new ArrayList<>();
+        for (Match match:matches){
+            if (match.getDateTimeStart().toLocalDate().equals(holiday)){
+                matchesHoliday.add(match);
+            }
+        }
+        for (Match match:matchesHoliday){
+            boolean isMoved=false;
+            LocalDate newDate=holiday.plusDays(1);
+            while (!isMoved){
+                List<Match> matchesNewDate=matches.stream().filter(m -> m.getDateTimeStart().toLocalDate().equals(newDate)
+                        && m.getCourt().equals(match.getCourt())).toList();
+
+                boolean timeFound=false;
+                LocalTime initialTime=LocalTime.of(9,0);
+                while (!timeFound && initialTime.isBefore(LocalTime.of(21,0))){
+                    LocalDateTime potentialStart= newDate.atTime(initialTime);
+                    boolean collision=matchesNewDate.stream().
+                            anyMatch(m->Math.abs(Duration.between(potentialStart, m.getDateTimeStart()).toHours())<DURATION);
+                    if (!collision){
+                        matchRepository.moveMatchInHoliday(match, potentialStart);
+                        isMoved=true;
+                        timeFound=true;
+                    }else{
+                        initialTime=initialTime.plusHours(DURATION);
+                    }
+                }
+                if (!isMoved){
+                    newDate=newDate.plusDays(1);
+                }
+            }
+        }
     }
 
 }

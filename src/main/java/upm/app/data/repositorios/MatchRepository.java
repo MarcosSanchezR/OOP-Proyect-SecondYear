@@ -17,4 +17,6 @@ public interface MatchRepository extends GenericRepository<Match> {
 
     Match readMatch(Match match);
 
+    void moveMatchInHoliday();
+
 }

@@ -41,5 +41,10 @@ public class MatchRepositoryMap extends RepositoryMap<Match> implements MatchRep
         return match;
     }
 
+    @Override
+    public void moveMatchInHoliday() {
+
+    }
+
 
 }
