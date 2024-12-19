@@ -13,5 +13,5 @@ public interface Command {
 
     String helpMessage();
 
-    void execute(   );
+    void execute();
 }

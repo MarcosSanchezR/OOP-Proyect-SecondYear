@@ -150,7 +150,7 @@ public class MatchService {
                 List<Match> matchesNewDate = matches.stream().filter(m -> m.getDateTimeStart().toLocalDate().equals(newDate[0])
                         && m.getCourt().equals(match.getCourt())).toList();
 
-                isMoved=tryRescheduleMatch(match, newDate[0], matchesNewDate);
+                isMoved = tryRescheduleMatch(match, newDate[0], matchesNewDate);
 
                 if (!isMoved) {
                     newDate[0] = newDate[0].plusDays(1);
@@ -159,7 +159,7 @@ public class MatchService {
         }
     }
 
-    private boolean tryRescheduleMatch(Match match, LocalDate newDate, List<Match> matchesNewDate){
+    private boolean tryRescheduleMatch(Match match, LocalDate newDate, List<Match> matchesNewDate) {
         LocalTime initialTime = LocalTime.of(9, 0);
 
         while (initialTime.isBefore(LocalTime.of(21, 0))) {
