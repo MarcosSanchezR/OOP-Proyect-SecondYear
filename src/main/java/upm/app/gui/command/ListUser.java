@@ -39,6 +39,5 @@ public class ListUser extends AbstractCommand{
         new EntityListDialog(this.name(), this.userService.listAll()
                 .map(Object.class::cast).toList());
         GraphicalUserInterfaceFX.getInstance().getStatus().successful("Consulta realizada");
-
     }
 }
