@@ -4,8 +4,8 @@ import upm.app.data.modelos.TennisCourt;
 import upm.app.data.repositorios.CourtRepository;
 import upm.app.services.exceptions.DuplicateException;
 
-import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 public class CourtService {
     private final CourtRepository courtRepository;
@@ -29,7 +29,7 @@ public class CourtService {
         }
     }
 
-    public List<TennisCourt> listAll() {
-        return this.courtRepository.findAll();
+    public Stream<TennisCourt> listAll() {
+        return this.courtRepository.findAll().stream();
     }
 }

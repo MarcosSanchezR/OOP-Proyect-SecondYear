@@ -6,8 +6,8 @@ import upm.app.services.exceptions.DuplicateException;
 import upm.app.services.exceptions.NotFoundException;
 import upm.app.services.exceptions.UnauthorizedException;
 
-import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 public class UserService {
     private final UserRepository userRepository;
@@ -32,8 +32,8 @@ public class UserService {
         }
     }
 
-    public List<User> listAll() {
-        return this.userRepository.findAll();
+    public Stream<User> listAll() {
+        return this.userRepository.findAll().stream();
     }
 
     public User login(String dni, String password) {

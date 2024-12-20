@@ -4,6 +4,7 @@ import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import upm.app.data.modelos.Rol;
@@ -48,21 +49,18 @@ public class CreateUser extends AbstractCommand {
     public void execute() {
         ObservableList<Node> contentArea = GraphicalUserInterfaceFX.getInstance().getContentArea().getChildren();
         contentArea.clear();
+
         TextField nameField = new TextField();
         nameField.setPromptText("Nombre");
-
-        RequiredTextField dniField = new RequiredTextField("DNI", 9); // Requerido con 9 caracteres (por ejemplo).
+        RequiredTextField dniField = new RequiredTextField("DNI", 9);
         DateSelector birthDatePicker = new DateSelector("Fecha de Nacimiento:");
         PasswordField passwordField = new PasswordField();
         passwordField.setPromptText("Contraseña");
 
-        // Crear botón de envío
         Button submit = new Button("Crear Usuario");
 
-        // Agregar todos los componentes al área de contenido
         contentArea.addAll(nameField, dniField, birthDatePicker, passwordField, submit);
 
-        // Deshabilitar el botón hasta que todos los campos sean válidos
         submit.disableProperty().bind(
                 Bindings.or(
                         dniField.observableInvalid(),
@@ -77,7 +75,6 @@ public class CreateUser extends AbstractCommand {
                 )
         );
 
-        // Manejo del evento del botón
         submit.setOnAction(actionEvent -> {
             List<String> values = List.of(
             nameField.getText(),
@@ -92,7 +89,7 @@ public class CreateUser extends AbstractCommand {
     public void executeAction(List<String> fields) {
         User createdUser =this.userService.create(
                 new User(fields.get(0), LocalDate.parse(fields.get(1)), fields.get(2), fields.get(3)));
-        GraphicalUserInterfaceFX.getInstance().getStatus().successful("Usuario creado correctamnete");
+        GraphicalUserInterfaceFX.getInstance().getStatus().successful("Usuario creado correctamente");
         new EntityListDialog(this.name(), List.of(createdUser));
     }
 }
