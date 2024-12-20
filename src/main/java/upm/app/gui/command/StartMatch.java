@@ -7,11 +7,9 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.layout.HBox;
-import upm.app.data.modelos.Match;
 import upm.app.data.modelos.Rol;
 import upm.app.gui.fx.GraphicalUserInterfaceFX;
 import upm.app.gui.fx.components.CourtComboBox;
-import upm.app.gui.fx.dialogs.EntityListDialog;
 import upm.app.services.CourtService;
 import upm.app.services.MatchService;
 
@@ -20,18 +18,18 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-public class ReadMatch extends AbstractCommand{
+public class StartMatch extends AbstractCommand{
     private final MatchService matchService;
     private final CourtService courtService;
 
-    public ReadMatch(MatchService matchService, CourtService courtService) {
+    public StartMatch(MatchService matchService, CourtService courtService) {
         this.matchService = matchService;
         this.courtService = courtService;
     }
 
     @Override
     public String name() {
-        return "read-match";
+        return "start-match";
     }
 
     @Override
@@ -41,12 +39,12 @@ public class ReadMatch extends AbstractCommand{
 
     @Override
     public List<Rol> allowedRoles() {
-        return Rol.autorized();
+        return List.of(Rol.ADMIN, Rol.REFEREE);
     }
 
     @Override
     public String helpMessage() {
-        return "Muestra la puntuacion del partido";
+        return "Empieza el partido";
     }
 
     @Override
@@ -84,8 +82,7 @@ public class ReadMatch extends AbstractCommand{
     @Override
     public void executeAction(List<String> fields) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH-mm-ss");
-        Match match=matchService.readMatch(LocalDateTime.parse(fields.get(0), formatter), fields.get(1));
-        GraphicalUserInterfaceFX.getInstance().getStatus().successful("Consulta realizada");
-        new EntityListDialog(this.name(), List.of(match));
+        matchService.startMatch(LocalDateTime.parse(fields.get(0), formatter), fields.get(1));
+        GraphicalUserInterfaceFX.getInstance().getStatus().successful("El partido ha comenzado exitosamente");
     }
 }

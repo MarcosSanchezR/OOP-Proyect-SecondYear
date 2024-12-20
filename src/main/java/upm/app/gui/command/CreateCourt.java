@@ -71,8 +71,8 @@ public class CreateCourt extends AbstractCommand {
         submit.setOnAction(actionEvent -> {
             List<String> values = List.of(
                     nameField.getText(),
-                    locationField.getText(),
-                    surfacePicker.getSelectionModel().getSelectedItem());
+                    surfacePicker.getSelectionModel().getSelectedItem(),
+                    locationField.getText());
             this.submitActionHandler(values).handle(actionEvent);
         });
 

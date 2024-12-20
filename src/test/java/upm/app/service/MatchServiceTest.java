@@ -14,7 +14,7 @@ import upm.app.services.exceptions.NotFoundException;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -81,8 +81,8 @@ class MatchServiceTest {
         matchService.create(LocalDateTime.of(2025, 11, 1, 12, 0, 0), "03948573h", "03378573p", "Pista Central");
         matchService.create(LocalDateTime.of(2025, 11, 1, 15, 0, 0), "03378573p", "03948573h", "Pista 2");
 
-        List<Match> matches = matchService.listAll();
-        assertEquals(2, matches.size());
+        Stream<Match> matches = matchService.listAll();
+        assertEquals(2, matches.toList().size());
     }
 
     @Test

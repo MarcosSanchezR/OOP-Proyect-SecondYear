@@ -29,7 +29,7 @@ public class DeleteUser extends AbstractCommand{
 
     @Override
     public List<Rol> allowedRoles() {
-        return List.of(Rol.ADMIN);
+        return List.of(Rol.ADMIN, Rol.REFEREE);
     }
 
     @Override

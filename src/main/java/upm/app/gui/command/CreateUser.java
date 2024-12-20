@@ -3,10 +3,8 @@ package upm.app.gui.command;
 import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
 import upm.app.data.modelos.Rol;
 import upm.app.data.modelos.User;
 import upm.app.gui.fx.GraphicalUserInterfaceFX;
@@ -50,16 +48,22 @@ public class CreateUser extends AbstractCommand {
         ObservableList<Node> contentArea = GraphicalUserInterfaceFX.getInstance().getContentArea().getChildren();
         contentArea.clear();
 
+        Label nameLabel = new Label("Username:");
         TextField nameField = new TextField();
         nameField.setPromptText("Nombre");
+        nameField.setPrefWidth(100);
+        VBox nameBox= new VBox(5, nameLabel, nameField);
         RequiredTextField dniField = new RequiredTextField("DNI", 9);
         DateSelector birthDatePicker = new DateSelector("Fecha de Nacimiento:");
+        Label passLabel = new Label("Contraseña:");
         PasswordField passwordField = new PasswordField();
         passwordField.setPromptText("Contraseña");
+        passwordField.setPrefWidth(100);
+        VBox passBox = new VBox(5, passLabel,passwordField);
 
         Button submit = new Button("Crear Usuario");
 
-        contentArea.addAll(nameField, dniField, birthDatePicker, passwordField, submit);
+        contentArea.addAll(nameBox, dniField, birthDatePicker, passBox, submit);
 
         submit.disableProperty().bind(
                 Bindings.or(
@@ -78,8 +82,8 @@ public class CreateUser extends AbstractCommand {
         submit.setOnAction(actionEvent -> {
             List<String> values = List.of(
             nameField.getText(),
-            dniField.getText(),
             birthDatePicker.getSelectedDate().toString(),
+            dniField.getText(),
             passwordField.getText());
         this.submitActionHandler(values).handle(actionEvent);
         });

@@ -1,9 +1,5 @@
 package upm.app;
 
-import upm.app.console.CommandLineInterface;
-import upm.app.console.ErrorHandler;
-import upm.app.console.View;
-import upm.app.console.commands.*;
 import upm.app.data.repositorios.CourtRepository;
 import upm.app.data.repositorios.MatchRepository;
 import upm.app.data.repositorios.TennisSeeder;
@@ -11,6 +7,21 @@ import upm.app.data.repositorios.UserRepository;
 import upm.app.data.repositorios.map.CourtRepositoryMap;
 import upm.app.data.repositorios.map.MatchRepositoryMap;
 import upm.app.data.repositorios.map.UserRepositoryMap;
+import upm.app.gui.Controller;
+import upm.app.gui.ListCourt;
+import upm.app.gui.command.CreateCourt;
+import upm.app.gui.command.CreateMatch;
+import upm.app.gui.command.CreateUser;
+import upm.app.gui.command.DeleteCourt;
+import upm.app.gui.command.DeleteUser;
+import upm.app.gui.command.ListMatch;
+import upm.app.gui.command.ListUser;
+import upm.app.gui.command.Login;
+import upm.app.gui.command.Logout;
+import upm.app.gui.command.MoveMatches;
+import upm.app.gui.command.ReadMatch;
+import upm.app.gui.command.ScoreMatch;
+import upm.app.gui.command.StartMatch;
 import upm.app.services.CourtService;
 import upm.app.services.MatchService;
 import upm.app.services.UserService;
@@ -18,10 +29,8 @@ import upm.app.services.UserService;
 
 public class DependencyInjector {
     private static final DependencyInjector instance = new DependencyInjector();
-    private final ErrorHandler errorHandler;
-    private final View view;
+    private final Controller controller;
     private final TennisSeeder tennisSeeder;
-    private final CommandLineInterface cli;
     private final UserRepository userRepository;
     private final UserService userService;
     private final CourtRepository courtRepository;
@@ -40,46 +49,30 @@ public class DependencyInjector {
         this.courtService = new CourtService(this.courtRepository);
         this.matchService = new MatchService(this.matchRepository, courtRepository, userRepository);
 
-        this.view = new View();
-        this.cli = new CommandLineInterface(this.view);
-        this.cli.add(new Help(this.cli));
-        this.cli.add(new Exit());
-        this.cli.add(new Login(this.userService, this.cli));
-        this.cli.add(new Logout(this.cli));
-        this.cli.add(new CreateUser(this.view, this.userService));
-        this.cli.add(new DeleteUser(this.view, this.userService));
-        this.cli.add(new ListUser(this.view, this.userService));
-        this.cli.add(new CreateCourt(this.view, this.courtService));
-        this.cli.add(new DeleteCourt(this.view, this.courtService));
-        this.cli.add(new ListCourt(this.view, this.courtService));
-        this.cli.add(new CreateMatch(this.view, this.matchService));
-        this.cli.add(new EstablishWinner(this.view, this.matchService));
-        this.cli.add(new ListMatch(this.view, this.matchService));
-        this.cli.add(new StartMatch(this.view, this.matchService));
-        this.cli.add(new ScoreMatch(this.view, this.matchService));
-        this.cli.add(new ReadMatch(this.view, this.matchService));
-        this.cli.add(new MoveMatches(this.view, this.matchService));
-        this.errorHandler = new ErrorHandler(this.cli, this.view);
+        this.controller = new Controller();
+        this.controller.add(new CreateUser(userService));
+        this.controller.add(new CreateCourt(courtService));
+        this.controller.add(new CreateMatch(matchService, userService, courtService));
+        this.controller.add(new DeleteUser(userService));
+        this.controller.add(new DeleteCourt(courtService));
+        this.controller.add(new ListUser(userService));
+        this.controller.add(new ListCourt(courtService));
+        this.controller.add(new ListMatch(matchService));
+        this.controller.add(new Login(userService, controller));
+        this.controller.add(new Logout(controller));
+        this.controller.add(new MoveMatches(matchService));
+        this.controller.add(new ReadMatch(matchService, courtService));
+        this.controller.add(new ScoreMatch(matchService, courtService));
+        this.controller.add(new StartMatch(matchService, courtService));
+
     }
 
     public static DependencyInjector getInstance() {
         return instance;
     }
 
-    public void run() {
-        this.errorHandler.handleErrors();
-    }
-
-    public ErrorHandler getErrorHandler() {
-        return errorHandler;
-    }
-
-    public View getView() {
-        return view;
-    }
-
-    public CommandLineInterface getCommandLineInterface() {
-        return cli;
+    public Controller getController() {
+        return controller;
     }
 
     public TennisSeeder getTennisSeeder() {

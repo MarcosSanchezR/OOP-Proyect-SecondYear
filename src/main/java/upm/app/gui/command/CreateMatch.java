@@ -4,6 +4,7 @@ import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.layout.HBox;
@@ -11,7 +12,6 @@ import upm.app.data.modelos.Match;
 import upm.app.data.modelos.Rol;
 import upm.app.gui.fx.GraphicalUserInterfaceFX;
 import upm.app.gui.fx.components.CourtComboBox;
-import upm.app.gui.fx.components.DateSelector;
 import upm.app.gui.fx.components.UserComboBox;
 import upm.app.gui.fx.dialogs.EntityListDialog;
 import upm.app.services.CourtService;
@@ -19,6 +19,7 @@ import upm.app.services.MatchService;
 import upm.app.services.UserService;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -58,7 +59,7 @@ public class CreateMatch extends AbstractCommand{
         ObservableList<Node> contentArea = GraphicalUserInterfaceFX.getInstance().getContentArea().getChildren();
         contentArea.clear();
 
-        DateSelector dateSelector=new DateSelector("Fecha del partido");
+        DatePicker dateSelector = new DatePicker();
         UserComboBox user1 = new UserComboBox(userService, "Jugador 1");
         UserComboBox user2 = new UserComboBox(userService, "Jugador 2");
         CourtComboBox courtComboBox = new CourtComboBox(courtService);
@@ -77,14 +78,18 @@ public class CreateMatch extends AbstractCommand{
                         user1.observableNotSelect(),
                         user2.observableNotSelect()
                 ).or(courtComboBox.observableNotSelect()).or(Bindings.createBooleanBinding(
-                        () -> dateSelector.getSelectedDate() == null,
-                        dateSelector.getDatePicker().valueProperty()))
+                        () -> dateSelector.getValue() == null,
+                        dateSelector.valueProperty()))
         );
 
         submit.setOnAction(actionEvent -> {
+            LocalTime time = LocalTime.of(hourSpinner.getValue(), minuteSpinner.getValue(), 0);
+            LocalDateTime localDateTime = dateSelector.getValue().atTime(time);
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH-mm-ss");
+            String formattedDateTime = localDateTime.format(formatter);
             List<String> values = List.of(
-                    dateSelector.getSelectedDate().toString(),
-                    hourSpinner.getValue() + "-" + minuteSpinner.getValue(),
+                    formattedDateTime,
                     user1.getSelectedDni(),
                     user2.getSelectedDni(),
                     courtComboBox.getValue().getKey()
