@@ -8,6 +8,7 @@ import upm.app.services.CourtService;
 import upm.app.services.exceptions.DuplicateException;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -52,11 +53,12 @@ class CourtServiceTest {
         courtService.create(court1);
         courtService.create(court2);
 
-        List<TennisCourt> courts = courtService.listAll();
+        Stream<TennisCourt> courts = courtService.listAll();
+        List<TennisCourt> courtList = courts.toList();
 
-        assertEquals(2, courts.size());
-        assertEquals("Pista Central", courts.get(0).getName());
-        assertEquals("Pista Norte", courts.get(1).getName());
+        assertEquals(2, courtList.size());
+        assertEquals("Pista Central", courtList.get(0).getName());
+        assertEquals("Pista Norte", courtList.get(1).getName());
     }
 
 }

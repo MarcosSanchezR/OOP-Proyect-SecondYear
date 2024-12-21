@@ -9,6 +9,7 @@ import upm.app.services.exceptions.DuplicateException;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -57,11 +58,12 @@ class UserServiceTest {
         userService.create(user);
         userService.create(user2);
 
-        List<User> users = userService.listAll();
+        Stream<User> users = userService.listAll();
+        List<User> userList = users.toList();
 
-        assertEquals(2, users.size());
-        assertEquals("Marcos", users.get(0).getName());
-        assertEquals("Daniel", users.get(1).getName());
+        assertEquals(2, userList.size());
+        assertEquals("Marcos", userList.get(0).getName());
+        assertEquals("Daniel", userList.get(1).getName());
     }
 
 

@@ -41,12 +41,10 @@ public class Set {
     public boolean setWon() {
         if (this.player1 > MINIMUM_WIN || this.player1 == MINIMUM_WIN && this.player1 - this.player2 >= MINIMUM_ADVANTAGE) {
             this.winner = 1;
-            return true;
         } else if (this.player2 > MINIMUM_WIN || this.player2 == MINIMUM_WIN && this.player2 - this.player1 >= MINIMUM_ADVANTAGE) {
             this.winner = 2;
-            return true;
         }
-        return false;
+        return winner==1 || winner==2;
     }
 
     public Game createNewGame() {

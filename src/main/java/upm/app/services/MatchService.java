@@ -14,6 +14,7 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -136,18 +137,21 @@ public class MatchService {
     }
 
     public void moveMatchInHoliday(LocalDate holiday) {
-        Stream<Match> matches = listAll();
-        Stream<Match> matches2=listAll();
-        List<Match> matchesHoliday = matches
-                .filter(match -> match.getDateTimeStart().toLocalDate().equals(holiday))
-                .toList();
+        List<Match> matches = listAll().toList();
+        List<Match> matchesHoliday = new ArrayList<>();
+        for (Match match : matches) {
+            if (match.getDateTimeStart().toLocalDate().equals(holiday)) {
+                matchesHoliday.add(match);
+            }
+        }
         for (Match match : matchesHoliday) {
             boolean isMoved = false;
             final LocalDate[] newDate = {holiday.plusDays(1)};
             while (!isMoved) {
-                List<Match> matchesNewDate = getList(match, matches2, newDate);
+                List<Match> matchesNewDate = matches.stream().filter(m -> m.getDateTimeStart().toLocalDate().equals(newDate[0])
+                        && m.getCourt().equals(match.getCourt())).toList();
 
-                isMoved = tryRescheduleMatch(match, newDate[0], matchesNewDate);
+                isMoved=tryRescheduleMatch(match, newDate[0], matchesNewDate);
 
                 if (!isMoved) {
                     newDate[0] = newDate[0].plusDays(1);
@@ -156,14 +160,7 @@ public class MatchService {
         }
     }
 
-    private static List<Match> getList(Match match, Stream<Match> matches2, LocalDate[] newDate) {
-        return matches2
-                .filter(m -> m.getDateTimeStart().toLocalDate().equals(newDate[0])
-                        && m.getCourt().equals(match.getCourt()))
-                .toList();
-    }
-
-    private boolean tryRescheduleMatch(Match match, LocalDate newDate, List<Match> matchesNewDate) {
+    private boolean tryRescheduleMatch(Match match, LocalDate newDate, List<Match> matchesNewDate){
         LocalTime initialTime = LocalTime.of(9, 0);
 
         while (initialTime.isBefore(LocalTime.of(21, 0))) {
@@ -180,5 +177,6 @@ public class MatchService {
         }
         return false;
     }
+
 
 }

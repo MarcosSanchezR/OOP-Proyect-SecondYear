@@ -12,7 +12,6 @@ public class Match extends Entity {
     private static final int WIN = 2;
     private static final int DURATION = 3;
     private static final int MINIMUM_START = 9;
-    private final Random r = new Random();
     private final List<Set> sets;
     private LocalDateTime dateTimeStart;
     private LocalDateTime dateTimeEnd;
@@ -22,7 +21,6 @@ public class Match extends Entity {
     private TennisCourt court;
     private User ganador;
     private MatchStatus status;
-    private Set currentSet;
 
     public Match(LocalDateTime dateTimeStart, User user1, User user2, TennisCourt court) {
         this.setDateTimeStart(dateTimeStart);
@@ -32,8 +30,6 @@ public class Match extends Entity {
         this.dateTimeEnd = dateTimeStart.plusHours(DURATION);
         this.status = MatchStatus.NOT_STARTED;
         this.sets = new ArrayList<>();
-        this.currentSet = new Set();
-        sets.add(currentSet);
         this.service = 0;
     }
 
@@ -97,6 +93,7 @@ public class Match extends Entity {
     }
 
     public void altService() {
+        Random r=new Random();
         if (this.service == 0) {
             this.service = r.nextInt(2) + 1;
         } else {
@@ -108,31 +105,38 @@ public class Match extends Entity {
         if (this.service == 0) {
             throw new InvalidAttributeException("No se ha establecido quien tiene el servicio todavia");
         }
-        if (currentSet.setWon()) {
-            throw new InvalidAttributeException("Ya se ha ganado el set");
+        if (sets.isEmpty()){
+            Set firstSet = new Set();
+            sets.add(firstSet);
+        }
+        if (getLastSet().setWon() && !matchWon()) {
+            sets.add(new Set());
         }
         if (matchWon()) {
             throw new InvalidAttributeException("Ya se ha ganado el partido");
         }
-        if (currentSet.getGame().getService() == 0 && currentSet.getGame().getRest() == 0) {
+        if (getLastSet().getGame().getService() == 0 && getLastSet().getGame().getRest() == 0) {
             altService();
         }
+
+        addPoints(winner);
+        getLastSet().setWon();
+
+    }
+
+    private void addPoints (int winner){
         if (winner == 1) {
             if (service == 1) {
-                currentSet.player1Won();
+                getLastSet().player1Won();
             } else {
-                currentSet.player2Won();
+                getLastSet().player2Won();
             }
         } else if (winner == 2) {
             if (service == 1) {
-                currentSet.player2Won();
+                getLastSet().player2Won();
             } else {
-                currentSet.player1Won();
+                getLastSet().player1Won();
             }
-        }
-        if (currentSet.setWon() && !matchWon()) {
-            this.currentSet = new Set();
-            sets.add(currentSet);
         }
     }
 
@@ -161,14 +165,21 @@ public class Match extends Entity {
             player2Sets = set.getPlayer2();
         }
 
-        String player1GameScore = String.valueOf(currentSet.getGame().getService());
-        String player2GameScore = String.valueOf(currentSet.getGame().getRest());
+        String player1GameScore = String.valueOf(getLastSet().getGame().getService());
+        String player2GameScore = String.valueOf(getLastSet().getGame().getRest());
 
         scoreboard.append(user1.getName()).append(": ").append(player1Sets).append(" (").append(player1GameScore).append(")\n");
 
         scoreboard.append(user2.getName()).append(": ").append(player2Sets).append(" (").append(player2GameScore).append(")");
 
         return scoreboard.toString();
+    }
+
+    private Set getLastSet() {
+        if (sets.isEmpty()) {
+            throw new InvalidAttributeException("No hay sets en el partido.");
+        }
+        return sets.get(sets.size() - 1);
     }
 
     public MatchStatus getStatus() {
