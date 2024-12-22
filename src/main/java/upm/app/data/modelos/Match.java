@@ -32,67 +32,6 @@ public class Match extends Entity {
         this.service = 0;
     }
 
-    public LocalDateTime getDateTimeStart() {
-        return dateTimeStart;
-    }
-
-    public void setDateTimeStart(LocalDateTime dateTimeStart) {
-        if (dateTimeStart.isBefore(LocalDateTime.now())) {
-            throw new InvalidAttributeException("El partido no puede empezar en una fecha pasada: " + dateTimeStart);
-        }
-        if (dateTimeStart.getHour() < MINIMUM_START) {
-            throw new InvalidAttributeException("El partido no puede empezar antes de las " + MINIMUM_START);
-        }
-        this.dateTimeStart = dateTimeStart;
-        this.dateTimeEnd = dateTimeStart.plusHours(DURATION);
-    }
-
-    public LocalDateTime getDateTimeEnd() {
-        return dateTimeEnd;
-    }
-
-    public User getUser1() {
-        return user1;
-    }
-
-    public void setUser1(User user1) {
-        this.user1 = user1;
-    }
-
-    public User getUser2() {
-        return user2;
-    }
-
-    public void setUser2(User user2) {
-        this.user2 = user2;
-    }
-
-    public TennisCourt getCourt() {
-        return court;
-    }
-
-    public void setCourt(TennisCourt court) {
-        this.court = court;
-    }
-
-    public User getGanador() {
-        int[] setsWon = calculateSetsWon();
-        if (setsWon[0] >= WIN) {
-            return user1;
-        } else if (setsWon[1] >= WIN) {
-            return user2;
-        }
-        return null;
-    }
-
-    public int getService() {
-        return service;
-    }
-
-    public void setService(int who) {
-        service = who;
-    }
-
     public void altService() {
         Random r = new Random();
         if (this.service == 0) {
@@ -180,6 +119,67 @@ public class Match extends Entity {
         scoreboard.append(user2.getName()).append(": ").append(player2Sets).append(" (").append(player2GameScore).append(")");
 
         return scoreboard.toString();
+    }
+
+    public LocalDateTime getDateTimeStart() {
+        return dateTimeStart;
+    }
+
+    public void setDateTimeStart(LocalDateTime dateTimeStart) {
+        if (dateTimeStart.isBefore(LocalDateTime.now())) {
+            throw new InvalidAttributeException("El partido no puede empezar en una fecha pasada: " + dateTimeStart);
+        }
+        if (dateTimeStart.getHour() < MINIMUM_START) {
+            throw new InvalidAttributeException("El partido no puede empezar antes de las " + MINIMUM_START);
+        }
+        this.dateTimeStart = dateTimeStart;
+        this.dateTimeEnd = dateTimeStart.plusHours(DURATION);
+    }
+
+    public LocalDateTime getDateTimeEnd() {
+        return dateTimeEnd;
+    }
+
+    public User getUser1() {
+        return user1;
+    }
+
+    public void setUser1(User user1) {
+        this.user1 = user1;
+    }
+
+    public User getUser2() {
+        return user2;
+    }
+
+    public void setUser2(User user2) {
+        this.user2 = user2;
+    }
+
+    public TennisCourt getCourt() {
+        return court;
+    }
+
+    public void setCourt(TennisCourt court) {
+        this.court = court;
+    }
+
+    public User getGanador() {
+        int[] setsWon = calculateSetsWon();
+        if (setsWon[0] >= WIN) {
+            return user1;
+        } else if (setsWon[1] >= WIN) {
+            return user2;
+        }
+        return null;
+    }
+
+    public int getService() {
+        return service;
+    }
+
+    public void setService(int who) {
+        service = who;
     }
 
     private Set getLastSet() {
