@@ -6,6 +6,8 @@ import upm.app.data.modelos.User;
 import upm.app.data.repositorios.map.UserRepositoryMap;
 import upm.app.services.UserService;
 import upm.app.services.exceptions.DuplicateException;
+import upm.app.services.exceptions.NotFoundException;
+import upm.app.services.exceptions.UnauthorizedException;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -64,6 +66,20 @@ class UserServiceTest {
         assertEquals(2, userList.size());
         assertEquals("Marcos", userList.get(0).getName());
         assertEquals("Daniel", userList.get(1).getName());
+    }
+
+    @Test
+    void loginTest() {
+        User user = new User("Marcos", LocalDate.of(2005, 11, 1), "03948573h", "666");
+        userService.create(user);
+
+        User loggedInUser = userService.login("03948573h", "666");
+        assertNotNull(loggedInUser);
+        assertEquals("Marcos", loggedInUser.getName());
+
+        assertThrows(NotFoundException.class, () -> userService.login("00000000a", "666"));
+
+        assertThrows(UnauthorizedException.class, () -> userService.login("03948573h", "wrongPassword"));
     }
 
 

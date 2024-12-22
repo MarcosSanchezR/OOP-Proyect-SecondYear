@@ -1,14 +1,11 @@
 package upm.app.data.modelos;
 
-public class EstandarGame implements Game {
+public class EstandarGame extends Game {
 
     private static final int MINIMUM_ADVANTAGE = 20;
-    private int service;
-    private int rest;
 
     public EstandarGame() {
-        this.service = GamePoints.START.getValue();
-        this.rest = GamePoints.START.getValue();
+        super();
     }
 
     @Override
@@ -41,42 +38,14 @@ public class EstandarGame implements Game {
 
     @Override
     public boolean gameWon() {
-        if (this.service == GamePoints.WIN_AD.getValue()) {
-            return true;
-        }
-        if (this.rest == GamePoints.WIN_AD.getValue()) {
+        if (this.service == GamePoints.WIN_AD.getValue() || this.rest == GamePoints.WIN_AD.getValue()) {
             return true;
         }
         return ((this.service >= GamePoints.ADVANTAGE.getValue() && this.service - this.rest >= MINIMUM_ADVANTAGE) ||
                 (this.rest >= GamePoints.ADVANTAGE.getValue() && this.rest - this.service >= MINIMUM_ADVANTAGE));
     }
 
-    public int getService() {
-        return service;
-    }
-
-    public void setService(int service) {
-        this.service = service;
-    }
-
-    public int getRest() {
-        return rest;
-    }
-
-    public void setRest(int rest) {
-        this.rest = rest;
-    }
-
-    @Override
-    public String toString() {
-        return "EstandarGame{" +
-                ", service=" + service +
-                ", rest=" + rest +
-                '}';
-    }
-
     public enum GamePoints {
-        START(0),
         FIFTEEN(15),
         THIRTY(30),
         FORTY(40),
@@ -103,6 +72,5 @@ public class EstandarGame implements Game {
         public int getValue() {
             return value;
         }
-
     }
 }

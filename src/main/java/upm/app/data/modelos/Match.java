@@ -19,7 +19,6 @@ public class Match extends Entity {
     private User user2;
     private int service;
     private TennisCourt court;
-    private User ganador;
     private MatchStatus status;
 
     public Match(LocalDateTime dateTimeStart, User user1, User user2, TennisCourt court) {
@@ -77,11 +76,13 @@ public class Match extends Entity {
     }
 
     public User getGanador() {
-        return ganador;
-    }
-
-    public void setGanador(User ganador) {
-        this.ganador = ganador;
+        int[] setsWon = calculateSetsWon();
+        if (setsWon[0] >= WIN) {
+            return user1;
+        } else if (setsWon[1] >= WIN) {
+            return user2;
+        }
+        return null;
     }
 
     public int getService() {
@@ -93,7 +94,7 @@ public class Match extends Entity {
     }
 
     public void altService() {
-        Random r=new Random();
+        Random r = new Random();
         if (this.service == 0) {
             this.service = r.nextInt(2) + 1;
         } else {
@@ -105,7 +106,7 @@ public class Match extends Entity {
         if (this.service == 0) {
             throw new InvalidAttributeException("No se ha establecido quien tiene el servicio todavia");
         }
-        if (sets.isEmpty()){
+        if (sets.isEmpty()) {
             Set firstSet = new Set();
             sets.add(firstSet);
         }
@@ -124,7 +125,7 @@ public class Match extends Entity {
 
     }
 
-    private void addPoints (int winner){
+    private void addPoints(int winner) {
         if (winner == 1) {
             if (service == 1) {
                 getLastSet().player1Won();
@@ -141,6 +142,11 @@ public class Match extends Entity {
     }
 
     public boolean matchWon() {
+        int[] setsWon = calculateSetsWon();
+        return setsWon[0] >= WIN || setsWon[1] >= WIN;
+    }
+
+    private int[] calculateSetsWon() {
         int player1Sets = 0;
         int player2Sets = 0;
 
@@ -151,7 +157,8 @@ public class Match extends Entity {
                 player2Sets++;
             }
         }
-        return player1Sets >= WIN || player2Sets >= WIN;
+
+        return new int[]{player1Sets, player2Sets};
     }
 
     public String scoreboard() {
@@ -204,12 +211,12 @@ public class Match extends Entity {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Match match = (Match) o;
-        return Objects.equals(dateTimeStart, match.dateTimeStart) && Objects.equals(dateTimeEnd, match.dateTimeEnd) && Objects.equals(user1, match.user1) && Objects.equals(user2, match.user2) && Objects.equals(court, match.court) && Objects.equals(ganador, match.ganador);
+        return Objects.equals(dateTimeStart, match.dateTimeStart) && Objects.equals(dateTimeEnd, match.dateTimeEnd) && Objects.equals(user1, match.user1) && Objects.equals(user2, match.user2) && Objects.equals(court, match.court);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), dateTimeStart, dateTimeEnd, user1, user2, court, ganador);
+        return Objects.hash(super.hashCode(), dateTimeStart, dateTimeEnd, user1, user2, court);
     }
 
     @Override
@@ -220,7 +227,7 @@ public class Match extends Entity {
                 ", user1=" + user1 +
                 ", user2=" + user2 +
                 ", court=" + court +
-                ", ganador=" + ganador +
+                ", ganador=" + getGanador() +
                 '}' + "\n";
     }
 

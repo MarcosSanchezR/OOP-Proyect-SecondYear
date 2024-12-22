@@ -1,17 +1,41 @@
 package upm.app.data.modelos;
 
-public interface Game {
-    void serviceWon();
+public abstract class Game {
+    protected int service;
+    protected int rest;
 
-    void restWon();
+    protected Game() {
+        this.service = 0;
+        this.rest = 0;
+    }
 
-    boolean gameWon();
+    public abstract void serviceWon();
 
-    int getService();
+    public abstract void restWon();
 
-    void setService(int service);
+    public abstract boolean gameWon();
 
-    int getRest();
+    public int getService() {
+        return service;
+    }
 
-    void setRest(int rest);
+    public void setService(int service) {
+        this.service = service;
+    }
+
+    public int getRest() {
+        return rest;
+    }
+
+    public void setRest(int rest) {
+        this.rest = rest;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName() + "{" +
+                "service=" + service +
+                ", rest=" + rest +
+                '}';
+    }
 }

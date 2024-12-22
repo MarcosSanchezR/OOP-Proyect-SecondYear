@@ -20,7 +20,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-public class ReadMatch extends AbstractCommand{
+public class ReadMatch extends AbstractCommand {
     private final MatchService matchService;
     private final CourtService courtService;
 
@@ -54,13 +54,13 @@ public class ReadMatch extends AbstractCommand{
         ObservableList<Node> contentArea = GraphicalUserInterfaceFX.getInstance().getContentArea().getChildren();
         contentArea.clear();
 
-        DatePicker dateSelector=new DatePicker();
+        DatePicker dateSelector = new DatePicker();
         CourtComboBox courtComboBox = new CourtComboBox(courtService);
         Spinner<Integer> hourSpinner = new Spinner<>(0, 23, 9);
         hourSpinner.setEditable(true);
         Spinner<Integer> minuteSpinner = new Spinner<>(0, 59, 0, 5);
         minuteSpinner.setEditable(true);
-        HBox hour= new HBox(10, new Label("Hora:"), hourSpinner, new Label("Minutos:"), minuteSpinner);
+        HBox hour = new HBox(10, new Label("Hora:"), hourSpinner, new Label("Minutos:"), minuteSpinner);
 
         Button submit = new Button("Leer partido");
 
@@ -84,7 +84,7 @@ public class ReadMatch extends AbstractCommand{
     @Override
     public void executeAction(List<String> fields) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH-mm-ss");
-        Match match=matchService.readMatch(LocalDateTime.parse(fields.get(0), formatter), fields.get(1));
+        Match match = matchService.readMatch(LocalDateTime.parse(fields.get(0), formatter), fields.get(1));
         GraphicalUserInterfaceFX.getInstance().getStatus().successful("Consulta realizada");
         new EntityListDialog(this.name(), List.of(match));
     }

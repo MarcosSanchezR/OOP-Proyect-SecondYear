@@ -1,6 +1,5 @@
 package upm.app.gui.command;
 
-import upm.app.data.modelos.Match;
 import upm.app.data.modelos.Rol;
 import upm.app.gui.fx.GraphicalUserInterfaceFX;
 import upm.app.gui.fx.dialogs.EntityListDialog;
@@ -8,7 +7,7 @@ import upm.app.services.MatchService;
 
 import java.util.List;
 
-public class ListMatch extends AbstractCommand{
+public class ListMatch extends AbstractCommand {
     private final MatchService matchService;
 
     public ListMatch(MatchService matchService) {

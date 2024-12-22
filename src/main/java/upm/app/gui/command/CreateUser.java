@@ -3,7 +3,10 @@ package upm.app.gui.command;
 import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import upm.app.data.modelos.Rol;
 import upm.app.data.modelos.User;
@@ -52,14 +55,14 @@ public class CreateUser extends AbstractCommand {
         TextField nameField = new TextField();
         nameField.setPromptText("Nombre");
         nameField.setPrefWidth(100);
-        VBox nameBox= new VBox(5, nameLabel, nameField);
+        VBox nameBox = new VBox(5, nameLabel, nameField);
         RequiredTextField dniField = new RequiredTextField("DNI", 9);
         DateSelector birthDatePicker = new DateSelector("Fecha de Nacimiento:");
         Label passLabel = new Label("Contraseña:");
         PasswordField passwordField = new PasswordField();
         passwordField.setPromptText("Contraseña");
         passwordField.setPrefWidth(100);
-        VBox passBox = new VBox(5, passLabel,passwordField);
+        VBox passBox = new VBox(5, passLabel, passwordField);
 
         Button submit = new Button("Crear Usuario");
 
@@ -81,17 +84,17 @@ public class CreateUser extends AbstractCommand {
 
         submit.setOnAction(actionEvent -> {
             List<String> values = List.of(
-            nameField.getText(),
-            birthDatePicker.getSelectedDate().toString(),
-            dniField.getText(),
-            passwordField.getText());
-        this.submitActionHandler(values).handle(actionEvent);
+                    nameField.getText(),
+                    birthDatePicker.getSelectedDate().toString(),
+                    dniField.getText(),
+                    passwordField.getText());
+            this.submitActionHandler(values).handle(actionEvent);
         });
     }
 
     @Override
     public void executeAction(List<String> fields) {
-        User createdUser =this.userService.create(
+        User createdUser = this.userService.create(
                 new User(fields.get(0), LocalDate.parse(fields.get(1)), fields.get(2), fields.get(3)));
         GraphicalUserInterfaceFX.getInstance().getStatus().successful("Usuario creado correctamente");
         new EntityListDialog(this.name(), List.of(createdUser));

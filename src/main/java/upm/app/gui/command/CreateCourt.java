@@ -61,7 +61,7 @@ public class CreateCourt extends AbstractCommand {
                         locationField.observableInvalid(),
                         Bindings.createBooleanBinding(
                                 () -> nameField.getText().isEmpty() ||
-                                        surfacePicker.getSelectionModel().getSelectedItem() ==null,
+                                        surfacePicker.getSelectionModel().getSelectedItem() == null,
                                 nameField.textProperty(),
                                 surfacePicker.getSelectionModel().selectedItemProperty()
                         )
@@ -80,7 +80,7 @@ public class CreateCourt extends AbstractCommand {
 
     @Override
     public void executeAction(List<String> fields) {
-        TennisCourt createdCourt =this.courtService.create(
+        TennisCourt createdCourt = this.courtService.create(
                 new TennisCourt(fields.get(0), fields.get(1), fields.get(2)));
         GraphicalUserInterfaceFX.getInstance().getStatus().successful("Pista creada correctamente");
         new EntityListDialog(this.name(), List.of(createdCourt));

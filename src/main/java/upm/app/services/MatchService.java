@@ -67,22 +67,6 @@ public class MatchService {
         return this.matchRepository.create(match);
     }
 
-    public void establishWinner(LocalDateTime dateTime, String name, String dni) {
-        if (this.courtRepository.findByName(name).isEmpty()) {
-            throw new NotFoundException("No existe esa pista: " + name);
-        }
-        List<Match> sameCourt = this.matchRepository.findByCourt(name);
-        Match match = getMatch(dateTime, name, sameCourt);
-        if (!dni.equals(match.getUser1().getDni()) && !dni.equals(match.getUser2().getDni())) {
-            throw new NotFoundException("No se ha encontrado ningun partido con esa fecha en esa pista con ese jugador: " + dateTime + ", " + name + ", " + dni);
-        }
-        if (dni.equals(match.getUser1().getDni())) {
-            this.matchRepository.establishWinner(match, match.getUser1());
-        } else {
-            this.matchRepository.establishWinner(match, match.getUser2());
-        }
-    }
-
     public Stream<Match> listAll() {
         return this.matchRepository.findAll().stream();
     }
@@ -151,7 +135,7 @@ public class MatchService {
                 List<Match> matchesNewDate = matches.stream().filter(m -> m.getDateTimeStart().toLocalDate().equals(newDate[0])
                         && m.getCourt().equals(match.getCourt())).toList();
 
-                isMoved=tryRescheduleMatch(match, newDate[0], matchesNewDate);
+                isMoved = tryRescheduleMatch(match, newDate[0], matchesNewDate);
 
                 if (!isMoved) {
                     newDate[0] = newDate[0].plusDays(1);
@@ -160,7 +144,7 @@ public class MatchService {
         }
     }
 
-    private boolean tryRescheduleMatch(Match match, LocalDate newDate, List<Match> matchesNewDate){
+    private boolean tryRescheduleMatch(Match match, LocalDate newDate, List<Match> matchesNewDate) {
         LocalTime initialTime = LocalTime.of(9, 0);
 
         while (initialTime.isBefore(LocalTime.of(21, 0))) {

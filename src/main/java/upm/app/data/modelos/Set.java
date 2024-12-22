@@ -44,7 +44,7 @@ public class Set {
         } else if (this.player2 > MINIMUM_WIN || this.player2 == MINIMUM_WIN && this.player2 - this.player1 >= MINIMUM_ADVANTAGE) {
             this.winner = 2;
         }
-        return winner==1 || winner==2;
+        return winner == 1 || winner == 2;
     }
 
     public Game createNewGame() {

@@ -63,20 +63,6 @@ class MatchServiceTest {
     }
 
     @Test
-    void establishWinnerTest() {
-        Match match = matchService.create(LocalDateTime.of(2025, 11, 1, 12, 0, 0), "03948573h", "03378573p", "Pista Central");
-
-        matchService.establishWinner(LocalDateTime.of(2025, 11, 1, 12, 0, 0), "Pista Central", "03948573h");
-
-        assertEquals(user1, match.getGanador());
-
-        assertThrows(NotFoundException.class, () -> matchService.establishWinner(LocalDateTime.of(2025, 11, 1, 13, 0, 0), "Pista Central", "03948573h"));
-
-        assertThrows(NotFoundException.class, () -> matchService.establishWinner(LocalDateTime.of(2025, 11, 1, 12, 0, 0), "Pista Central", "00000000x"));
-
-    }
-
-    @Test
     void listAllMatchesTest() {
         matchService.create(LocalDateTime.of(2025, 11, 1, 12, 0, 0), "03948573h", "03378573p", "Pista Central");
         matchService.create(LocalDateTime.of(2025, 11, 1, 15, 0, 0), "03378573p", "03948573h", "Pista 2");
@@ -117,7 +103,7 @@ class MatchServiceTest {
     }
 
     @Test
-    void moveMatchInHolidayTest(){
+    void moveMatchInHolidayTest() {
         LocalDate holiday = LocalDate.of(2025, 11, 1);
 
         matchService.create(LocalDateTime.of(2025, 11, 1, 9, 0, 0), "03948573h", "03378573p", "Pista Central");
@@ -139,7 +125,6 @@ class MatchServiceTest {
         assertEquals(LocalDate.of(2025, 11, 2), match3.getDateTimeStart().toLocalDate());
 
     }
-
 
 
 }

@@ -59,15 +59,6 @@ class MatchRepositoryMapTest {
     }
 
     @Test
-    void establishWinnerTest() {
-        matchRepositoryMap.establishWinner(match1, user1);
-        assertEquals(user1, match1.getGanador());
-
-        matchRepositoryMap.establishWinner(match2, user2);
-        assertEquals(user2, match2.getGanador());
-    }
-
-    @Test
     void findAllTest() {
         List<Match> matches = matchRepositoryMap.findAll();
         assertEquals(2, matches.size());
@@ -98,12 +89,12 @@ class MatchRepositoryMapTest {
     }
 
     @Test
-    void moveMatchInHolidayTest(){
-        LocalDateTime newDate= LocalDateTime.of(2025, 11, 2, 12, 0, 0);
+    void moveMatchInHolidayTest() {
+        LocalDateTime newDate = LocalDateTime.of(2025, 11, 2, 12, 0, 0);
 
         matchRepositoryMap.moveMatchInHoliday(match1, newDate);
 
-        assertEquals(LocalDate.of(2025,11,2), match1.getDateTimeStart().toLocalDate());
+        assertEquals(LocalDate.of(2025, 11, 2), match1.getDateTimeStart().toLocalDate());
     }
 
 }

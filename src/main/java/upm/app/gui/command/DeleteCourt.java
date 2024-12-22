@@ -10,7 +10,7 @@ import upm.app.services.CourtService;
 
 import java.util.List;
 
-public class DeleteCourt extends AbstractCommand{
+public class DeleteCourt extends AbstractCommand {
     private final CourtService courtService;
 
     public DeleteCourt(CourtService courtService) {
@@ -44,7 +44,7 @@ public class DeleteCourt extends AbstractCommand{
 
         CourtComboBox courtComboBox = new CourtComboBox(courtService);
 
-        Button submit= new Button("Eliminar");
+        Button submit = new Button("Eliminar");
 
         contentArea.addAll(courtComboBox, submit);
 

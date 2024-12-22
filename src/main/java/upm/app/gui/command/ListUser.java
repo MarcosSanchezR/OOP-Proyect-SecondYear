@@ -7,7 +7,7 @@ import upm.app.services.UserService;
 
 import java.util.List;
 
-public class ListUser extends AbstractCommand{
+public class ListUser extends AbstractCommand {
     private final UserService userService;
 
     public ListUser(UserService userService) {

@@ -10,7 +10,7 @@ import upm.app.services.UserService;
 
 import java.util.List;
 
-public class DeleteUser extends AbstractCommand{
+public class DeleteUser extends AbstractCommand {
     private final UserService userService;
 
     public DeleteUser(UserService userService) {
@@ -44,7 +44,7 @@ public class DeleteUser extends AbstractCommand{
 
         UserComboBox userComboBox = new UserComboBox(userService, "Dni");
 
-        Button submit= new Button("Eliminar");
+        Button submit = new Button("Eliminar");
 
         contentArea.addAll(userComboBox, submit);
 

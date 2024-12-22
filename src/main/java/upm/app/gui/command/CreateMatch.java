@@ -23,7 +23,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-public class CreateMatch extends AbstractCommand{
+public class CreateMatch extends AbstractCommand {
     private final MatchService matchService;
     private final UserService userService;
     private final CourtService courtService;
@@ -67,7 +67,7 @@ public class CreateMatch extends AbstractCommand{
         hourSpinner.setEditable(true);
         Spinner<Integer> minuteSpinner = new Spinner<>(0, 59, 0, 5);
         minuteSpinner.setEditable(true);
-        HBox hour= new HBox(10, new Label("Hora:"), hourSpinner, new Label("Minutos:"), minuteSpinner);
+        HBox hour = new HBox(10, new Label("Hora:"), hourSpinner, new Label("Minutos:"), minuteSpinner);
 
         Button submit = new Button("Crear partido");
 

@@ -1,21 +1,17 @@
 package upm.app.gui.command;
 
-import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 import upm.app.data.modelos.Rol;
 import upm.app.gui.fx.GraphicalUserInterfaceFX;
 import upm.app.gui.fx.components.DateSelector;
-import upm.app.gui.fx.components.RequiredTextField;
 import upm.app.services.MatchService;
 
 import java.time.LocalDate;
 import java.util.List;
 
-public class MoveMatches extends AbstractCommand{
+public class MoveMatches extends AbstractCommand {
     private final MatchService matchService;
 
     public MoveMatches(MatchService matchService) {

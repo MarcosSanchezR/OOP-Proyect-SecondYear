@@ -1,7 +1,6 @@
 package upm.app.data.repositorios.map;
 
 import upm.app.data.modelos.Match;
-import upm.app.data.modelos.User;
 import upm.app.data.repositorios.MatchRepository;
 
 import java.time.LocalDateTime;
@@ -19,11 +18,6 @@ public class MatchRepositoryMap extends RepositoryMap<Match> implements MatchRep
             }
         }
         return matchesInCourt;
-    }
-
-    @Override
-    public void establishWinner(Match match, User winner) {
-        match.setGanador(winner);
     }
 
     @Override

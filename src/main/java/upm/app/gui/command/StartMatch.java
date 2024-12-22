@@ -18,7 +18,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-public class StartMatch extends AbstractCommand{
+public class StartMatch extends AbstractCommand {
     private final MatchService matchService;
     private final CourtService courtService;
 
@@ -52,13 +52,13 @@ public class StartMatch extends AbstractCommand{
         ObservableList<Node> contentArea = GraphicalUserInterfaceFX.getInstance().getContentArea().getChildren();
         contentArea.clear();
 
-        DatePicker dateSelector=new DatePicker();
+        DatePicker dateSelector = new DatePicker();
         CourtComboBox courtComboBox = new CourtComboBox(courtService);
         Spinner<Integer> hourSpinner = new Spinner<>(0, 23, 9);
         hourSpinner.setEditable(true);
         Spinner<Integer> minuteSpinner = new Spinner<>(0, 59, 0, 5);
         minuteSpinner.setEditable(true);
-        HBox hour= new HBox(10, new Label("Hora:"), hourSpinner, new Label("Minutos:"), minuteSpinner);
+        HBox hour = new HBox(10, new Label("Hora:"), hourSpinner, new Label("Minutos:"), minuteSpinner);
 
         Button submit = new Button("Leer partido");
 
