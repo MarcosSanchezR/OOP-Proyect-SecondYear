@@ -77,10 +77,16 @@ public class ScoreMatch extends AbstractCommand {
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH-mm-ss");
             String formattedDateTime = localDateTime.format(formatter);
+            String serviceRest = "";
+            if (((RadioButton) scoreGroup.getSelectedToggle()).getText().equals("Servicio")){
+                serviceRest="service";
+            }else{
+                serviceRest="rest";
+            }
             List<String> values = List.of(
                     formattedDateTime,
                     courtComboBox.getValue().getKey(),
-                    ((RadioButton) scoreGroup.getSelectedToggle()).getText()
+                    serviceRest
             );
             this.submitActionHandler(values).handle(actionEvent);
         });
