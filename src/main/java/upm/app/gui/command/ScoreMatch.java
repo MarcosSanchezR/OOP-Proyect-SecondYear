@@ -50,7 +50,9 @@ public class ScoreMatch extends AbstractCommand {
         ObservableList<Node> contentArea = GraphicalUserInterfaceFX.getInstance().getContentArea().getChildren();
         contentArea.clear();
 
+        Label dateLabel = new Label("Fecha:");
         DatePicker dateSelector = new DatePicker();
+        VBox dateBox = new VBox(5, dateLabel, dateSelector);
         CourtComboBox courtComboBox = new CourtComboBox(courtService);
         Spinner<Integer> hourSpinner = new Spinner<>(0, 23, 9);
         hourSpinner.setEditable(true);
@@ -67,7 +69,7 @@ public class ScoreMatch extends AbstractCommand {
 
         Button submit = new Button("Puntuar");
 
-        contentArea.addAll(dateSelector, hour, courtComboBox, toggleBox, submit);
+        contentArea.addAll(dateBox, hour, courtComboBox, toggleBox, submit);
 
         submit.disableProperty().bind(scoreGroup.selectedToggleProperty().isNull());
 
@@ -78,10 +80,10 @@ public class ScoreMatch extends AbstractCommand {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH-mm-ss");
             String formattedDateTime = localDateTime.format(formatter);
             String serviceRest = "";
-            if (((RadioButton) scoreGroup.getSelectedToggle()).getText().equals("Servicio")){
-                serviceRest="service";
-            }else{
-                serviceRest="rest";
+            if (((RadioButton) scoreGroup.getSelectedToggle()).getText().equals("Servicio")) {
+                serviceRest = "service";
+            } else {
+                serviceRest = "rest";
             }
             List<String> values = List.of(
                     formattedDateTime,

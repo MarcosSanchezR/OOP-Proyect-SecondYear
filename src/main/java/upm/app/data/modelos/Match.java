@@ -182,7 +182,7 @@ public class Match extends Entity {
         service = who;
     }
 
-    private Set getLastSet() {
+    public Set getLastSet() {
         if (sets.isEmpty()) {
             throw new InvalidAttributeException("No hay sets en el partido.");
         }

@@ -7,6 +7,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import upm.app.data.modelos.Match;
 import upm.app.data.modelos.Rol;
 import upm.app.gui.fx.GraphicalUserInterfaceFX;
@@ -54,7 +55,9 @@ public class ReadMatch extends AbstractCommand {
         ObservableList<Node> contentArea = GraphicalUserInterfaceFX.getInstance().getContentArea().getChildren();
         contentArea.clear();
 
+        Label dateLabel = new Label("Fecha:");
         DatePicker dateSelector = new DatePicker();
+        VBox dateBox = new VBox(5, dateLabel, dateSelector);
         CourtComboBox courtComboBox = new CourtComboBox(courtService);
         Spinner<Integer> hourSpinner = new Spinner<>(0, 23, 9);
         hourSpinner.setEditable(true);
@@ -64,7 +67,7 @@ public class ReadMatch extends AbstractCommand {
 
         Button submit = new Button("Leer partido");
 
-        contentArea.addAll(dateSelector, hour, courtComboBox, submit);
+        contentArea.addAll(dateBox, hour, courtComboBox, submit);
 
 
         submit.setOnAction(actionEvent -> {
