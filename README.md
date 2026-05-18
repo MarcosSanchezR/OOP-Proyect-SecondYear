@@ -14,5 +14,6 @@ This project was developed as part of the Object-Oriented Programming course in 
 - **Build Tool**: Maven.
 ## Setup and Execution
   1.Clone this repository.
-
+   ```bash
+  
   2.Run the project in your IDE and run the project from maven using: mvn clean javafx:run.
