@@ -1,7 +1,7 @@
 # OOP_Project2025
 
 ## OverView
-This project was developed as part of the Object-Oriented Programming course in the second degree year at Universidad Politécnica de Madrid. It implement a ser management system supporting creation, reading, and deletion of users to organize tennis matches between players using Java, also I did programme sql repositories but I didn't connect them into the DependencyInjector. For the frontend of the system I use a simple GUI in JavaFX.
+This project was developed as part of the Object-Oriented Programming course in the second degree year at Universidad Politécnica de Madrid. It implement a set management system supporting creation, reading, and deletion of users to organize tennis matches between players using Java, also I did programme sql repositories but I didn't connect them into the DependencyInjector. For the frontend of the system I use a simple GUI in JavaFX.
 
 ## Feature
 
